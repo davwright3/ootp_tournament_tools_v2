@@ -39,15 +39,14 @@ jobs:
       - name: Run Inno Setup Compiler
         shell: pwsh
         run: |
-          iscc installer/installer.iss `
-            "/DMyOutputDir=$env:GITHUB_WORKSPACE\dist\main"
+          iscc installer/installer.iss
 
       - name: Rename Windows Installer
         shell: pwsh
         run: |
           $version="${{ github.ref_name }}"
           New-Item -ItemType Directory -Force -Path release | Out-Null
-          Copy-Item "installer/Output/*.exe" "release/AU_Tournament_Utilities-$version-windows-x64.exe"
+          Copy-Item "installer\Output\*.exe" "release/AU_Tournament_Utilities-$version-windows-x64.exe"
 
       - name: List Output Files
         run: dir installer/Output
