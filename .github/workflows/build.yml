@@ -32,6 +32,12 @@ jobs:
         run: |
           pyinstaller --clean main.spec
 
+      - name: Show PyInstaller dist tree
+        shell: pwsh
+        run: |
+          Write-Host "Dist contents:"
+          Get-ChildItem -Recurse -Depth 2 dist | Select-Object FullName
+
       - name: Install Inno Setup
         run: |
           choco install innosetup --yes
