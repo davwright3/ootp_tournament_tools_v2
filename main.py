@@ -2,6 +2,7 @@
 import tkinter as tk
 from config_utils.load_settings import settings as loaded_settings
 from view_utils.header_view import Header
+from view_utils.footer_view import Footer
 
 class MainApp(tk.Tk):
     """Class for generating the main application."""
@@ -20,10 +21,17 @@ class MainApp(tk.Tk):
         self.rowconfigure(0, weight=0)
         self.rowconfigure(1, weight=1)
         self.rowconfigure(2, weight=0)
+
+        self.rowconfigure(0, weight=0)
+        self.rowconfigure(1, weight=1)
+        self.rowconfigure(2, weight=0)
         row = 0
         self.header_frame = Header(self)
         self.header_frame.grid(row=row, column=0, sticky="nsew")
         row += 1
+
+        self.footer_frame = Footer(self)
+        self.footer_frame.grid(row=2, column=0, sticky="nsew")
 
 
 

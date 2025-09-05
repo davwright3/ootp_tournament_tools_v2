@@ -8,7 +8,7 @@ class Header(tk.Frame):
     """Reusable header class for entire app."""
     def __init__(self, parent, app_name="AU Tournament Utilities V2"):
         """Initialize the header frame."""
-        super().__init__()
+        super().__init__(parent, bd=3, relief='groove', bg='lightgray')
 
         # File path for image
         logo_image_path = get_resource_path(
@@ -25,11 +25,11 @@ class Header(tk.Frame):
         self.columnconfigure(1, weight=1)
         self.columnconfigure(2, weight=0)
 
-        self.logo_label = tk.Label(self, image=self.logo_tk_image, bg='lightgray')
+        self.logo_label = tk.Label(self, image=self.logo_tk_image, background='lightgray')
         self.logo_label.grid(row=0, column=0, sticky="w")
 
-        self.title_label = tk.Label(self, text=self.name_text, font=("Arial", 16, "bold"), bg='lightgray')
+        self.title_label = tk.Label(self, text=self.name_text, font=("Arial", 16, "bold"), background='lightgray')
         self.title_label.grid(row=0, column=1, sticky="nsew")
 
-        self.reverse_logo_label = tk.Label(self, image=self.reverse_logo_tk_image, bg='lightgray')
+        self.reverse_logo_label = tk.Label(self, image=self.reverse_logo_tk_image, background='lightgray')
         self.reverse_logo_label.grid(row=0, column=2, sticky="e")
