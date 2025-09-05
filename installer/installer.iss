@@ -1,10 +1,5 @@
 ; --- installer/installer.iss ---
 
-#define Workspace GetEnv("GITHUB_WORKSPACE")
-#ifndef SourceDir
-    #define SourceDir Workspace + "\dist"
-#endif
-
 [Setup]
 AppName=AU Tournament Utilities v2
 AppVersion=0.0.1
@@ -18,15 +13,12 @@ Compression=lzma
 SolidCompression=yes
 
 [Files]
-; Handle ONEFILE: dist\*.exe
-Source: "{#DistDir}\*.exe"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-
-; Handle ONEDIR: dist\<name>\<name>.exe
-Source: "{#DistDir}\*\*.exe"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+; Handle ONEFILE: dist\main.exe
+Source: "dist\main.exe"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
-Name: "{group}\AU Tournament Utilities v2"; Filename: "{app}\main.exe"; Flags: skipifsourcedoesntexist
-Name: "{commondesktop}\AU Tournament Utilities v2"; Filename: "{app}\main.exe"; Tasks: desktopicon; Flags skipifsourcedoesntexist
+Name: "{group}\AU Tournament Utilities v2"; Filename: "{app}\main.exe"
+Name: "{commondesktop}\AU Tournament Utilities v2"; Filename: "{app}\main.exe"; Tasks: desktopicon
 
 [Tasks]
 Name: "desktopicon"; Description: "Create a &desktop icon"; GroupDescription: "Additional icons:"
