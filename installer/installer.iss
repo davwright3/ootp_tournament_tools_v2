@@ -14,7 +14,7 @@ SolidCompression=yes
 
 [Files]
 ; Handle ONEFILE: dist\main.exe
-Source: "dist\main.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\dist\main.exe"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
 Name: "{group}\AU Tournament Utilities v2"; Filename: "{app}\main.exe"
