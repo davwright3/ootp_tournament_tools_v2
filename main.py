@@ -14,6 +14,9 @@ class MainApp(tk.Tk):
         self.minsize(400, 300)
         self.configure(bg="lightgray")
 
+        def open_file_processing_app():
+            print("Opening file processing app..")
+
         settings = loaded_settings
 
         self.columnconfigure(0, weight=1)
@@ -25,17 +28,44 @@ class MainApp(tk.Tk):
         self.rowconfigure(0, weight=0)
         self.rowconfigure(1, weight=1)
         self.rowconfigure(2, weight=0)
+
+        # Main frames for setting up the page
         row = 0
         self.header_frame = Header(self)
         self.header_frame.grid(row=row, column=0, sticky="nsew")
         row += 1
 
+        self.content_frame = tk.Frame(self, bg='lightgray')
+        self.content_frame.grid(row=row, column=0, sticky="nsew")
+        row += 1
+
         self.footer_frame = Footer(self)
-        self.footer_frame.grid(row=2, column=0, sticky="nsew")
+        self.footer_frame.grid(row=row, column=0, sticky="nsew")
 
+        # Buttons for apps
 
+        main_row = 0
+        main_column = 0
 
+        self.content_frame.columnconfigure(0, weight=1)
+        self.content_frame.columnconfigure(1, weight=1)
+        self.content_frame.columnconfigure(2, weight=1)
+        self.content_frame.columnconfigure(3, weight=1)
 
+        self.content_frame.rowconfigure(0, weight=1)
+        self.content_frame.rowconfigure(1, weight=1)
+        self.content_frame.rowconfigure(2, weight=1)
+
+        self.file_processing_button = tk.Button(
+            self.content_frame,
+            text="File Processing",
+            command=open_file_processing_app,
+            padx=5,
+            pady=5,
+        )
+        self.file_processing_button.grid(row=int(main_row / 4), column=main_column % 4, sticky="nsew")
+        main_row += 1
+        main_column += 1
 
 
 
