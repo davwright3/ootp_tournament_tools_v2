@@ -5,7 +5,7 @@ import tempfile, os
 
 from config_utils.get_user_settings_path import get_user_settings_path
 from config_utils.get_default_settings_path import get_default_settings_path
-from config_utils.varify_settings_up_to_date import verify_settings_up_to_date
+from config_utils.verify_settings_up_to_date import verify_settings_up_to_date
 
 APP_NAME = 'AU OOTP Tournament Utilities v2'
 
