@@ -1,8 +1,17 @@
 """Version 2 of Angered Unicorn's OOTP Tournament Utilities."""
 import tkinter as tk
-from config_utils.load_settings import settings as loaded_settings
-from view_utils.header_view import Header
-from view_utils.footer_view import Footer
+import traceback, sys
+import os
+import logging
+from config_utils.load_save_settings import settings as loaded_settings
+from config_utils.load_save_settings import get_setting
+from config_utils.select_target_card_list_file import select_target_file
+from config_utils.select_starting_folder_dirs import select_initial_target_folder, select_initial_raw_data_folder
+from view_utils.header_frame import Header
+from view_utils.footer_frame import Footer
+from view_utils.message_panel import MessagePanel
+from log_utils.tk_handler import TkTextHandler
+
 
 class MainApp(tk.Tk):
     """Class for generating the main application."""
@@ -14,47 +23,86 @@ class MainApp(tk.Tk):
         self.minsize(400, 300)
         self.configure(bg="lightgray")
 
-        def open_file_processing_app():
-            print("Opening file processing app..")
+        # Variables for page
+        self.target_card_list_var = tk.StringVar(
+            value=get_setting('TargetFiles', 'target_card_list')
+        )
+        self.initial_target_folder_var = tk.StringVar(
+            value=get_setting('InitialTargetDirs', 'starting_target_folder')
+        )
+        self.initial_raw_data_folder_var = tk.StringVar(
+            value=get_setting('InitialTargetDirs', 'starting_data_folder')
+        )
 
-        settings = loaded_settings
+        self.is_card_list_valid = tk.BooleanVar(value=False)
+        self.card_list_valid_display = tk.StringVar()
 
+
+        # Variables for settings
+        self.settings = loaded_settings
+
+        self.card_list_target_path = self.settings['TargetFiles']['target_card_list']
+
+        def check_card_list_valid():
+            if not os.path.isfile(self.card_list_target_path):
+                self.card_list_target_path = None
+                self.card_list_valid_display.set("Invalid \u274c")
+            elif not self.card_list_target_path.lower().endswith(".csv"):
+                self.card_list_target_path = None
+                self.card_list_valid_display.set("Invalid \u274c")
+            else:
+                self.card_list_valid_display.set("Valid \u2713")
+
+        # Page rows and columns
         self.columnconfigure(0, weight=1)
+        self.columnconfigure(1, weight=0)
 
         self.rowconfigure(0, weight=0)
         self.rowconfigure(1, weight=1)
         self.rowconfigure(2, weight=0)
-
-        self.rowconfigure(0, weight=0)
-        self.rowconfigure(1, weight=1)
-        self.rowconfigure(2, weight=0)
+        self.rowconfigure(3, weight=0)
 
         # Main frames for setting up the page
         row = 0
         self.header_frame = Header(self)
-        self.header_frame.grid(row=row, column=0, sticky="nsew")
+        self.header_frame.grid(row=row, column=0, columnspan=2, sticky="nsew")
         row += 1
 
         self.content_frame = tk.Frame(self, bg='lightgray')
         self.content_frame.grid(row=row, column=0, sticky="nsew")
         row += 1
 
+        self.settings_frame = tk.Frame(self, bg='lightgray', relief='groove', bd=3)
+        self.settings_frame.grid(row=row, column=0, columnspan=2, sticky="nsew")
+        row += 1
+
         self.footer_frame = Footer(self)
-        self.footer_frame.grid(row=row, column=0, sticky="nsew")
+        self.footer_frame.grid(row=row, column=0, columnspan=2, sticky="nsew")
 
-        # Buttons for apps
-
-        main_row = 0
-        main_column = 0
-
+        # Content frame configuration
         self.content_frame.columnconfigure(0, weight=1)
         self.content_frame.columnconfigure(1, weight=1)
         self.content_frame.columnconfigure(2, weight=1)
-        self.content_frame.columnconfigure(3, weight=1)
+        self.content_frame.columnconfigure(3, weight=0)
 
         self.content_frame.rowconfigure(0, weight=1)
         self.content_frame.rowconfigure(1, weight=1)
-        self.content_frame.rowconfigure(2, weight=1)
+        self.content_frame.rowconfigure(2, weight=0)
+
+        # Settings frame configuration
+        self.settings_frame.grid_columnconfigure(0, weight=0)
+        self.settings_frame.grid_columnconfigure(1, weight=0)
+        self.settings_frame.grid_columnconfigure(2, weight=0)
+        self.settings_frame.grid_columnconfigure(3, weight=0)
+        self.settings_frame.grid_columnconfigure(4, weight=1)
+
+        self.settings_frame.grid_rowconfigure(0, weight=1)
+        self.settings_frame.grid_rowconfigure(1, weight=1)
+        self.settings_frame.grid_rowconfigure(2, weight=1)
+
+        # Content frame, buttons for apps and messaging station
+        main_row = 0
+        main_column = 0
 
         self.file_processing_button = tk.Button(
             self.content_frame,
@@ -67,6 +115,102 @@ class MainApp(tk.Tk):
         main_row += 1
         main_column += 1
 
+        self.message_panel = MessagePanel(self.content_frame, height=12)
+        self.message_panel.grid(row=0, column=3, rowspan=2, sticky="nsew")
+
+        # Settings frame content
+        self.select_target_card_list_button = tk.Button(
+            self.settings_frame,
+            text="Select File",
+            command=lambda: select_target_file(self.target_card_list_var)
+        )
+        self.select_target_card_list_button.grid(row=0, column=0, sticky="w", padx=3, pady=3)
+
+        self.card_list_label = tk.Label(
+            self.settings_frame,
+            text="Card List:",
+            font=('Arial', 10, 'bold'),
+            bg='lightgray'
+        )
+        self.card_list_label.grid(row=0, column=1, sticky="nsew", padx=3, pady=3)
+
+        self.card_list_target_location_label = tk.Label(
+            self.settings_frame,
+            textvariable=self.target_card_list_var,
+            font=("Arial", 10),
+            bg='lightgray'
+        )
+        self.card_list_target_location_label.grid(row=0, column=2, sticky="w", padx=3, pady=3)
+
+        self.select_initial_target_file_dir_button = tk.Button(
+            self.settings_frame,
+            text="Select File",
+            command=lambda: select_initial_target_folder(self, self.initial_target_folder_var)
+        )
+        self.select_initial_target_file_dir_button.grid(row=1, column=0, sticky="w", padx=3, pady=3)
+
+        self.initial_target_data_label = tk.Label(
+            self.settings_frame,
+            text="Tgt Data:",
+            font=("Arial", 10, 'bold'),
+            bg='lightgray'
+        )
+        self.initial_target_data_label.grid(row=1, column=1, sticky="nsew", padx=3, pady=3)
+
+        self.select_initial_target_folder_location_label = tk.Label(
+            self.settings_frame,
+            textvariable=self.initial_target_folder_var,
+            font=("Arial", 10),
+            bg='lightgray'
+        )
+        self.select_initial_target_folder_location_label.grid(row=1, column=2, sticky="w", padx=3, pady=3)
+
+        self.select_inital_raw_data_folder_button = tk.Button(
+            self.settings_frame,
+            text="Select File",
+            command=lambda: select_initial_raw_data_folder(self, self.initial_raw_data_folder_var)
+        )
+        self.select_inital_raw_data_folder_button.grid(row=2, column=0, sticky="w", padx=3, pady=3)
+
+        self.initial_raw_data_folder_label = tk.Label(
+            self.settings_frame,
+            text="Raw Data:",
+            font=("Arial", 10, 'bold'),
+            bg='lightgray'
+        )
+        self.initial_raw_data_folder_label.grid(row=2, column=1, sticky="nsew", padx=3, pady=3)
+
+        self.select_initial_raw_data_folder_location_label = tk.Label(
+            self.settings_frame,
+            textvariable=self.initial_raw_data_folder_var,
+            font=("Arial", 10),
+            bg='lightgray'
+        )
+        self.select_initial_raw_data_folder_location_label.grid(row=2, column=2, sticky="w", padx=3, pady=3)
+
+        self.card_list_valid_label = tk.Label(
+            self.settings_frame,
+            textvariable=self.card_list_valid_display,
+            font=("Arial", 10, 'bold')
+        )
+        self.card_list_valid_label.grid(row=0, column=3, sticky="nsew", padx=3, pady=3)
+
+        check_card_list_valid()
+
+        # Logging info
+        root_logger = logging.getLogger()
+        root_logger.setLevel(logging.INFO)
+
+        ui_handler = TkTextHandler(self.message_panel)
+        ui_handler.setFormatter(logging.Formatter(fmt='%(asctime)s %(levelname)-8s %(message)s', datefmt="%Y-%m-%d %H:%M:%S"))
+        root_logger.addHandler(ui_handler)
+
+        logging.info("System initialized")
+        logging.warning("This is a warning")
+        logging.error("Something went wrong")
+
+def open_file_processing_app():
+    logging.info("Opening file processing app..")
 
 
 if __name__ == "__main__":
