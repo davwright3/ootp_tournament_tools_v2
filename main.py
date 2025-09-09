@@ -11,6 +11,15 @@ from view_utils.header_frame import Header
 from view_utils.footer_frame import Footer
 from view_utils.message_panel import MessagePanel
 from log_utils.tk_handler import TkTextHandler
+from apps.file_processing_app import FileProcessingApp
+
+
+class ExcludeNamespaces(logging.Filter):
+    def __init__(self, *prefixes: str):
+        super().__init__()
+        self.prefixes = prefixes
+    def filter(self, record: logging.LogRecord) -> bool:
+        return not any(record.name.startswith(p) for p in self.prefixes)
 
 
 class MainApp(tk.Tk):
@@ -36,7 +45,6 @@ class MainApp(tk.Tk):
 
         self.is_card_list_valid = tk.BooleanVar(value=False)
         self.card_list_valid_display = tk.StringVar()
-
 
         # Variables for settings
         self.settings = loaded_settings
@@ -203,6 +211,7 @@ class MainApp(tk.Tk):
 
         ui_handler = TkTextHandler(self.message_panel)
         ui_handler.setFormatter(logging.Formatter(fmt='%(asctime)s %(levelname)-8s %(message)s', datefmt="%Y-%m-%d %H:%M:%S"))
+        ui_handler.addFilter(ExcludeNamespaces("apps.fileproc"))
         root_logger.addHandler(ui_handler)
 
         logging.info("System initialized")
@@ -211,6 +220,7 @@ class MainApp(tk.Tk):
 
 def open_file_processing_app():
     logging.info("Opening file processing app..")
+    FileProcessingApp()
 
 
 if __name__ == "__main__":
