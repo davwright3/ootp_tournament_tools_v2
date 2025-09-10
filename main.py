@@ -1,16 +1,15 @@
 """Version 2 of Angered Unicorn's OOTP Tournament Utilities."""
 import tkinter as tk
-import traceback, sys
 import os
 import logging
-from config_utils.load_save_settings import settings as loaded_settings
-from config_utils.load_save_settings import get_setting
-from config_utils.select_target_card_list_file import select_target_file
-from config_utils.select_starting_folder_dirs import select_initial_target_folder, select_initial_raw_data_folder
-from view_utils.header_frame import Header
-from view_utils.footer_frame import Footer
-from view_utils.message_panel import MessagePanel
-from log_utils.tk_handler import TkTextHandler
+from utils.config_utils.load_save_settings import settings as loaded_settings
+from utils.config_utils.load_save_settings import get_setting
+from utils.config_utils.select_target_card_list_file import select_target_file
+from utils.config_utils.select_starting_folder_dirs import select_initial_target_folder, select_initial_raw_data_folder
+from utils.view_utils.header_frame import Header
+from utils.view_utils.footer_frame import Footer
+from utils.view_utils.message_panel import MessagePanel
+from utils.log_utils.tk_handler import TkTextHandler
 from apps.file_processing_app import FileProcessingApp
 
 
@@ -211,6 +210,8 @@ class MainApp(tk.Tk):
 
         ui_handler = TkTextHandler(self.message_panel)
         ui_handler.setFormatter(logging.Formatter(fmt='%(asctime)s %(levelname)-8s %(message)s', datefmt="%Y-%m-%d %H:%M:%S"))
+
+        # Set ui_handler to exclude log message from selected apps.  Add new apps as necessary.
         ui_handler.addFilter(ExcludeNamespaces("apps.fileproc"))
         root_logger.addHandler(ui_handler)
 

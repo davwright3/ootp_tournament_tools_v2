@@ -4,12 +4,12 @@ via dataframe concatenation.
 """
 import tkinter as tk
 import logging
-from config_utils.load_save_settings import settings as loaded_settings
-from log_utils.attach import attach_panel
-from view_utils.header_frame import Header
-from view_utils.footer_frame import Footer
-from view_utils.message_panel import MessagePanel
-from data_utils.process_fiies import process_files
+from utils.config_utils.load_save_settings import settings as loaded_settings
+from utils.log_utils.attach import attach_panel
+from utils.view_utils.header_frame import Header
+from utils.view_utils.footer_frame import Footer
+from utils.view_utils.message_panel import MessagePanel
+from utils.data_utils.process_fiies import process_files
 
 
 class FileProcessingApp(tk.Toplevel):
@@ -85,8 +85,8 @@ class FileProcessingApp(tk.Toplevel):
 
         self.log = logging.getLogger("apps.fileproc")
         self.log.info(f"{self.log} window opened.")
-        self.log.info(f'Current ready data folder: {self.starting_ready_folder}')
-        self.log.info(f'Current data folder: {self.starting_data_folder}')
+        self.log.info(f'Ready folder: {self.starting_ready_folder}')
+        self.log.info(f'Data folder: {self.starting_data_folder}')
 
         # Buttons and info for the file processing frame
         self.process_files_button = tk.Button(
@@ -95,3 +95,8 @@ class FileProcessingApp(tk.Toplevel):
             command=process_files
         )
         self.process_files_button.grid(row=0, column=0, sticky="nsew")
+
+        self.new_file_button = tk.Button(
+            self.file_processing_panel,
+            text="New File",
+        )

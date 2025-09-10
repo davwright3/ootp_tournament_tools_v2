@@ -18,6 +18,6 @@ def get_resource_path(relative_path):
     else:
         # Running in development mode.
         base_path = os.path.abspath(
-            os.path.join(os.path.dirname(__file__), '../..'))
+            os.path.join(os.path.dirname(__file__), '../../..'))
     return os.path.join(base_path, relative_path)
 

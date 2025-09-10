@@ -1,7 +1,6 @@
 import os
 import tkinter as tk
-from configparser import ConfigParser
-from config_utils.load_save_settings import settings as current_settings
+from utils.config_utils import settings as current_settings
 
 class SettingsFrame(tk.Frame):
     def __init__(self, parent):
