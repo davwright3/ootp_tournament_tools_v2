@@ -209,15 +209,15 @@ class MainApp(tk.Tk):
         root_logger.setLevel(logging.INFO)
 
         ui_handler = TkTextHandler(self.message_panel)
-        ui_handler.setFormatter(logging.Formatter(fmt='%(asctime)s %(levelname)-8s %(message)s', datefmt="%Y-%m-%d %H:%M:%S"))
+        ui_handler.setFormatter(logging.Formatter(fmt='%(levelname)-8s %(message)s'))
+        # ui_handler.setFormatter(logging.Formatter(fmt='%(asctime)s %(levelname)-8s %(message)s', datefmt="%Y-%m-%d %H:%M:%S"))
+
 
         # Set ui_handler to exclude log message from selected apps.  Add new apps as necessary.
         ui_handler.addFilter(ExcludeNamespaces("apps.fileproc"))
         root_logger.addHandler(ui_handler)
 
-        logging.info("System initialized")
-        logging.warning("This is a warning")
-        logging.error("Something went wrong")
+        logging.info("Thank you for using my OOTP Tournament Statistics Utility Tool")
 
 def open_file_processing_app():
     logging.info("Opening file processing app..")
