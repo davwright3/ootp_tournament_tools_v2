@@ -172,13 +172,13 @@ class FileProcessingApp(tk.Toplevel):
         )
         self.select_data_folder_info_label.grid(row=1, column=1, sticky="w")
 
-        self.selected_data_foler_path_label = tk.Label(
+        self.selected_data_folder_path_label = tk.Label(
             self.process_files_frame,
             textvariable=self.selected_raw_data_path_var,
             font = ('Arial', 8),
             bg='lightgray'
         )
-        self.selected_data_foler_path_label.grid(row=1, column=2, sticky="e")
+        self.selected_data_folder_path_label.grid(row=1, column=2, sticky="e")
 
         self.process_files_button = tk.Button(
             self.process_files_frame,
