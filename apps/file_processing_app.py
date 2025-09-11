@@ -5,6 +5,7 @@ via dataframe concatenation.
 import tkinter as tk
 import logging
 import os
+from threading import Thread
 from utils.config_utils.load_save_settings import settings as loaded_settings
 from utils.config_utils.get_resource_path import get_resource_path
 from utils.data_utils.create_file_from_template import create_file_from_template
@@ -26,6 +27,9 @@ class FileProcessingApp(tk.Toplevel):
         self.geometry("1920x1080")
         self.title("File Processing")
 
+        self.log = logging.getLogger("apps.fileproc")
+        self.log.info(f"{self.log} window opened.")
+
         # Variables for module
         self.starting_ready_folder = (
             loaded_settings['InitialTargetDirs']['starting_target_folder']
@@ -33,10 +37,13 @@ class FileProcessingApp(tk.Toplevel):
         self.starting_data_folder = (
             loaded_settings['InitialTargetDirs']['starting_data_folder']
         )
+        self.log.info(f'Ready folder: {self.starting_ready_folder}')
+        self.log.info(f'Data folder: {self.starting_data_folder}')
 
         self.selected_target_file_path_var = tk.StringVar(value='None Selected')
         self.selected_raw_data_path_var = tk.StringVar(value='None Selected')
 
+        # Methods for class
         def _set_process_file_button_state():
             if (self.selected_raw_data_path_var.get() == 'None Selected' or
                     self.selected_target_file_path_var.get() == 'None Selected'):
@@ -98,11 +105,6 @@ class FileProcessingApp(tk.Toplevel):
         )
         self.message_panel.grid(row=0, column=1, rowspan=3, sticky="nsew")
         attach_panel(self.message_panel, logger_name="apps.fileproc")
-
-        self.log = logging.getLogger("apps.fileproc")
-        self.log.info(f"{self.log} window opened.")
-        self.log.info(f'Ready folder: {self.starting_ready_folder}')
-        self.log.info(f'Data folder: {self.starting_data_folder}')
 
         # Buttons, frames  and info for the file processing frame
         self.new_file_frame = tk.Frame(self.main_frame, bg='lightgray', relief='ridge', bd=3)
@@ -181,7 +183,7 @@ class FileProcessingApp(tk.Toplevel):
         self.process_files_button = tk.Button(
             self.process_files_frame,
             text="Process Files",
-            command=lambda: process_files
+            command=self.start_processing
         )
         self.process_files_button.grid(row=2, column=0, sticky="e", pady=3, padx=(2, 5))
 
@@ -194,6 +196,14 @@ class FileProcessingApp(tk.Toplevel):
         self.process_files_label.grid(row=2, column=1, sticky="w")
 
         _set_process_file_button_state()
+
+    def start_processing(self):
+        logger = logging.getLogger("apps.fileproc")
+        target_path = self.selected_target_file_path_var.get()
+        raw_data_path = self.selected_raw_data_path_var.get()
+
+        Thread(target=process_files, args=(target_path, raw_data_path), daemon=True).start()
+        logger.info("Start background processing.")
 
 
 
