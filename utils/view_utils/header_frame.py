@@ -2,7 +2,7 @@
 import tkinter as tk
 from PIL import Image, ImageTk
 import os
-from config_utils.get_resource_path import get_resource_path
+from utils.config_utils.get_resource_path import get_resource_path
 
 class Header(tk.Frame):
     """Reusable header class for entire app."""

@@ -1,7 +1,8 @@
 """Script for selecting a target file."""
 from tkinter import filedialog
 import os
-from config_utils import load_save_settings as settings_module
+from utils.config_utils import load_save_settings as settings_module
+
 
 def select_target_file(target_var):
     path = filedialog.askopenfilename(

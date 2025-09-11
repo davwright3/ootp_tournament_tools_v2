@@ -1,16 +1,24 @@
 """Version 2 of Angered Unicorn's OOTP Tournament Utilities."""
 import tkinter as tk
-import traceback, sys
 import os
 import logging
-from config_utils.load_save_settings import settings as loaded_settings
-from config_utils.load_save_settings import get_setting
-from config_utils.select_target_card_list_file import select_target_file
-from config_utils.select_starting_folder_dirs import select_initial_target_folder, select_initial_raw_data_folder
-from view_utils.header_frame import Header
-from view_utils.footer_frame import Footer
-from view_utils.message_panel import MessagePanel
-from log_utils.tk_handler import TkTextHandler
+from utils.config_utils.load_save_settings import settings as loaded_settings
+from utils.config_utils.load_save_settings import get_setting
+from utils.config_utils.select_target_card_list_file import select_target_file
+from utils.config_utils.select_starting_folder_dirs import select_initial_target_folder, select_initial_raw_data_folder
+from utils.view_utils.header_frame import Header
+from utils.view_utils.footer_frame import Footer
+from utils.view_utils.message_panel import MessagePanel
+from utils.log_utils.tk_handler import TkTextHandler
+from apps.file_processing_app import FileProcessingApp
+
+
+class ExcludeNamespaces(logging.Filter):
+    def __init__(self, *prefixes: str):
+        super().__init__()
+        self.prefixes = prefixes
+    def filter(self, record: logging.LogRecord) -> bool:
+        return not any(record.name.startswith(p) for p in self.prefixes)
 
 
 class MainApp(tk.Tk):
@@ -36,7 +44,6 @@ class MainApp(tk.Tk):
 
         self.is_card_list_valid = tk.BooleanVar(value=False)
         self.card_list_valid_display = tk.StringVar()
-
 
         # Variables for settings
         self.settings = loaded_settings
@@ -202,15 +209,19 @@ class MainApp(tk.Tk):
         root_logger.setLevel(logging.INFO)
 
         ui_handler = TkTextHandler(self.message_panel)
-        ui_handler.setFormatter(logging.Formatter(fmt='%(asctime)s %(levelname)-8s %(message)s', datefmt="%Y-%m-%d %H:%M:%S"))
+        ui_handler.setFormatter(logging.Formatter(fmt='%(levelname)-8s %(message)s'))
+        # ui_handler.setFormatter(logging.Formatter(fmt='%(asctime)s %(levelname)-8s %(message)s', datefmt="%Y-%m-%d %H:%M:%S"))
+
+
+        # Set ui_handler to exclude log message from selected apps.  Add new apps as necessary.
+        ui_handler.addFilter(ExcludeNamespaces("apps.fileproc"))
         root_logger.addHandler(ui_handler)
 
-        logging.info("System initialized")
-        logging.warning("This is a warning")
-        logging.error("Something went wrong")
+        logging.info("Thank you for using my OOTP Tournament Statistics Utility Tool")
 
 def open_file_processing_app():
     logging.info("Opening file processing app..")
+    FileProcessingApp()
 
 
 if __name__ == "__main__":

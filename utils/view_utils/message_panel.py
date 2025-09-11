@@ -16,9 +16,9 @@ class MessagePanel(ttk.Frame):
         self.text.configure(yscrollcommand=self.scrollbar.set)
 
         # Tags
-        self.text.tag_config('INFO', foreground='green')
-        self.text.tag_config('ERROR', foreground='red')
-        self.text.tag_config('WARNING', foreground='yellow')
+        self.text.tag_config('INFO', foreground='royal blue')
+        self.text.tag_config('ERROR', foreground='firebrick')
+        self.text.tag_config('WARNING', foreground='orange')
 
     def append(self, msg, tag=None):
         self.text.configure(state='normal')

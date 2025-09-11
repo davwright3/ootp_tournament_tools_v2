@@ -1,7 +1,8 @@
 """Scripts for selecting and saving target start folder."""
 from tkinter import filedialog
 import os
-from config_utils import load_save_settings as settings_module
+from utils.config_utils import load_save_settings as settings_module
+
 
 def select_initial_target_folder(parent, target_var):
     try:
