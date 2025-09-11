@@ -3,6 +3,8 @@ import tkinter as tk
 import os
 import logging
 
+from PIL.ImageOps import expand
+
 from apps import basic_stats_app
 from utils.config_utils.load_save_settings import settings as loaded_settings
 from utils.config_utils.load_save_settings import get_setting
@@ -80,8 +82,8 @@ class MainApp(tk.Tk):
         self.header_frame.grid(row=row, column=0, columnspan=2, sticky="nsew")
         row += 1
 
-        self.content_frame = tk.Frame(self, bg='lightgray')
-        self.content_frame.grid(row=row, column=0, sticky="nsew")
+        self.content_frame = tk.Frame(self, bg='red')
+        self.content_frame.grid(row=row, column=0, columnspan=2, sticky="nsew")
         row += 1
 
         self.settings_frame = tk.Frame(self, bg='lightgray', relief='groove', bd=3)
@@ -94,12 +96,8 @@ class MainApp(tk.Tk):
         # Content frame configuration
         self.content_frame.columnconfigure(0, weight=1)
         self.content_frame.columnconfigure(1, weight=1)
-        self.content_frame.columnconfigure(2, weight=1)
-        self.content_frame.columnconfigure(3, weight=0)
 
         self.content_frame.rowconfigure(0, weight=1)
-        self.content_frame.rowconfigure(1, weight=1)
-        self.content_frame.rowconfigure(2, weight=0)
 
         # Settings frame configuration
         self.settings_frame.grid_columnconfigure(0, weight=0)
@@ -112,34 +110,52 @@ class MainApp(tk.Tk):
         self.settings_frame.grid_rowconfigure(1, weight=1)
         self.settings_frame.grid_rowconfigure(2, weight=1)
 
+        # Frames inside of content frame
+        self.buttons_frame = tk.Frame(self.content_frame, bg='red')
+        self.buttons_frame.grid(row=0, column=0, sticky="nsew")
+
+        self.buttons_frame.columnconfigure(0, weight=1)
+        self.buttons_frame.columnconfigure(1, weight=1)
+        self.buttons_frame.columnconfigure(2, weight=1)
+
+        self.buttons_frame.rowconfigure(0, weight=1)
+        self.buttons_frame.rowconfigure(1, weight=1)
+        self.buttons_frame.rowconfigure(2, weight=1)
+
+        self.message_frame = tk.Frame(self.content_frame, bg='blue')
+        self.message_frame.grid(row=0, column=1, sticky="nsew")
+
+        self.message_frame.grid_columnconfigure(0, weight=1)
+        self.message_frame.grid_rowconfigure(0, weight=1)
+
         # Content frame, buttons for apps and messaging station
         main_row = 0
         main_column = 0
 
         self.file_processing_button = tk.Button(
-            self.content_frame,
+            self.buttons_frame,
             text="File Processing",
             command=open_file_processing_app,
             padx=5,
             pady=5,
         )
-        self.file_processing_button.grid(row=int(main_row / 4), column=main_column % 4, sticky="nsew")
+        self.file_processing_button.grid(row=int(main_row / 3), column=main_column % 3, sticky="nsew")
         main_row += 1
         main_column += 1
 
         self.basic_stats_app_button = tk.Button(
-            self.content_frame,
+            self.buttons_frame,
             text="Basic Stats App",
             command=open_basic_stats_app,
             padx=5,
             pady=5,
         )
-        self.basic_stats_app_button.grid(row=int(main_row / 4), column=main_column % 4, sticky="nsew")
+        self.basic_stats_app_button.grid(row=int(main_row / 3), column=main_column % 3, sticky="nsew")
         main_row += 1
         main_column += 1
 
-        self.message_panel = MessagePanel(self.content_frame, height=12)
-        self.message_panel.grid(row=0, column=3, rowspan=2, sticky="nsew")
+        self.message_panel = MessagePanel(self.message_frame, height=12)
+        self.message_panel.grid(row=0, column=0, sticky="nsew")
 
         # Settings frame content
         self.select_target_card_list_button = tk.Button(
