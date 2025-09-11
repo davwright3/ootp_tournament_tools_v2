@@ -5,7 +5,7 @@ a = Analysis(
     ['main.py'],
     pathex=[],
     binaries=[],
-    datas=[('image_assets', 'ootp_tournament_tools_v2\\image_assets'), ('settings_default.ini', '.')],
+    datas=[('image_assets', 'ootp_tournament_tools_v2\\image_assets'), ('settings_default.ini', '.'), ('README.md', '.')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},

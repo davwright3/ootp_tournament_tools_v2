@@ -6,6 +6,8 @@ from utils.config_utils.load_save_settings import settings as loaded_settings
 from utils.config_utils.load_save_settings import get_setting
 from utils.config_utils.select_target_card_list_file import select_target_file
 from utils.config_utils.select_starting_folder_dirs import select_initial_target_folder, select_initial_raw_data_folder
+from utils.log_utils.readme_messaging import log_readme_section
+from utils.config_utils.get_base_resource_path import get_base_resource_path
 from utils.view_utils.header_frame import Header
 from utils.view_utils.footer_frame import Footer
 from utils.view_utils.message_panel import MessagePanel
@@ -209,7 +211,7 @@ class MainApp(tk.Tk):
         root_logger.setLevel(logging.INFO)
 
         ui_handler = TkTextHandler(self.message_panel)
-        ui_handler.setFormatter(logging.Formatter(fmt='%(levelname)-8s %(message)s'))
+        ui_handler.setFormatter(logging.Formatter(fmt='%(message)s'))
         # ui_handler.setFormatter(logging.Formatter(fmt='%(asctime)s %(levelname)-8s %(message)s', datefmt="%Y-%m-%d %H:%M:%S"))
 
 
@@ -218,6 +220,9 @@ class MainApp(tk.Tk):
         root_logger.addHandler(ui_handler)
 
         logging.info("Thank you for using my OOTP Tournament Statistics Utility Tool")
+
+        readme_file = get_base_resource_path("README.md")
+        log_readme_section(readme_file, 'Updated:')
 
 def open_file_processing_app():
     logging.info("Opening file processing app..")

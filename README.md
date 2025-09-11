@@ -7,7 +7,9 @@ which can be found here: [GithubLink](https://github.com/davwright3/au_ootp_tour
 
 ## Current Version 0.1.0
 
-Updated: 11 Sep 2025
+### Updated: 
+
+11 Sep 2025
 
 New Features:
 
