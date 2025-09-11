@@ -2,6 +2,8 @@
 import tkinter as tk
 import os
 import logging
+
+from apps import basic_stats_app
 from utils.config_utils.load_save_settings import settings as loaded_settings
 from utils.config_utils.load_save_settings import get_setting
 from utils.config_utils.select_target_card_list_file import select_target_file
@@ -13,6 +15,7 @@ from utils.view_utils.footer_frame import Footer
 from utils.view_utils.message_panel import MessagePanel
 from utils.log_utils.tk_handler import TkTextHandler
 from apps.file_processing_app import FileProcessingApp
+from apps.basic_stats_app import BasicStatsApp
 
 
 class ExcludeNamespaces(logging.Filter):
@@ -124,6 +127,17 @@ class MainApp(tk.Tk):
         main_row += 1
         main_column += 1
 
+        self.basic_stats_app_button = tk.Button(
+            self.content_frame,
+            text="Basic Stats App",
+            command=open_basic_stats_app,
+            padx=5,
+            pady=5,
+        )
+        self.basic_stats_app_button.grid(row=int(main_row / 4), column=main_column % 4, sticky="nsew")
+        main_row += 1
+        main_column += 1
+
         self.message_panel = MessagePanel(self.content_frame, height=12)
         self.message_panel.grid(row=0, column=3, rowspan=2, sticky="nsew")
 
@@ -174,12 +188,12 @@ class MainApp(tk.Tk):
         )
         self.select_initial_target_folder_location_label.grid(row=1, column=2, sticky="w", padx=3, pady=3)
 
-        self.select_inital_raw_data_folder_button = tk.Button(
+        self.select_initial_raw_data_folder_button = tk.Button(
             self.settings_frame,
             text="Select File",
             command=lambda: select_initial_raw_data_folder(self, self.initial_raw_data_folder_var)
         )
-        self.select_inital_raw_data_folder_button.grid(row=2, column=0, sticky="w", padx=3, pady=3)
+        self.select_initial_raw_data_folder_button.grid(row=2, column=0, sticky="w", padx=3, pady=3)
 
         self.initial_raw_data_folder_label = tk.Label(
             self.settings_frame,
@@ -227,6 +241,10 @@ class MainApp(tk.Tk):
 def open_file_processing_app():
     logging.info("Opening file processing app..")
     FileProcessingApp()
+
+def open_basic_stats_app():
+    logging.info("Opening basic stats app..")
+    BasicStatsApp()
 
 
 if __name__ == "__main__":
