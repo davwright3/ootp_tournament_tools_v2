@@ -19,7 +19,7 @@ def create_file_from_template(parent):
     logger = logging.getLogger("apps.fileproc.data_utils")
 
     target_folder = loaded_settings['InitialTargetDirs']['starting_target_folder']
-    template_path = get_resource_path(os.path.join('ootp_tournament_tools_v2/image_assets', 'data_template.csv'))
+    template_path = get_resource_path(os.path.join('au_ootp_tournament_utilities_v2/image_assets', 'data_template.csv'))
 
     root_window = parent.winfo_toplevel()
     dialog = CustomInputDialog(
@@ -47,6 +47,8 @@ def create_file_from_template(parent):
                 logger.error(f"Failed to copy template file: {e}")
         else:
             logger.error('Template is not valid')
+    else:
+        logger.error(f"Template file not found: {template_path}")
 
 
 
