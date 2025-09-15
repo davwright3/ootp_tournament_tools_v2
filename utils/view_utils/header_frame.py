@@ -12,7 +12,7 @@ class Header(tk.Frame):
 
         # File path for image
         logo_image_path = get_resource_path(
-            os.path.join('ootp_tournament_tools_v2/image_assets', 'unicorn_logo_nobg2.png')
+            os.path.join('au_ootp_tournament_utilities_v2/image_assets', 'unicorn_logo_nobg2.png')
         )
         self.name_text = app_name
         self.logo = Image.open(logo_image_path)
