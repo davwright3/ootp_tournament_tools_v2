@@ -1,0 +1,34 @@
+"""Singleton pattern data frame for basic stats app use."""
+import pandas as pd
+import numpy as np
+
+class DataStore:
+    """Singleton pattern data frame for basic stats app use."""
+
+    _instance = None
+    _main_dataframe = None
+
+    def __new__(cls):
+        """Set singleton instance."""
+        if cls._instance is None:
+            cls._instance = super(DataStore, cls).__new__(cls)
+        return cls._instance
+
+    def load_data(self, filepath):
+        """Load the file into the dataframe from the target CSV."""
+        df = pd.read_csv(filepath)
+        self._main_dataframe = df
+
+    def get_data(self):
+        """Return the dataframe for use in app."""
+        return self._main_dataframe
+
+    def set_data(self, df):
+        """Set dataframe instance to new dataframe."""
+        self._main_dataframe = df
+
+    def clear_data(self):
+        """Clear the dataframe."""
+        self._main_dataframe = None
+
+data_store = DataStore()
