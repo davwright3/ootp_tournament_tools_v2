@@ -8,7 +8,12 @@ logger = logging.getLogger("apps.fileproc.data_utils")
 logger.info('Beginning file processing')
 
 def add_file(target_df, file_to_add):
-    """Add current file to the end of the df."""
+    """
+    Add current file to the end of the df.
+    :param target_df: Target dataframe, dataframe
+    :param file_to_add: Path to file addition, string
+    :return: Concatenated dataframe with added file to end, dataframe
+    """
     file_name = os.path.splitext(os.path.basename(file_to_add))[0]
     addition = pd.read_csv(file_to_add)
     addition['Trny'] = file_name
@@ -22,7 +27,15 @@ def add_file(target_df, file_to_add):
 
 
 def process_files(target_file_path: str, raw_dir: str):
-    """Process the files."""
+    """
+    Process the files from the raw directory into a single, concatenated file.
+    File names get added to the concatenated file under the heading 'Trny',
+    and each file is checked against the list from the 'Trny' heading to ensure
+    that duplicate files are not added to the concatenated file.
+    :param target_file_path: Target file path, string
+    :param raw_dir: Raw directory path, string
+    :return: None
+    """
     target_dataframe = None
     raw_data_dir = None
 

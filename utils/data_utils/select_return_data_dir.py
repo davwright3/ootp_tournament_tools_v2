@@ -5,6 +5,13 @@ import logging
 from utils.config_utils.load_save_settings import settings as loaded_settings
 
 def select_return_data_dir(parent, dir_path=None):
+    """
+    Returns the raw data directory, and sets it to a StringVar on the
+    parent window for display.
+    :param parent: Parent window, tk.TkToplevel
+    :param dir_path: Path to set, tk.StringVar
+    :return: None
+    """
     initial_dir = loaded_settings['InitialTargetDirs']['starting_data_folder']
     logger = logging.getLogger('apps.fileproc.data_utils')
     path = filedialog.askdirectory(
