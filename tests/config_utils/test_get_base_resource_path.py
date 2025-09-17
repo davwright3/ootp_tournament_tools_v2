@@ -5,28 +5,29 @@ development or pyinstaller run environment.
 import os
 import sys
 from pathlib import Path
+import types
 from utils.config_utils.get_base_resource_path import get_base_resource_path
+import importlib
 import platform
 import pytest
 
 def test_uses_meipass_when_present(tmp_path, monkeypatch, caplog):
     # Arrange the path
+    import utils.config_utils.get_base_resource_path as mod
+    importlib.reload(mod)
+
     fake_bundle_root = tmp_path / "bundle"
     fake_bundle_root.mkdir()
-    rel = os.path.join("images", 'logo.png')
-    monkeypatch.setattr(sys, "_MEIPASS", str(fake_bundle_root), raising=False)
+    stub_sys = types.SimpleNamespace(frozen=True, _MEIPASS=str(fake_bundle_root))
 
-    # Action
-    with caplog.at_level("INFO"):
-        out = get_base_resource_path(rel)
+    monkeypatch.setattr(mod, 'sys', stub_sys, raising=False)
 
-    # Assert
+    rel = os.path.join('images', 'logo.png')
+    with caplog.at_level('INFO'):
+        out = mod.get_base_resource_path(rel)
+
     assert Path(out) == fake_bundle_root / rel
     assert any(str(fake_bundle_root / rel) in r.message for r in caplog.records)
-
-    # Cleanup
-    if hasattr(sys, "_MEIPASS"):
-        delattr(sys, "_MEIPASS")
 
 
 def test_uses_cwd_when_no_meipass(tmp_path, monkeypatch, caplog):

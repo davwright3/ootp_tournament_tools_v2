@@ -4,7 +4,6 @@ Check current environment.
 Utility for checking which environment is running and
 adjusting resource path as necessary.
 """
-
 import sys
 import os
 
