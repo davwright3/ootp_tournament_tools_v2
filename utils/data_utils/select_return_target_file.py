@@ -6,6 +6,13 @@ import logging
 
 
 def select_return_target_file(parent, file_path=None):
+    """
+    Selects a returns the target file for concatenation, sets the
+    path to a string variable on the parent window for display.
+    :param parent: Parent window, tk.TkToplevel
+    :param file_path: File path to be set, tk.StringVar
+    :return: None
+    """
     logger = logging.getLogger('apps.fileproc.data_utils')
 
     path = filedialog.askopenfilename(

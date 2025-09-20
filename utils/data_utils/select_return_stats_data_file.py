@@ -5,7 +5,10 @@ from tkinter import filedialog
 from utils.config_utils import load_save_settings as settings_module
 
 def select_return_stats_data_file(parent):
-    """Select and return the file to be loaded into DataFrame."""
+    """
+    Select the file to be loaded into DataFrame.
+    :param parent: Parent window, tkTkToplevel
+    """
     logger = logging.getLogger('apps.basic_stats_app.data_utils')
     logger.info('Loading DataFrame')
 

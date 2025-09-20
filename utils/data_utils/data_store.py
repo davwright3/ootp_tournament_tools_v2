@@ -15,16 +15,27 @@ class DataStore:
         return cls._instance
 
     def load_data(self, filepath):
-        """Load the file into the dataframe from the target CSV."""
+        """
+        Load the file into the dataframe from the target CSV.
+        :param filepath: Path to the CSV file, string.
+        :return: None
+        """
         df = pd.read_csv(filepath)
         self._main_dataframe = df
 
     def get_data(self):
-        """Return the dataframe for use in app."""
+        """
+        Return the dataframe for use in app.
+        :return: Dataframe
+        """
         return self._main_dataframe
 
     def set_data(self, df):
-        """Set dataframe instance to new dataframe."""
+        """
+        Set dataframe instance to new dataframe.
+        :param df: Dataframe
+        :return: None
+        """
         self._main_dataframe = df
 
     def clear_data(self):

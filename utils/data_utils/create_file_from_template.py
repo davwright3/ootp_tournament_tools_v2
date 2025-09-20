@@ -7,14 +7,21 @@ from utils.config_utils.get_resource_path import get_resource_path
 from utils.dialog_utils.custom_input_dialog import CustomInputDialog
 
 def sanitize_filename(filename):
-    """Remove characters not allowed in the filename."""
+    """
+    Remove characters not allowed in the filename.
+    :param filename: Input filename, string
+    :return: Sanitized filename, removing any character not
+     allowed in filename.
+    """
     return re.sub(r'[^\w\s-]', '', filename.strip())
 
 def create_file_from_template(parent):
     """
-    Create a new empty csv from a template file.
-
-    File will be copied to the location set as the user's ready file folder.
+    Create a new empty csv (with headers) from a template file.
+    File will be copied to the location set as the user's ready
+    file folder in the settings from the main menu.
+    :param parent: Parent Window, tk.TkToplevel
+    :return: None
     """
     logger = logging.getLogger("apps.fileproc.data_utils")
 

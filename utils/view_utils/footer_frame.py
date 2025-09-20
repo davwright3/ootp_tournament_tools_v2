@@ -13,10 +13,10 @@ class Footer(tk.Frame):
             webbrowser.open_new(url)
 
         def on_enter(event):
-            self.github_button.configure(bg='violet')
+            self.github_button.configure(bg='violet', cursor='hand2')
 
         def on_leave(event):
-            self.github_button.configure(bg='lightgray')
+            self.github_button.configure(bg='lightgray', cursor='')
 
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=1)
@@ -43,12 +43,9 @@ class Footer(tk.Frame):
             relief="solid",
             padx=10,
             pady=10,
-            background='lightgray'
+            background='lightgray',
+            command=lambda: webbrowser.open_new("https://github.com/davwright3")
         )
         self.github_button.grid(row=0, column=2, sticky='w')
         self.github_button.bind("<Enter>", on_enter)
         self.github_button.bind("<Leave>", on_leave)
-        self.github_button.bind(
-            "<Button-1>",
-            lambda e: open_link("https://github.com/davwright3")
-        )

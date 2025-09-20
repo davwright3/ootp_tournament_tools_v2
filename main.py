@@ -2,10 +2,13 @@
 import tkinter as tk
 import os
 import logging
+from logging.handlers import MemoryHandler
 
-from PIL.ImageOps import expand
+root = logging.getLogger()
+root.setLevel(logging.INFO)
+BOOTSTRAP_MEM = MemoryHandler(capacity=10000, flushLevel=logging.CRITICAL)
+root.addHandler(BOOTSTRAP_MEM)
 
-from apps import basic_stats_app
 from utils.config_utils.load_save_settings import settings as loaded_settings
 from utils.config_utils.load_save_settings import get_setting
 from utils.config_utils.select_target_card_list_file import select_target_file
@@ -244,10 +247,13 @@ class MainApp(tk.Tk):
         ui_handler.setFormatter(logging.Formatter(fmt='%(message)s'))
         # ui_handler.setFormatter(logging.Formatter(fmt='%(asctime)s %(levelname)-8s %(message)s', datefmt="%Y-%m-%d %H:%M:%S"))
 
-
         # Set ui_handler to exclude log message from selected apps.  Add new apps as necessary.
         ui_handler.addFilter(ExcludeNamespaces("apps.fileproc"))
         root_logger.addHandler(ui_handler)
+
+        BOOTSTRAP_MEM.setTarget(ui_handler)
+        BOOTSTRAP_MEM.flush()
+        root.removeHandler(BOOTSTRAP_MEM)
 
         logging.info("Thank you for using my OOTP Tournament Statistics Utility Tool")
 

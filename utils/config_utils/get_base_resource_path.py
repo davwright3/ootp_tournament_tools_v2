@@ -12,5 +12,5 @@ def get_base_resource_path(relative_path: str) -> str:
         logger.info(f'Path: {base_path}')
         return base_path
     base_path = os.path.join(os.path.abspath('.'), relative_path)
-    logger.info(f'Path: {base_path}')
+    logger.info(f'Base resource path set to: {base_path}')
     return base_path
