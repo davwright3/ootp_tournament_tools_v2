@@ -14,6 +14,10 @@ import os
 import sys
 from utils.config_utils import get_user_settings_path as mod
 
+def normpath(p) -> str:
+    # Normalize paths
+    return os.path.normcase(os.path.normpath(os.fspath(p)))
+
 def test_nt_returns_appdata_path(monkeypatch, tmp_path):
     """Test that Windows system returns settings in AppData folder."""
     monkeypatch.setattr(os, 'name', 'nt', raising=False)
@@ -22,8 +26,10 @@ def test_nt_returns_appdata_path(monkeypatch, tmp_path):
     appdata_path = tmp_path / 'AppData' / "Roaming"
     monkeypatch.setenv('APPDATA', str(appdata_path))
 
+    expected = Path(appdata_path / 'MyApp' / 'settings.ini')
+
     out = Path(mod.get_user_settings_path('MyApp'))
-    assert out == appdata_path / 'MyApp' / 'settings.ini'
+    assert normpath(out) == normpath(expected)
     assert out.is_absolute()
 
 def test_macos_returns_application_support_path(monkeypatch, tmp_path):
