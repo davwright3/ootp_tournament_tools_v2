@@ -2,6 +2,7 @@
 from configparser import ConfigParser
 from pathlib import Path
 import tempfile, os
+from site import USER_BASE
 
 from utils.config_utils.get_user_settings_path import get_user_settings_path
 from utils.config_utils.get_default_settings_path import get_default_settings_path
@@ -15,7 +16,6 @@ DEFAULT_SETTINGS_PATH = Path(get_default_settings_path())
 # Internal methods
 def _load_settings() -> ConfigParser:
     """Load settings from user's settings.ini file."""
-    verify_settings_up_to_date(SETTINGS_PATH, DEFAULT_SETTINGS_PATH)
 
     config = ConfigParser()
     # Ensure file exists and crate if necessary
@@ -27,6 +27,7 @@ def _load_settings() -> ConfigParser:
         else:
             _atomic_write(config, SETTINGS_PATH)
     else:
+        verify_settings_up_to_date(DEFAULT_SETTINGS_PATH, SETTINGS_PATH)
         config.read(SETTINGS_PATH, encoding='utf-8')
 
     return config

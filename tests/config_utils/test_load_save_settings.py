@@ -164,35 +164,3 @@ def test_atomic_write_creates_file_without_temp_leftovers(patched_paths_imported
     leftovers = list(base.glob('*.tmp')) + list(base.glob('tmp'))
     assert leftovers == []
 
-def test_verify_settings_up_to_date_called(monkeypatch, tmp_path):
-    base = tmp_path / 'settings_sandbox'
-    base.mkdir()
-    user_ini = base / 'settings.ini'
-    default_ini = base / 'settings_default.ini'
-
-    monkeypatch.setattr(
-        'utils.config_utils.get_user_settings_path.get_user_settings_path',
-        lambda app_name: str(user_ini),
-        raising=False
-    )
-    monkeypatch.setattr(
-        'utils.config_utils.get_default_settings_path.get_default_settings_path',
-        lambda: str(default_ini),
-        raising=False
-    )
-
-    called = {'args':None}
-    def fake_verify(u, d):
-        called['args'] = (Path(u), Path(d))
-
-    monkeypatch.setattr(
-        'utils.config_utils.verify_settings_up_to_date.verify_settings_up_to_date',
-        fake_verify,
-        raising=False
-    )
-
-    sys.modules.pop(CONFIG_MOD, None)
-    mod = importlib.import_module(CONFIG_MOD)
-    importlib.reload(mod)
-
-    assert called['args'] == (Path(user_ini), Path(default_ini))

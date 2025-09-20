@@ -2,42 +2,62 @@
 defaults to determine if required settings have been updated."""
 import os
 import shutil
+import logging
 from configparser import ConfigParser
 
+
+def new_cfg():
+    # No interpolation
+    cfg = ConfigParser(interpolation=None)
+    cfg.optionxform = str
+    return cfg
+
 def verify_settings_up_to_date(default_path, user_settings_path):
-    """Check that user has most up to date settings file."""
-    user_config = ConfigParser()
-    default_config = ConfigParser()
+    """
+    Ensure that the user's settings file exists and is up to date.
 
-    default_config.read(default_path)
+    Args:
+        default_path: path to the *default file*
+        user_settings_path: path to the where the user settings should exist
+        filename: name of the settings file
 
-    if not os.path.exists(user_settings_path):
-        try:
-            shutil.copyfile(default_path, user_settings_path)
-            print(f'Created users settings at {user_settings_path}')
-            return
-        except FileNotFoundError or Exception as e:
-            print(f'Could not copy default settings to {user_settings_path}, {e}')
-            return
+    Returns:
+        Message letting the user know whether the settings were up to date or needed to be updated.
+    """
+    logger = logging.getLogger(__name__)
+    # Normalize the string
+    default_path = os.fspath(default_path)
+    user_file = os.fspath(user_settings_path)
 
-    user_config.read(user_settings_path)
+    # Make sure the parent directory exists
+    os.makedirs(os.path.dirname(user_file) or ".", exist_ok=True)
 
+    default_cfg = new_cfg()
+    user_cfg = new_cfg()
+
+    default_cfg.read(default_path, encoding='utf-8')
+    user_cfg.read(user_file, encoding='utf-8')
+
+    # Merge missing sections (preserving user values)
     updated = False
 
-    for section in default_config.sections():
-        if not user_config.has_section(section):
-            user_config.add_section(section)
-            print(f'Adding section {section}')
+    for section in default_cfg.sections():
+        if not user_cfg.has_section(section):
+            user_cfg.add_section(section)
+            logger.info(f'User settings file {user_file} was successfully updated.')
             updated = True
-        for key, value in default_config.items(section):
-            if not user_config.has_option(section, key):
-                user_config.set(section, key, value)
-                print(f'Setting {key} to {value}')
+
+        for key, value in default_cfg.items(section):
+            if not user_cfg.has_option(section, key):
+                user_cfg.set(section, key, value)
+                logger.info(f'Setting {key} to {value}.')
                 updated = True
 
     if updated:
-        with open(user_settings_path, 'w') as configfile:
-            user_config.write(configfile)
-            print(f'User settings updated with missing defaults')
-    else:
-        print(f'Users settings up to date')
+        with open(user_file, 'w', encoding='utf-8') as f:
+            user_cfg.write(f)
+        logger.info(f'User settings file {user_file} was successfully updated.')
+        return True
+
+    logger.info(f'User settings file {user_file} up to date.')
+    return False
