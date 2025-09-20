@@ -6,13 +6,18 @@ Windows: */AppData/Roaming/au_otp_tournament_utilities_v2/settings.ini
 macOS: */Library/Application Support/au_ootp_tournament_utilities_v2/settings.ini
 Linux/other: config/{appname{
 """
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
+import ntpath
 # TODO 3: test macOS
 # TODO 4: text other
 
 import os
 import sys
 from utils.config_utils import get_user_settings_path as mod
+
+def normpath(p) -> str:
+    # Normalize paths
+    return ntpath.normcase(ntpath.normpath(os.fspath(p)))
 
 def test_nt_returns_appdata_path(monkeypatch, tmp_path):
     """Test that Windows system returns settings in AppData folder."""
@@ -22,9 +27,11 @@ def test_nt_returns_appdata_path(monkeypatch, tmp_path):
     appdata_path = tmp_path / 'AppData' / "Roaming"
     monkeypatch.setenv('APPDATA', str(appdata_path))
 
-    out = Path(mod.get_user_settings_path('MyApp'))
-    assert out == appdata_path / 'MyApp' / 'settings.ini'
-    assert out.is_absolute()
+    expected = PureWindowsPath(str(appdata_path)) / 'MyApp' / 'settings.ini'
+
+    out = mod.get_user_settings_path('MyApp')
+    assert normpath(out) == normpath(expected)
+    assert ntpath.isabs(os.fspath(out))
 
 def test_macos_returns_application_support_path(monkeypatch, tmp_path):
     """Test that macos returns settings in AppSupport folder."""
