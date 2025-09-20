@@ -17,7 +17,7 @@ from utils.config_utils import get_user_settings_path as mod
 
 def normpath(p) -> str:
     # Normalize paths
-    return os.path.normcase(os.path.normpath(os.fspath(p)))
+    return ntpath.normcase(ntpath.normpath(os.fspath(p)))
 
 def test_nt_returns_appdata_path(monkeypatch, tmp_path):
     """Test that Windows system returns settings in AppData folder."""
