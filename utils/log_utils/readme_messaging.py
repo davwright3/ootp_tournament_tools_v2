@@ -10,7 +10,7 @@ def _sluggify_github(s: str) -> str:
     s = s.strip().lower()
     s = re.sub(r'[^\w\s-]', '', s)
     s = re.sub(r'\s+', '-', s)
-    s= re.sub(r'-2,}', '-', s)
+    s= re.sub(r'-{2,}', '-', s)
     return s
 
 def extract_markdown_section(md_path: str, heading_query: str) -> Optional[str]:

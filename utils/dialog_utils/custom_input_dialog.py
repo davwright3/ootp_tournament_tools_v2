@@ -28,7 +28,7 @@ class CustomInputDialog(tk.Toplevel):
         )
         self.confirm_button.pack(pady=10)
 
-        self.bind("<Return>", lambda e: self._on_confirm)
+        self.bind("<Return>", self._on_confirm)
 
     def _on_confirm(self, event=None):
         """Confirm the user input."""
