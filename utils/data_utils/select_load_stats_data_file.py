@@ -3,11 +3,13 @@ import os
 import logging
 from tkinter import filedialog
 from utils.config_utils import load_save_settings as settings_module
+from utils.data_utils.data_store import data_store
 
-def select_return_stats_data_file(parent):
+def select_load_stats_data_file(parent, loaded_file_var, file_loaded_bool):
     """
     Select the file to be loaded into DataFrame.
     :param parent: Parent window, tkTkToplevel
+    :param loaded_file_var: Variable for displaying selected file, tkStringVar
     """
     logger = logging.getLogger('apps.basic_stats_app.data_utils')
     logger.info('Loading DataFrame')
@@ -20,8 +22,16 @@ def select_return_stats_data_file(parent):
     )
 
     if not filepath:
-        logger.info('No file selected')
+        logger.info('No file selected please select a file to load.')
         return
 
     logger.info(f'Loading data from from: {filepath}')
+    try:
+        data_store.load_data(filepath)
+        loaded_file_var.set(filepath)
+        file_loaded_bool.set(True)
+        logger.info(f'Data loaded from {filepath}')
+    except Exception as e:
+        logger.error(f'Failed to load data from {filepath}: {e}')
+        file_loaded_bool.set(False)
 
