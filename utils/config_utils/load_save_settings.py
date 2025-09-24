@@ -15,7 +15,13 @@ DEFAULT_SETTINGS_PATH = Path(get_default_settings_path())
 
 # Internal methods
 def _load_settings() -> ConfigParser:
-    """Load settings from user's settings.ini file."""
+    """
+    Load settings from user's settings.ini file.
+    If the user settings do not exist, will create a new settings.ini file =
+    from the programs default_settings.ini.
+    If the settings exist, will create a _settings session for use during
+    program running.
+    """
 
     config = ConfigParser()
     # Ensure file exists and crate if necessary
