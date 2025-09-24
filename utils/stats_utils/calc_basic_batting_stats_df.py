@@ -75,7 +75,6 @@ def calc_basic_batting_stats_df():
     )
 
 
-
     df2 = df[['CID', 'PA', 'AVG', 'OBP', 'SLG', 'OPS', 'wOBA', 'HRrate', 'Krate', 'BBrate', 'SBrate', 'SBpct', 'WARrate']]
     print(df2)
     del df

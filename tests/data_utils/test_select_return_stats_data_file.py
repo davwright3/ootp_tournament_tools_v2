@@ -1,6 +1,7 @@
 # tests/test_select_return_stats_data_file.py
 from unittest.mock import MagicMock
 import pytest
+import tkinter as tk
 
 # 🔁 CHANGE THIS to the actual module path
 import utils.data_utils.select_load_stats_data_file as mod
@@ -25,7 +26,7 @@ def test_happy_path_logs_and_uses_initialdir(monkeypatch, caplog):
 
     parent = MagicMock()
 
-    result = mod.select_load_stats_data_file(parent)
+    result = mod.select_load_stats_data_file(parent, MagicMock(), MagicMock())
     assert result is None  # current implementation does not return the path
 
     # Verify dialog args
@@ -49,7 +50,7 @@ def test_cancel_logs_no_file(monkeypatch, caplog):
     monkeypatch.setattr(mod.filedialog, "askopenfilename",
                         lambda **kw: "")  # simulate cancel
 
-    result = mod.select_load_stats_data_file(MagicMock())
+    result = mod.select_load_stats_data_file(MagicMock(), MagicMock(), MagicMock())
     assert result is None
 
     msgs = [r.message for r in caplog.records]
