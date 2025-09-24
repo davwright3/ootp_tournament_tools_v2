@@ -4,12 +4,14 @@ Will copy the dataframe from the datastore, and calculate
  stats based on user selections.
 The result will be sent back to the stats app for display in a custom frame.
 """
+import numpy as np
+
 from utils.data_utils.data_store import data_store
 from utils.data_utils.card_list_store import card_list_store
 import pandas as pd
 
 def calc_basic_batting_stats_df(
-        min_pa=0,
+        min_pa=600,
         min_value=40,
         max_value=105,
         stat_list = None,
@@ -72,6 +74,7 @@ def get_player_stats(df, min_pa=0):
              'HR','TB', 'SO', 'HP', 'BB', 'IBB', 'SF', 'SB',
              'CS', 'WAR' ]].groupby(['CID'], as_index=False).sum()
 
+
     df['AVG'] = (
         (df['H'] / df['AB']).
         apply(lambda x: f'{x:.3f}'.lstrip('0') if x < 1 else f'{x:.3f}')
@@ -122,9 +125,13 @@ def get_player_stats(df, min_pa=0):
         apply(lambda x: f'{x:.1f}'.lstrip('0') if x < 1 else f'{x:.1f}')
     )
 
-    df['SBpct'] = (
-        ((df['SB']) / (df['SB'] + df['CS'])).
-        apply(lambda x: f'{x:.3f}'.lstrip('0') if x < 1 else f'{x:.3f}')
+    den = df['SB'] + df ['CS']
+    rate = df['SB'] / den
+
+    df['SBpct'] = np.where(
+        den.eq(0),
+        '.000',
+        rate.apply(lambda x: f'{x:.3f}'.lstrip('0') if x < 1 else f'{x:.3f}')
     )
 
     df['WARrate'] = (

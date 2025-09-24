@@ -31,6 +31,7 @@ def select_load_stats_data_file(parent, loaded_file_var, file_loaded_bool):
         loaded_file_var.set(filepath)
         file_loaded_bool.set(True)
         logger.info(f'Data loaded from {filepath}')
+        logger.info(f'Loaded file contains {len(data_store.get_data())} rows of data.')
     except Exception as e:
         logger.error(f'Failed to load data from {filepath}: {e}')
         file_loaded_bool.set(False)
