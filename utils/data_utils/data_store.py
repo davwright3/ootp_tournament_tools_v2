@@ -42,4 +42,5 @@ class DataStore:
         """Clear the dataframe."""
         self._main_dataframe = None
 
+
 data_store = DataStore()

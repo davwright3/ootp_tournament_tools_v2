@@ -66,10 +66,12 @@ def sample_stats_df():
     """
     Fixture for testing of basic batting stats.
     Creates a small, clean dataframe for stat testing.
+    Note: CID 73691 is Yosver Zulueta, 2B eligible for testing purposes.
+    Note: CID 73885 is Mke Zunino, 2B INELIGIBLE for testing purposes.
     """
 
     data = {
-        'CID': [11111, 11111, 22222, 22222],
+        'CID': [73691, 73691, 73885, 73885],
         'PA': [20, 30, 30, 10],
         'AB': [18, 26, 27, 9],
         'H': [6, 8, 11, 2],

@@ -7,32 +7,61 @@ from tests.conftest import sample_stats_df
 
 
 def test_basic_batting_stats_return_correct_values(patched_batting_data_store):
+    """
+    Tests that all stats return the correct values.
+    :param patched_batting_data_store:
+    :return:
+    """
     df = mod.calc_basic_batting_stats_df()
 
     assert not df.empty
-    assert df.loc[df['CID'] == 11111, 'AVG'].squeeze() == '.318'
-    assert df.loc[df['CID'] == 22222, 'AVG'].squeeze() == '.361'
-    assert df.loc[df['CID'] == 11111, 'OBP'].squeeze() == '.340'
-    assert df.loc[df['CID'] == 22222, 'OBP'].squeeze() == '.390'
-    assert df.loc[df['CID'] == 11111, 'SLG'].squeeze() == '.545'
-    assert df.loc[df['CID'] == 22222, 'SLG'].squeeze() == '.611'
-    assert df.loc[df['CID'] == 11111, 'OPS'].squeeze() == '.885'
-    assert df.loc[df['CID'] == 22222, 'OPS'].squeeze() == '1.001'
-    assert df.loc[df['CID'] == 11111, 'wOBA'].squeeze() == '.369'
-    assert df.loc[df['CID'] == 22222, 'wOBA'].squeeze() == '.420'
-    assert df.loc[df['CID'] == 11111, 'HRrate'].squeeze() == '24.0'
-    assert df.loc[df['CID'] == 22222, 'HRrate'].squeeze() == '30.0'
-    assert df.loc[df['CID'] == 11111, 'Krate'].squeeze() == '84.0'
-    assert df.loc[df['CID'] == 22222, 'Krate'].squeeze() == '120.0'
-    assert df.loc[df['CID'] == 11111, 'BBrate'].squeeze() == '36.0'
-    assert df.loc[df['CID'] == 22222, 'BBrate'].squeeze() == '30.0'
-    assert df.loc[df['CID'] == 11111, 'SBrate'].squeeze() == '24.0'
-    assert df.loc[df['CID'] == 22222, 'SBrate'].squeeze() == '15.0'
-    assert df.loc[df['CID'] == 11111, 'SBpct'].squeeze() == '.667'
-    assert df.loc[df['CID'] == 22222, 'SBpct'].squeeze() == '.500'
-    assert df.loc[df['CID'] == 11111, 'WARrate'].squeeze() == '10.8'
-    assert df.loc[df['CID'] == 22222, 'WARrate'].squeeze() == '6.0'
+    assert df.loc[df['CID'] == 73691, 'AVG'].squeeze() == '.318'
+    assert df.loc[df['CID'] == 73885, 'AVG'].squeeze() == '.361'
+    assert df.loc[df['CID'] == 73691, 'OBP'].squeeze() == '.340'
+    assert df.loc[df['CID'] == 73885, 'OBP'].squeeze() == '.390'
+    assert df.loc[df['CID'] == 73691, 'SLG'].squeeze() == '.545'
+    assert df.loc[df['CID'] == 73885, 'SLG'].squeeze() == '.611'
+    assert df.loc[df['CID'] == 73691, 'OPS'].squeeze() == '.885'
+    assert df.loc[df['CID'] == 73885, 'OPS'].squeeze() == '1.001'
+    assert df.loc[df['CID'] == 73691, 'wOBA'].squeeze() == '.369'
+    assert df.loc[df['CID'] == 73885, 'wOBA'].squeeze() == '.420'
+    assert df.loc[df['CID'] == 73691, 'HRrate'].squeeze() == '24.0'
+    assert df.loc[df['CID'] == 73885, 'HRrate'].squeeze() == '30.0'
+    assert df.loc[df['CID'] == 73691, 'Krate'].squeeze() == '84.0'
+    assert df.loc[df['CID'] == 73885, 'Krate'].squeeze() == '120.0'
+    assert df.loc[df['CID'] == 73691, 'BBrate'].squeeze() == '36.0'
+    assert df.loc[df['CID'] == 73885, 'BBrate'].squeeze() == '30.0'
+    assert df.loc[df['CID'] == 73691, 'SBrate'].squeeze() == '24.0'
+    assert df.loc[df['CID'] == 73885, 'SBrate'].squeeze() == '15.0'
+    assert df.loc[df['CID'] == 73691, 'SBpct'].squeeze() == '.667'
+    assert df.loc[df['CID'] == 73885, 'SBpct'].squeeze() == '.500'
+    assert df.loc[df['CID'] == 73691, 'WARrate'].squeeze() == '10.8'
+    assert df.loc[df['CID'] == 73885, 'WARrate'].squeeze() == '6.0'
 
+def test_returns_only_eligible_cards(patched_batting_data_store):
+    df = mod.calc_basic_batting_stats_df(position_select='Learn2B')
 
+    assert 73691 in df['CID'].tolist()
+    assert 73885 not in df['CID'].tolist()
+
+def test_returns_only_selected_stats(patched_batting_data_store):
+    df = mod.calc_basic_batting_stats_df(stat_list=['PA', 'AVG'])
+
+    header_list = df.columns.tolist()
+    assert 'PA' in header_list
+    assert 'AVG' in header_list
+    assert 'OBP' not in header_list
+
+def test_returns_only_higher_than_min_pa(patched_batting_data_store):
+    df = mod.calc_basic_batting_stats_df(min_pa=45)
+
+    assert 73691 in df['CID'].tolist()
+    assert 73885 not in df['CID'].tolist()
+
+def test_returns_cards_within_selected_value_range(patched_batting_data_store):
+    df = mod.calc_basic_batting_stats_df(min_value=51, max_value=63)
+
+    assert 73691 not in df['CID'].tolist()
+    assert 73885 in df['CID'].tolist()
 
 
