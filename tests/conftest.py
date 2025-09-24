@@ -6,6 +6,8 @@ import configparser
 import pytest
 import tkinter as tk
 from pathlib import Path
+import pandas as pd
+import types
 
 ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
@@ -58,3 +60,42 @@ def temp_settings_files(tmp_path, monkeypatch):
 
     # Return paths so tests can use them
     return {"user": user_ini, "default": default_ini}
+
+@pytest.fixture
+def sample_stats_df():
+    """
+    Fixture for testing of basic batting stats.
+    Creates a small, clean dataframe for stat testing.
+    """
+
+    data = {
+        'CID': [11111, 11111, 22222, 22222],
+        'PA': [20, 30, 30, 10],
+        'AB': [18, 26, 27, 9],
+        'H': [6, 8, 11, 2],
+        '1B': [4, 5, 7, 2],
+        '2B': [1, 1, 1, 0],
+        '3B': [0, 1, 1, 0],
+        'HR': [1, 1, 2, 0],
+        'TB': [10, 14, 20, 2],
+        'SO': [4, 3, 6, 2],
+        'HP': [0, 0, 0, 1],
+        'BB': [1, 2, 1, 1],
+        'IBB': [0, 0, 0, 0],
+        'SF': [1, 2, 2, 0],
+        'SB': [2, 0, 1, 0],
+        'CS': [1, 0, 1, 0],
+        'WAR': [.3, .6, .1, .3]
+    }
+    df = pd.DataFrame(data)
+    return df
+
+@pytest.fixture
+def patched_batting_data_store(monkeypatch, sample_stats_df):
+    import utils.stats_utils.calc_basic_batting_stats_df as mod
+
+    fake_ds = types.SimpleNamespace(
+        get_data= lambda: sample_stats_df.copy(),
+    )
+    monkeypatch.setattr(mod, 'data_store', fake_ds, raising=True)
+    return sample_stats_df

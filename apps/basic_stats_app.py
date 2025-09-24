@@ -26,7 +26,6 @@ class BasicStatsApp(tk.Toplevel):
             for widget in frame.winfo_children():
                 if isinstance(widget, tk.Button):
                     buttons.append(widget)
-            print(f'{len(buttons)} buttons found')
 
             for button in buttons:
                 if self.is_dataframe_loaded.get():
