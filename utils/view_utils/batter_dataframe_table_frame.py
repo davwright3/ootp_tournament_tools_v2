@@ -11,6 +11,7 @@ class BatterDataFrameTableFrame(ttk.Frame):
             df: Optional[pd.DataFrame] = None,
             columns: Optional[List[str]] = None,
             formatters: Optional[Dict[str, Callable]] = None,
+            sort_keys: Optional[Dict[str, Callable[[pd.Series], pd.Series]]] = None,
             height: int = 18,
             show_index: bool = False,
             **kwargs
@@ -18,6 +19,7 @@ class BatterDataFrameTableFrame(ttk.Frame):
         super().__init__(parent, **kwargs)
         self._df: pd.DataFrame = pd.DataFrame() if df is None else df.copy()
         self._formatters = formatters or {}
+        self._sort_keys = sort_keys or {}
         self._show_index = show_index
         self._sort_state = {'col': None, 'reverse': False}
 
@@ -73,8 +75,21 @@ class BatterDataFrameTableFrame(ttk.Frame):
     def set_dataframe(self, df: pd.DataFrame, columns: Optional[List[str]] = None):
         """Replace the current dataframe and redraw the tree."""
         self._df = df.copy()
-        if columns is not None:
-            self._columns = columns
+        if columns is None:
+            # Keep requested order and drop missing
+            if getattr(self, "_columns", None):
+                keep = [c for c in self._columns if c in self._df.columns]
+                added = [c for c in self._df.columns if c not in keep]
+                self._columns = keep + added
+            else:
+                self._columns = self._df.columns.tolist()
+        else:
+            # Only keep columns in the df
+            self._columns = [c for c in columns if c in self._df.columns]
+        self._formatters = {k: v for k, v in (self._formatters or {}).items() if k in self._df.columns}
+        if hasattr(self, '_sort_keys'):
+            self._sort_keys = {k: v for k, v in (self._sort_keys or {}).items() if k in self._df.columns}
+
         self._refresh_all()
 
     def clear(self):
