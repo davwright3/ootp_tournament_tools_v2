@@ -9,7 +9,6 @@ class ScrollableFrame(ttk.Frame):
         super().__init__(parent, **kwargs)
 
         self.canvas = tk.Canvas(self, highlightthickness=0, borderwidth=0, bg='white')
-        self.inner = ttk.Frame(self.canvas)
 
         self.vsb = ttk.Scrollbar(
             self,
@@ -31,11 +30,13 @@ class ScrollableFrame(ttk.Frame):
         # Layout canvas
         self.canvas.grid(row=0, column=0, sticky='nsew')
         if yscroll:
-            self.vsb.grid(row=0, column=1, sticky='nsew')
+            self.vsb.grid(row=0, column=1, sticky='ns')
         if xscroll:
-            self.hsb.grid(row=1, column=0, sticky='nsew')
+            self.hsb.grid(row=1, column=0, sticky='ew')
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
+
+        self.inner = ttk.Frame(self.canvas)
 
         # Put inner frame in canvas
         self._win_id = self.canvas.create_window((0, 0), window=self.inner, anchor='nw')
@@ -46,6 +47,8 @@ class ScrollableFrame(ttk.Frame):
         # Make inner frame follow canvas
         if auto_width:
             self.canvas.bind("<Configure>", self._on_canvas_configure)
+
+        self.inner.grid_columnconfigure(0, weight=1)
 
 
     # Helpers

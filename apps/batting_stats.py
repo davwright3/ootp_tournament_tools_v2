@@ -15,6 +15,7 @@ from utils.view_utils.batter_dataframe_table_frame import BatterDataFrameTableFr
 from utils.view_utils.table_formatters import fmt_leading_dot
 from utils.view_utils.min_max_rating_frame import MinMaxFrame
 from utils.view_utils.scrollable_frame import ScrollableFrame
+from utils.view_utils.position_select_frame import PositionSelectFrame
 
 
 class BattingStatsApp(tk.Toplevel):
@@ -49,8 +50,6 @@ class BattingStatsApp(tk.Toplevel):
         self.options_frame.grid(row=0, column=1, sticky='nsew')
 
         self.options_frame.columnconfigure(0, weight=1)
-        self.options_frame.columnconfigure(1, weight=1)
-        self.options_frame.columnconfigure(2, weight=1)
         self.options_frame.rowconfigure(0, weight=0)
         self.options_frame.rowconfigure(1, weight=1)
 
@@ -71,14 +70,27 @@ class BattingStatsApp(tk.Toplevel):
 
         # Frame for the various user options to select
         self.options_select_frame = ScrollableFrame(
-            self.options_button_frame,
+            self.options_frame,
             yscroll=True,
             xscroll=False,
+            auto_width=True
         )
-        self.options_select_frame.grid(row=1, column=0, columnspan=3, sticky='nsew')
+        self.options_select_frame.grid(row=1, column=0, sticky='nsew')
 
-        self.min_max_frame = MinMaxFrame(self.options_select_frame)
-        self.min_max_frame.grid(row=0, column=0, sticky='nsew')
+        inner_frame = self.options_select_frame.inner
+        inner_frame.grid_columnconfigure(0, weight=1)
+        inner_frame.rowconfigure(0, weight=0)
+        inner_frame.rowconfigure(1, weight=0)
+        inner_frame.rowconfigure(2, weight=1)
+
+        item = 0
+        self.min_max_frame = MinMaxFrame(inner_frame)
+        self.min_max_frame.grid(row=item, column=0, sticky='ew')
+        item += 1
+
+        self.position_select_frame = PositionSelectFrame(inner_frame)
+        self.position_select_frame.grid(row=item, column=0, sticky='ew')
+        item += 1
 
         # Set up initial dataframe for the table
         stats_df = calc_basic_batting_stats_df()
@@ -102,6 +114,8 @@ class BattingStatsApp(tk.Toplevel):
 
     def reload_data(self):
         """Reload the data to the dataframe."""
-        stats_df = calc_basic_batting_stats_df(stat_list=['PA', 'OBP', 'wOBA'])
+        min_rating, max_rating = self.min_max_frame.get_min_max_rating()
+        selected_position = self.position_select_frame.get_position_select()
+        stats_df = calc_basic_batting_stats_df(stat_list=['PA', 'OBP', 'wOBA'], position_select=selected_position, min_value=min_rating, max_value=max_rating)
         self.dataframe_frame.set_dataframe(stats_df)
 
