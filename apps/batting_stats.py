@@ -11,7 +11,8 @@ from tkinter import ttk
 from utils.view_utils.header_frame import Header
 from utils.view_utils.footer_frame import Footer
 from utils.stats_utils.calc_basic_batting_stats_df import calc_basic_batting_stats_df
-from utils.view_utils.dataframe_table_frame import DataFrameTableFrame
+from utils.view_utils.batter_dataframe_table_frame import BatterDataFrameTableFrame
+from utils.view_utils.batting_table_formatters import fmt_leading_dot
 
 
 class BattingStatsApp(tk.Toplevel):
@@ -40,8 +41,22 @@ class BattingStatsApp(tk.Toplevel):
         self.footer_frame = Footer(self)
         self.footer_frame.grid(row=2, column=0, columnspan=2, sticky='nsew')
 
-        df = calc_basic_batting_stats_df()
+        stats_df = calc_basic_batting_stats_df()
 
-        self.dataframe_frame = DataFrameTableFrame(self.main_frame, df)
+        fmt = {
+            'AVG': fmt_leading_dot(3, '.000'),
+            'OBP': fmt_leading_dot(3, '.000'),
+            'SLG': fmt_leading_dot(3, '.000'),
+            'OPS': fmt_leading_dot(3, '.000'),
+            'wOBA': fmt_leading_dot(3, '.000'),
+            'HRrate': fmt_leading_dot(1, '.0'),
+            'Krate': fmt_leading_dot(1, '.0'),
+            'BBrate': fmt_leading_dot(1, '.0'),
+            'SBrate': fmt_leading_dot(1, '.0'),
+            'SBpct': fmt_leading_dot(3, '.000'),
+            'WARrate': fmt_leading_dot(1, '.0')
+        }
+
+        self.dataframe_frame = BatterDataFrameTableFrame(self.main_frame, df=stats_df, formatters=fmt)
         self.dataframe_frame.grid(row=0, column=0, columnspan=2, sticky='nsew')
 

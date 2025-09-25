@@ -3,7 +3,12 @@ import pandas as pd
 import numpy as np
 
 class DataStore:
-    """Singleton pattern data frame for basic stats app use."""
+    """
+    Singleton pattern data frame for basic stats app use.
+    Intended to be loaded when the user selects a target file from
+    one of the main statistics apps.
+    If no instance is present, a new instance of the class is created.
+    """
 
     _instance = None
     _main_dataframe = None

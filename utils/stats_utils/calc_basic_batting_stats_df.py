@@ -70,14 +70,19 @@ def get_eligible_players(player_list: pd.DataFrame, position_select: str = None,
     return eligible_players
 
 def get_player_stats(df, min_pa=0):
+    """
+    Calculate and return the basic batting stats for the return data frame.
+    :param df: The DataFrame to be processed, pd.DataFrame
+    :param min_pa: Return players with at least the min_pa, int
+    :return player_stats: DataFrame containing calculated basic batting stats, pd.DataFrame
+    """
     df = df[['CID', 'PA', 'AB', 'H', '1B', '2B', '3B',
              'HR','TB', 'SO', 'HP', 'BB', 'IBB', 'SF', 'SB',
              'CS', 'WAR' ]].groupby(['CID'], as_index=False).sum()
 
 
     df['AVG'] = (
-        (df['H'] / df['AB']).
-        apply(lambda x: f'{x:.3f}'.lstrip('0') if x < 1 else f'{x:.3f}')
+        (df['H'] / df['AB']).round(3)
     )
 
     df['OBP'] = (
@@ -90,39 +95,33 @@ def get_player_stats(df, min_pa=0):
     )
 
     df['OPS'] = (
-        (df['OBP'] + df['SLG']).
-        apply(lambda x: f'{x:.3f}'.lstrip('0') if x < 1 else f'{x:.3f}')
+        (df['OBP'] + df['SLG']).round(3)
     )
 
-    df['OBP'] = df['OBP'].apply(lambda x: f'{x:.3f}'.lstrip('0') if x < 1 else f'{x:.3f}')
+    df['OBP'] = df['OBP'].round(3)
 
-    df['SLG'] = df['SLG'].apply(lambda x: f'{x:.3f}'.lstrip('0') if x < 1 else f'{x:.3f}')
+    df['SLG'] = df['SLG'].round(3)
 
     df['wOBA'] = (
         (((.701*df['BB']) + (.732*df['HP']) + (.895*df['1B']) +
           (1.27*df['2B']) + (1.608*df['3B']) + (2.072*df['HR'])) /
-        (df['AB'] + df['BB'] - df['IBB'] + df['SF'] + df['HP'])).
-        apply(lambda x: f'{x:.3f}'.lstrip('0') if x < 1 else f'{x:.3f}')
+        (df['AB'] + df['BB'] - df['IBB'] + df['SF'] + df['HP'])).round(3)
     )
 
     df['HRrate'] = (
-        ((df['HR'] / df['PA']) * 600).
-        apply(lambda x: f'{x:.1f}'.lstrip('0') if x < 1 else f'{x:.1f}')
+        ((df['HR'] / df['PA']) * 600).round(1)
     )
 
     df['Krate'] = (
-        ((df['SO'] /df['PA']) * 600).
-        apply(lambda x: f'{x:.1f}'.lstrip('0') if x < 1 else f'{x:.1f}')
+        ((df['SO'] /df['PA']) * 600).round(1)
     )
 
     df['BBrate'] = (
-        ((df['BB'] / df['PA']) * 600).
-        apply(lambda x: f'{x:.1f}'.lstrip('0') if x < 1 else f'{x:.1f}')
+        ((df['BB'] / df['PA']) * 600).round(1)
     )
 
     df['SBrate'] = (
-        ((df['SB'] / df['PA']) * 600).
-        apply(lambda x: f'{x:.1f}'.lstrip('0') if x < 1 else f'{x:.1f}')
+        ((df['SB'] / df['PA']) * 600).round(3)
     )
 
     den = df['SB'] + df ['CS']
@@ -130,13 +129,12 @@ def get_player_stats(df, min_pa=0):
 
     df['SBpct'] = np.where(
         den.eq(0),
-        '.000',
-        rate.apply(lambda x: f'{x:.3f}'.lstrip('0') if x < 1 else f'{x:.3f}')
+        .000,
+        rate.round(3)
     )
 
     df['WARrate'] = (
-        ((df['WAR'] / df['PA'])*600).
-        apply(lambda x: f'{x:.1f}'.lstrip('0') if x < 1 else f'{x:.1f}')
+        ((df['WAR'] / df['PA'])*600).round(1)
     )
 
 
@@ -144,3 +142,4 @@ def get_player_stats(df, min_pa=0):
     df2 = df2[df2['PA'] >= min_pa]
     del df
     return df2
+

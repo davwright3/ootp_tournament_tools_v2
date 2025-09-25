@@ -4,7 +4,7 @@ from typing import Dict, Callable, List, Optional
 import pandas as pd
 import logging
 
-class DataFrameTableFrame(ttk.Frame):
+class BatterDataFrameTableFrame(ttk.Frame):
     def __init__(
             self,
             parent=None,
