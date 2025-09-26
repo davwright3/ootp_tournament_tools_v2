@@ -5,12 +5,16 @@ from tkinter import Radiobutton
 
 class PositionSelectFrame(tk.Frame):
     def __init__(self, parent):
-        super().__init__(parent)
+        super().__init__(parent, relief='ridge', bd=3, bg='white')
 
-        self.selected_position = tk.StringVar(value=None)
+        self.selected_position = tk.StringVar(value='All')
 
         self.label = tk.Label(self, text="Position Selection", justify='center')
-        self.label.grid(row=0, column=0, sticky='nsew')
+        self.label.grid(row=0, column=0, columnspan=3, sticky='nsew')
+
+        self.columnconfigure(0, weight=1)
+        self.columnconfigure(1, weight=1)
+        self.columnconfigure(2, weight=1)
 
         item = 0
         self.catcher_select = Radiobutton(
@@ -19,7 +23,7 @@ class PositionSelectFrame(tk.Frame):
             text='C',
             value='LearnC'
         )
-        self.catcher_select.grid(row=item // 3 + 1, column=item % 3 +1, sticky='nsew')
+        self.catcher_select.grid(row=item // 3 + 1, column=item % 3, sticky='nsew')
         item += 1
 
         self.firstbase_select = Radiobutton(
@@ -28,7 +32,7 @@ class PositionSelectFrame(tk.Frame):
             text='1B',
             value='Learn1B'
         )
-        self.firstbase_select.grid(row=item // 3 + 1, column=item % 3 +1, sticky='nsew')
+        self.firstbase_select.grid(row=item // 3 + 1, column=item % 3, sticky='nsew')
         item += 1
 
         self.secondbase_select = Radiobutton(
@@ -37,7 +41,7 @@ class PositionSelectFrame(tk.Frame):
             text='2B',
             value='Learn2B'
         )
-        self.secondbase_select.grid(row=item // 3 + 1, column=item % 3 +1, sticky='nsew')
+        self.secondbase_select.grid(row=item // 3 + 1, column=item % 3, sticky='nsew')
         item +=1
 
         self.thirdbase_select = Radiobutton(
@@ -46,7 +50,7 @@ class PositionSelectFrame(tk.Frame):
             text='3B',
             value='Learn3B'
         )
-        self.thirdbase_select.grid(row=item // 3 + 1, column=item % 3 +1, sticky='nsew')
+        self.thirdbase_select.grid(row=item // 3 + 1, column=item % 3, sticky='nsew')
         item +=1
 
         self.shortstop_select = Radiobutton(
@@ -55,7 +59,7 @@ class PositionSelectFrame(tk.Frame):
             text='SS',
             value='LearnSS'
         )
-        self.shortstop_select.grid(row=item // 3 + 1, column=item % 3 +1, sticky='nsew')
+        self.shortstop_select.grid(row=item // 3 + 1, column=item % 3, sticky='nsew')
         item +=1
 
         self.leftfield_select = Radiobutton(
@@ -64,7 +68,7 @@ class PositionSelectFrame(tk.Frame):
             text='LF',
             value='LearnLF'
         )
-        self.leftfield_select.grid(row=item // 3 + 1, column=item % 3 +1, sticky='nsew')
+        self.leftfield_select.grid(row=item // 3 + 1, column=item % 3, sticky='nsew')
         item +=1
 
         self.centerfield_select = Radiobutton(
@@ -73,7 +77,7 @@ class PositionSelectFrame(tk.Frame):
             text='CF',
             value='LearnCF',
         )
-        self.centerfield_select.grid(row=item // 3 + 1, column=item % 3 +1, sticky='nsew')
+        self.centerfield_select.grid(row=item // 3 + 1, column=item % 3, sticky='nsew')
         item +=1
 
         self.rightfield_select = Radiobutton(
@@ -82,7 +86,7 @@ class PositionSelectFrame(tk.Frame):
             text='RF',
             value='LearnRF'
         )
-        self.rightfield_select.grid(row=item // 3 + 1, column=item % 3 +1, sticky='nsew')
+        self.rightfield_select.grid(row=item // 3 + 1, column=item % 3, sticky='nsew')
         item +=1
 
         self.allbatters_select = Radiobutton(
@@ -91,8 +95,9 @@ class PositionSelectFrame(tk.Frame):
             text='All',
             value='All'
         )
-        self.allbatters_select.grid(row=item // 3 + 1, column=item % 3 +1, sticky='nsew')
+        self.allbatters_select.grid(row=item // 3 + 1, column=item % 3, sticky='nsew')
         item += 1
+
 
     def get_position_select(self):
         if self.selected_position.get() == 'All':

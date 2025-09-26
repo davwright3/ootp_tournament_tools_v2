@@ -97,7 +97,7 @@ def sample_stats_df():
 
 @pytest.fixture
 def patched_batting_data_store(monkeypatch, sample_stats_df):
-    import utils.stats_utils.calc_basic_batting_stats_df as mod
+    import utils.stats_utils.generate_basic_batting_stats_df as mod
 
     fake_ds = types.SimpleNamespace(
         get_data= lambda: sample_stats_df.copy(),

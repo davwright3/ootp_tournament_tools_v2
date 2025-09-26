@@ -10,12 +10,15 @@ from tkinter import ttk
 
 from utils.view_utils.header_frame import Header
 from utils.view_utils.footer_frame import Footer
-from utils.stats_utils.calc_basic_batting_stats_df import calc_basic_batting_stats_df
+from utils.stats_utils.generate_basic_batting_stats_df import calc_basic_batting_stats_df
 from utils.view_utils.batter_dataframe_table_frame import BatterDataFrameTableFrame
 from utils.view_utils.table_formatters import fmt_leading_dot
 from utils.view_utils.min_max_rating_frame import MinMaxFrame
 from utils.view_utils.scrollable_frame import ScrollableFrame
 from utils.view_utils.position_select_frame import PositionSelectFrame
+from utils.view_utils.batting_stats_select_frame import BattingStatsSelectFrame
+from utils.view_utils.general_info_select_frame import GeneralInfoFrame
+from utils.view_utils.batting_side_select_frame import BattingSideSelectFrame
 
 
 class BattingStatsApp(tk.Toplevel):
@@ -81,15 +84,28 @@ class BattingStatsApp(tk.Toplevel):
         inner_frame.grid_columnconfigure(0, weight=1)
         inner_frame.rowconfigure(0, weight=0)
         inner_frame.rowconfigure(1, weight=0)
-        inner_frame.rowconfigure(2, weight=1)
+        inner_frame.rowconfigure(2, weight=0)
+        inner_frame.rowconfigure(3, weight=1)
 
         item = 0
         self.min_max_frame = MinMaxFrame(inner_frame)
         self.min_max_frame.grid(row=item, column=0, sticky='ew')
         item += 1
 
+        self.batting_side_frame = BattingSideSelectFrame(inner_frame)
+        self.batting_side_frame.grid(row=item, column=0, sticky='ew')
+        item += 1
+
         self.position_select_frame = PositionSelectFrame(inner_frame)
         self.position_select_frame.grid(row=item, column=0, sticky='ew')
+        item += 1
+
+        self.batting_stats_select_frame = BattingStatsSelectFrame(inner_frame)
+        self.batting_stats_select_frame.grid(row=item, column=0, sticky='ew')
+        item += 1
+
+        self.general_info_select_frame = GeneralInfoFrame(inner_frame)
+        self.general_info_select_frame.grid(row=item, column=0, sticky='ew')
         item += 1
 
         # Set up initial dataframe for the table
@@ -116,6 +132,16 @@ class BattingStatsApp(tk.Toplevel):
         """Reload the data to the dataframe."""
         min_rating, max_rating = self.min_max_frame.get_min_max_rating()
         selected_position = self.position_select_frame.get_position_select()
-        stats_df = calc_basic_batting_stats_df(stat_list=['PA', 'OBP', 'wOBA'], position_select=selected_position, min_value=min_rating, max_value=max_rating)
+        selected_stats = self.batting_stats_select_frame.get_selected_stats()
+        selected_general_items = self.general_info_select_frame.get_selected_items()
+        selected_batting_side = self.batting_side_frame.get_selected_side()
+        stats_df = calc_basic_batting_stats_df(
+            stat_list=selected_stats,
+            position_select=selected_position,
+            general_list=selected_general_items,
+            min_value=min_rating,
+            max_value=max_rating,
+            bat_side_select=selected_batting_side,
+        )
         self.dataframe_frame.set_dataframe(stats_df)
 

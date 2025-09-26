@@ -2,7 +2,7 @@
 Test to ensure basic batting stats return expected values.
 Uses fixture from conftest.py file for basic stats.
 """
-import utils.stats_utils.calc_basic_batting_stats_df as mod
+import utils.stats_utils.generate_basic_batting_stats_df as mod
 from tests.conftest import sample_stats_df
 
 
