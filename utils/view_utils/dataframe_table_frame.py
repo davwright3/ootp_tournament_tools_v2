@@ -4,7 +4,7 @@ from typing import Dict, Callable, List, Optional
 import pandas as pd
 import logging
 
-class BatterDataFrameTableFrame(ttk.Frame):
+class DataFrameTableFrame(ttk.Frame):
     def __init__(
             self,
             parent=None,
@@ -76,19 +76,14 @@ class BatterDataFrameTableFrame(ttk.Frame):
         """Replace the current dataframe and redraw the tree."""
         self._df = df.copy()
         if columns is None:
-            # Keep requested order and drop missing
-            if getattr(self, "_columns", None):
-                keep = [c for c in self._columns if c in self._df.columns]
-                added = [c for c in self._df.columns if c not in keep]
-                self._columns = keep + added
-            else:
-                self._columns = self._df.columns.tolist()
+            self._columns = self._df.columns.tolist()
         else:
-            # Only keep columns in the df
-            self._columns = [c for c in columns if c in self._df.columns]
-        self._formatters = {k: v for k, v in (self._formatters or {}).items() if k in self._df.columns}
+            self._columns = [c for c in self._df.columns if c in columns]
+        self._formatters = {
+            k: v for k, v in (self._formatters or {}).items() if k in self._columns
+        }
         if hasattr(self, '_sort_keys'):
-            self._sort_keys = {k: v for k, v in (self._sort_keys or {}).items() if k in self._df.columns}
+            self._sort_keys = {k: v for k, v in self._sort_keys.items() if k in self._columns}
 
         self._refresh_all()
 
