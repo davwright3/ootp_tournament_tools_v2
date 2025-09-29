@@ -6,7 +6,7 @@ import utils.stats_utils.generate_basic_batting_stats_df as mod
 from tests.conftest import sample_stats_df
 
 
-def test_basic_batting_stats_return_correct_values(patched_batting_data_store):
+def test_basic_batting_stats_return_correct_values(patched_batting_data_store, patched_card_list_store):
     """
     Tests that all stats return the correct values.
     :param patched_batting_data_store:
@@ -38,13 +38,13 @@ def test_basic_batting_stats_return_correct_values(patched_batting_data_store):
     assert df.loc[df['CID'] == 73691, 'WARrate'].squeeze() == 10.8
     assert df.loc[df['CID'] == 73885, 'WARrate'].squeeze() == 6.0
 
-def test_returns_only_eligible_cards(patched_batting_data_store):
+def test_returns_only_eligible_cards(patched_batting_data_store, patched_card_list_store):
     df = mod.calc_basic_batting_stats_df(min_pa=1, position_select='Learn2B')
 
     assert 73691 in df['CID'].tolist()
     assert 73885 not in df['CID'].tolist()
 
-def test_returns_only_selected_stats(patched_batting_data_store):
+def test_returns_only_selected_stats(patched_batting_data_store, patched_card_list_store):
     df = mod.calc_basic_batting_stats_df(min_pa=1, stat_list=['PA', 'AVG'])
 
     header_list = df.columns.tolist()
@@ -52,13 +52,13 @@ def test_returns_only_selected_stats(patched_batting_data_store):
     assert 'AVG' in header_list
     assert 'OBP' not in header_list
 
-def test_returns_only_higher_than_min_pa(patched_batting_data_store):
+def test_returns_only_higher_than_min_pa(patched_batting_data_store, patched_card_list_store):
     df = mod.calc_basic_batting_stats_df(min_pa=45)
 
     assert 73691 in df['CID'].tolist()
     assert 73885 not in df['CID'].tolist()
 
-def test_returns_cards_within_selected_value_range(patched_batting_data_store):
+def test_returns_cards_within_selected_value_range(patched_batting_data_store, patched_card_list_store):
     df = mod.calc_basic_batting_stats_df(min_pa=1, min_value=51, max_value=63)
 
     assert 73691 not in df['CID'].tolist()
