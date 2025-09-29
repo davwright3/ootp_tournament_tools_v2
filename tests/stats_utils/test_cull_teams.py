@@ -3,9 +3,8 @@ from utils.stats_utils import cull_teams as mod
 
 def test_cull_teams(patched_batting_data_store):
     """Use testing data store to ensure proper teams are returned."""
-    df, removed = mod.cull_teams(patched_batting_data_store)
+    df = mod.cull_teams(patched_batting_data_store)
 
     assert not df.empty
-    assert removed == 2
     assert 73691 in df['CID'].tolist() and 73885 not in df['CID'].tolist()
 
