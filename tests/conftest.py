@@ -127,17 +127,31 @@ def patched_batting_data_store(monkeypatch, sample_stats_df):
     monkeypatch.setattr(mod, 'data_store', fake_df, raising=True)
     return sample_stats_df
 
-@pytest.fixture
-def patched_card_list_store(monkeypatch, sample_card_df):
+def pytest_configure(config):
     """Patches the card list inside the stats module."""
-    fake_df = sample_card_df.copy()
-
-    import utils.stats_utils.generate_basic_batting_stats_df as mod
-    fake_df = types.SimpleNamespace(
-        get_card_list= lambda: sample_card_df.copy(),
+    df_default = pd.DataFrame(
+        {
+            'Card ID': [73691, 73885],
+            '//Card Title': ['Card A', 'Card B'],
+            'Card Value': [48, 59],
+            'Bats': [1, 2],
+            'Throws': [1, 2],
+            'owned': [0, 1],
+            'Last 10 Price': [125, 2000],
+            'Last 10 Price(VAR)': [1234, 250],
+            'Learn2B': [1, 0],
+        }
     )
-    monkeypatch.setattr(mod, 'card_list_store', fake_df, raising=True)
-    return sample_card_df
+
+    fake_module = types.ModuleType('utils.data_utils.card_list_store')
+    fake_store = types.SimpleNamespace(
+        get_card_list=lambda: df_default.copy(),
+        load_card_list=lambda *a, **k: None
+    )
+    fake_module.card_list_store = fake_store
+
+    sys.modules['utils.data_utils.card_list_store'] = fake_module
+
 
 
 
