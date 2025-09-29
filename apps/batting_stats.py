@@ -20,6 +20,8 @@ from utils.view_utils.batting_stats_select_frame import BattingStatsSelectFrame
 from utils.view_utils.general_info_select_frame import GeneralInfoFrame
 from utils.view_utils.batting_side_select_frame import BattingSideSelectFrame
 from utils.view_utils.min_plate_appearance_frame import MinPlateAppearanceFrame
+from utils.view_utils.select_in_collection_frame import SelectInCollectionFrame
+from utils.view_utils.set_cull_teams_limit_frame import SetCullTeamsFrame
 
 
 class BattingStatsApp(tk.Toplevel):
@@ -113,6 +115,14 @@ class BattingStatsApp(tk.Toplevel):
         self.general_info_select_frame.grid(row=item, column=0, sticky='ew')
         item += 1
 
+        self.collection_only_frame = SelectInCollectionFrame(inner_frame)
+        self.collection_only_frame.grid(row=item, column=0, sticky='ew')
+        item += 1
+
+        self.cull_teams_limit_frame = SetCullTeamsFrame(inner_frame)
+        self.cull_teams_limit_frame.grid(row=item, column=0, sticky='ew')
+        item += 1
+
         # Set up initial dataframe for the table
         stats_df = calc_basic_batting_stats_df()
 
@@ -141,6 +151,8 @@ class BattingStatsApp(tk.Toplevel):
         selected_general_items = self.general_info_select_frame.get_selected_items()
         selected_batting_side = self.batting_side_frame.get_selected_side()
         min_plate_app = self.min_plate_app_frame.get_min_plate_app()
+        collection_only_sel = self.collection_only_frame.get_collection_only_value()
+        cull_teams_limit = self.cull_teams_limit_frame.get_cull_teams_limit()
         stats_df = calc_basic_batting_stats_df(
             stat_list=selected_stats,
             position_select=selected_position,
@@ -148,7 +160,9 @@ class BattingStatsApp(tk.Toplevel):
             min_value=min_rating,
             max_value=max_rating,
             bat_side_select=selected_batting_side,
-            min_pa=min_plate_app
+            min_pa=min_plate_app,
+            collection_only_select=collection_only_sel,
+            cull_team_limit_select=cull_teams_limit,
         )
         self.dataframe_frame.set_dataframe(stats_df)
 

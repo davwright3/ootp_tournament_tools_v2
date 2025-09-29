@@ -10,6 +10,7 @@ from utils.data_utils.data_store import data_store
 from utils.data_utils.card_list_store import card_list_store
 from utils.stats_utils.calc_batting_stats import calc_batting_stats
 from utils.stats_utils.get_eligible_players import get_eligible_players
+from utils.stats_utils.cull_teams import cull_teams
 import pandas as pd
 
 def calc_basic_batting_stats_df(
@@ -20,6 +21,8 @@ def calc_basic_batting_stats_df(
         general_list=None,
         bat_side_select='All',
         position_select: str= None,
+        collection_only_select: bool=False,
+        cull_team_limit_select: int=8
 ):
     """
     Calculates basic batting stats and returns a dataframe with the
@@ -31,9 +34,11 @@ def calc_basic_batting_stats_df(
     :param general_list: list of general items the user wants to view, list(str)
     :param bat_side_select: selected batting side, str
     :param position_select: The position that the user wants to view, str
+    :param collection_only_select: whether to display only cards in collection, bool
+    :param cull_team_limit_select: runs limit for where teams get removed, int
     :return: Dataframe
     """
-    df = data_store.get_data().copy()
+    df = cull_teams(data_store.get_data().copy(), run_cutoff=cull_team_limit_select)
     card_list = card_list_store.get_card_list().copy()
 
     eligible_player_set = get_eligible_players(
@@ -41,7 +46,8 @@ def calc_basic_batting_stats_df(
         position_select=position_select,
         min_value=min_value,
         max_value=max_value,
-        bats_side=bat_side_select
+        bats_side=bat_side_select,
+        collection_only=collection_only_select
     )
     del card_list
     player_stats = calc_batting_stats(df, min_pa)

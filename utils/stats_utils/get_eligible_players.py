@@ -7,6 +7,7 @@ def get_eligible_players(
         min_value=40,
         max_value=105,
         bats_side=None,
+        collection_only=False
 ):
     """
     Returns eligible players based on user selections.
@@ -15,6 +16,7 @@ def get_eligible_players(
     :param min_value: Minimum value of cards to view, int
     :param max_value: Maximum value of cards to view, int
     :param bats_side: Bats side, str
+    :param collection_only: If true, only return eligible players
     :return: DataFrame
     """
     eligible_players = player_list.copy()
@@ -29,6 +31,9 @@ def get_eligible_players(
 
     eligible_players.loc[:, 'B'] = eligible_players['Bats'].apply(lambda x: 'R' if x == 1 else 'L' if x == 2 else 'S')
     eligible_players.loc[:, 'T'] = eligible_players['Throws'].apply(lambda x: 'R' if x == 1 else 'L')
+
+    if collection_only:
+        eligible_players = eligible_players[eligible_players['owned'] > 0]
 
     if bats_side != 'All':
         eligible_players = eligible_players[eligible_players['B'] == bats_side]

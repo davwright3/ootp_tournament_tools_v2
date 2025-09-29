@@ -15,6 +15,31 @@ if str(ROOT) not in sys.path:
 
 collect_ignore_glob = ['utils/view_utils/*.py']
 
+def pytest_configure(config):
+    """Configuration for global testing."""
+    df_default = pd.DataFrame(
+        {
+            'Card ID': [73691, 73885],
+            '//Card Title': ['Card A', 'Card B'],
+            'Card Value': [48, 59],
+            'Bats': [1, 2],
+            'Throws': [1, 2],
+            'owned': [0, 1],
+            'Last 10 Price': [125, 2000],
+            'Last 10 Price(VAR)': [1234, 250],
+            'Learn2B': [1, 0],
+        }
+    )
+
+    fake_module = types.ModuleType('utils.data_utils.card_list_store')
+    fake_store = types.SimpleNamespace(
+        get_card_list=lambda: df_default.copy(),
+        load_card_list=lambda *a, **k: None
+    )
+    fake_module.card_list_store = fake_store
+
+    sys.modules['utils.data_utils.card_list_store'] = fake_module
+
 @pytest.fixture(scope='session', autouse=True)
 def _headless_env():
     """Hide some API warnings on macOS."""
@@ -73,7 +98,7 @@ def sample_stats_df():
 
     data = {
         'CID': [73691, 73691, 73885, 73885],
-        'ORG': ['A', 'A', 'A', 'A'],
+        'ORG': ['A', 'A', 'B', 'B'],
         'PA': [20, 30, 30, 10],
         'AB': [18, 26, 27, 9],
         'H': [6, 8, 11, 2],
@@ -90,31 +115,12 @@ def sample_stats_df():
         'SB': [2, 0, 1, 0],
         'CS': [1, 0, 1, 0],
         'WAR': [.3, .6, .1, .3],
-        'R': [3, 4, 2, 6],
-        'IP': [6.1, 5.2, 7.1, 8.0]
+        'R': [3, 3, 2, 9],
+        'IP': [6.1, 5.2, 7.1, 8.0],
+        'GS.1': [1, 0, 1, 0],
+        'Trny': [1, 1, 1, 1]
     }
     df = pd.DataFrame(data)
-    return df
-
-@pytest.fixture
-def sample_card_df():
-    """
-    Fixture for testing modules that require the card databse.
-    Creates a small dataframe for card testing.
-    :return: dataframe containing card data.
-    """
-    cards = {
-        'Card ID': [73691, 73885],
-        '//Card Title': ['Card A', 'Card B'],
-        'Card Value': [48, 59],
-        'Bats': [1, 2],
-        'Throws': [1, 2],
-        'owned': [0, 1],
-        'Last 10 Price': [125, 2000],
-        'Last 10 Price(VAR)': [1234, 250],
-        'Learn2B': [1, 0],
-    }
-    df = pd.DataFrame(cards)
     return df
 
 @pytest.fixture
@@ -127,30 +133,7 @@ def patched_batting_data_store(monkeypatch, sample_stats_df):
     monkeypatch.setattr(mod, 'data_store', fake_df, raising=True)
     return sample_stats_df
 
-def pytest_configure(config):
-    """Patches the card list inside the stats module."""
-    df_default = pd.DataFrame(
-        {
-            'Card ID': [73691, 73885],
-            '//Card Title': ['Card A', 'Card B'],
-            'Card Value': [48, 59],
-            'Bats': [1, 2],
-            'Throws': [1, 2],
-            'owned': [0, 1],
-            'Last 10 Price': [125, 2000],
-            'Last 10 Price(VAR)': [1234, 250],
-            'Learn2B': [1, 0],
-        }
-    )
 
-    fake_module = types.ModuleType('utils.data_utils.card_list_store')
-    fake_store = types.SimpleNamespace(
-        get_card_list=lambda: df_default.copy(),
-        load_card_list=lambda *a, **k: None
-    )
-    fake_module.card_list_store = fake_store
-
-    sys.modules['utils.data_utils.card_list_store'] = fake_module
 
 
 
