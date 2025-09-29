@@ -23,10 +23,13 @@ def cull_teams(df, run_cutoff=8):
     if removed_pct > .35:
         logger.warning(f'''
         Removed {removed_count} out of {len(df)} rows.
-        This is {round(removed_pct, 2) * 100}% chance of being removed.
+        This is a {round(removed_pct, 2) * 100}% removal rate.
         Please check data set for valid data.
         ''')
     else:
-        logger.info(f'Removed {removed_count} out of {len(df)} rows of data.')
+        logger.info(f'''
+        Removed {removed_count} out of {len(df)} rows of data.
+        This is a {round(removed_pct, 2) * 100}% removal rate..
+        ''')
     return df_filtered
 
