@@ -7,9 +7,10 @@ import logging
 import os
 from utils.view_utils.header_frame import Header
 from utils.view_utils.footer_frame import Footer
-from utils.data_utils.select_return_stats_data_file import select_return_stats_data_file
+from utils.data_utils.select_load_stats_data_file import select_load_stats_data_file
 from utils.view_utils.message_panel import MessagePanel
 from utils.log_utils.attach import attach_panel
+from apps.batting_stats import BattingStatsApp
 
 
 
@@ -20,10 +21,22 @@ class BasicStatsApp(tk.Toplevel):
         self.title("Basic Stats Views")
         self.geometry("1920x1080")
 
+        def set_active_buttons(frame):
+            buttons = []
+            for widget in frame.winfo_children():
+                if isinstance(widget, tk.Button):
+                    buttons.append(widget)
+
+            for button in buttons:
+                if self.is_dataframe_loaded.get():
+                    button.configure(state=tk.NORMAL)
+                else:
+                    button.configure(state=tk.DISABLED)
+
         # Variables for page
         self.data_file_select_var = tk.StringVar(value=None)
         self.dataframe_loaded_var = tk.StringVar(value="No file selected.")
-        self.is_dataframe_loaded = False
+        self.is_dataframe_loaded = tk.BooleanVar(value=False)
 
         self.rowconfigure(0, weight=0)
         self.rowconfigure(1, weight=0)
@@ -55,11 +68,22 @@ class BasicStatsApp(tk.Toplevel):
         self.footer_frame = Footer(self)
         self.footer_frame.grid(row=3, column=0, sticky="nsew")
 
+        self.main_frame.columnconfigure(0, weight=1)
+        self.main_frame.columnconfigure(1, weight=1)
+        self.main_frame.rowconfigure(0, weight=1)
+
         # Data for file selection frame
         self.data_file_select_button = tk.Button(
             self.select_data_file_frame,
             text="File Select",
-            command=lambda: select_return_stats_data_file(self)
+            command=lambda: (
+                select_load_stats_data_file(
+                    self,
+                    loaded_file_var=self.dataframe_loaded_var,
+                    file_loaded_bool=self.is_dataframe_loaded,
+                ),
+                set_active_buttons(self.app_select_frame)
+            )
         )
         self.data_file_select_button.grid(row=0, column=0, sticky="e")
 
@@ -80,9 +104,35 @@ class BasicStatsApp(tk.Toplevel):
         self.valid_file_label.grid(row=0, column=3, sticky="e")
 
         # Data for main frame
+        self.app_select_frame = tk.Frame(
+            self.main_frame,
+        )
+        self.app_select_frame.grid(row=0, column=0, sticky="nsew")
+
+        self.app_select_frame.columnconfigure(0, weight=1)
+        self.app_select_frame.columnconfigure(1, weight=1)
+        self.app_select_frame.columnconfigure(2, weight=1)
+        self.app_select_frame.rowconfigure(0, weight=1)
+        self.app_select_frame.rowconfigure(1, weight=1)
+        self.app_select_frame.rowconfigure(2, weight=1)
+
+
+        self.batting_app_select_button = tk.Button(
+            self.app_select_frame,
+            text="Batting Stats",
+            command=open_batting_stats
+        )
+        self.batting_app_select_button.grid(row=0, column=0, sticky="nsew")
+
         self.message_panel = MessagePanel(self.main_frame, height=12)
         self.message_panel.grid(row=0, column=1, sticky="nsew")
         attach_panel(self.message_panel, 'apps.basic_stats_app')
         self.log = logging.getLogger("apps.basic_stats_app")
         self.log.info("Initializing Basic Stats App")
+
+        set_active_buttons(self.app_select_frame)
+
+def open_batting_stats():
+    BattingStatsApp()
+
 

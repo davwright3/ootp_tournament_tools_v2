@@ -6,12 +6,39 @@ import configparser
 import pytest
 import tkinter as tk
 from pathlib import Path
+import pandas as pd
+import types
 
 ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 collect_ignore_glob = ['utils/view_utils/*.py']
+
+def pytest_configure(config):
+    """Configuration for global testing."""
+    df_default = pd.DataFrame(
+        {
+            'Card ID': [73691, 73885],
+            '//Card Title': ['Card A', 'Card B'],
+            'Card Value': [48, 59],
+            'Bats': [1, 2],
+            'Throws': [1, 2],
+            'owned': [0, 1],
+            'Last 10 Price': [125, 2000],
+            'Last 10 Price(VAR)': [1234, 250],
+            'Learn2B': [1, 0],
+        }
+    )
+
+    fake_module = types.ModuleType('utils.data_utils.card_list_store')
+    fake_store = types.SimpleNamespace(
+        get_card_list=lambda: df_default.copy(),
+        load_card_list=lambda *a, **k: None
+    )
+    fake_module.card_list_store = fake_store
+
+    sys.modules['utils.data_utils.card_list_store'] = fake_module
 
 @pytest.fixture(scope='session', autouse=True)
 def _headless_env():
@@ -58,3 +85,56 @@ def temp_settings_files(tmp_path, monkeypatch):
 
     # Return paths so tests can use them
     return {"user": user_ini, "default": default_ini}
+
+@pytest.fixture
+def sample_stats_df():
+    """
+    Fixture for testing of basic batting stats.
+    Creates a small, clean dataframe for stat testing.
+    Note: CID 73691 is Yosver Zulueta, 2B eligible for testing purposes.
+    Note: CID 73885 is Mke Zunino, 2B INELIGIBLE for testing purposes.
+    :return: Dataframe containing batting stats.
+    """
+
+    data = {
+        'CID': [73691, 73691, 73885, 73885],
+        'ORG': ['A', 'A', 'B', 'B'],
+        'PA': [20, 30, 30, 10],
+        'AB': [18, 26, 27, 9],
+        'H': [6, 8, 11, 2],
+        '1B': [4, 5, 7, 2],
+        '2B': [1, 1, 1, 0],
+        '3B': [0, 1, 1, 0],
+        'HR': [1, 1, 2, 0],
+        'TB': [10, 14, 20, 2],
+        'SO': [4, 3, 6, 2],
+        'HP': [0, 0, 0, 1],
+        'BB': [1, 2, 1, 1],
+        'IBB': [0, 0, 0, 0],
+        'SF': [1, 2, 2, 0],
+        'SB': [2, 0, 1, 0],
+        'CS': [1, 0, 1, 0],
+        'WAR': [.3, .6, .1, .3],
+        'R': [3, 3, 2, 9],
+        'IP': [6.1, 5.2, 7.1, 8.0],
+        'GS.1': [1, 0, 1, 0],
+        'Trny': [1, 1, 1, 1]
+    }
+    df = pd.DataFrame(data)
+    return df
+
+@pytest.fixture
+def patched_batting_data_store(monkeypatch, sample_stats_df):
+    import utils.stats_utils.generate_basic_batting_stats_df as mod
+
+    fake_df = types.SimpleNamespace(
+        get_data= lambda: sample_stats_df.copy(),
+    )
+    monkeypatch.setattr(mod, 'data_store', fake_df, raising=True)
+    return sample_stats_df
+
+
+
+
+
+

@@ -248,7 +248,7 @@ class MainApp(tk.Tk):
         # ui_handler.setFormatter(logging.Formatter(fmt='%(asctime)s %(levelname)-8s %(message)s', datefmt="%Y-%m-%d %H:%M:%S"))
 
         # Set ui_handler to exclude log message from selected apps.  Add new apps as necessary.
-        ui_handler.addFilter(ExcludeNamespaces("apps.fileproc"))
+        ui_handler.addFilter(ExcludeNamespaces("apps.fileproc", 'apps.basic_stats_app'))
         root_logger.addHandler(ui_handler)
 
         BOOTSTRAP_MEM.setTarget(ui_handler)
