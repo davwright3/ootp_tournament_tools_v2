@@ -6,7 +6,8 @@ def get_eligible_players(
         position_select: str = None,
         min_value=40,
         max_value=105,
-        bats_side=None,
+        bats_side='All',
+        throws_side='All',
         collection_only=False
 ):
     """
@@ -16,6 +17,7 @@ def get_eligible_players(
     :param min_value: Minimum value of cards to view, int
     :param max_value: Maximum value of cards to view, int
     :param bats_side: Bats side, str
+    :param throws_side: Throws side, str
     :param collection_only: If true, only return eligible players
     :return: DataFrame
     """
@@ -38,6 +40,8 @@ def get_eligible_players(
     if bats_side != 'All':
         eligible_players = eligible_players[eligible_players['B'] == bats_side]
 
+    if throws_side != 'All':
+        eligible_players = eligible_players[eligible_players['T'] == throws_side]
 
     eligible_players = eligible_players.rename(
         columns= {'Card ID': 'CID', '//Card Title': 'Title', 'Card Value': 'Val',

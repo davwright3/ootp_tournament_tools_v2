@@ -148,8 +148,18 @@ def sample_stats_df():
     return df
 
 @pytest.fixture
-def patched_data_store(monkeypatch, sample_stats_df):
+def patched_batting_data_store(monkeypatch, sample_stats_df):
     import utils.stats_utils.generate_basic_batting_stats_df as mod
+
+    fake_df = types.SimpleNamespace(
+        get_data= lambda: sample_stats_df.copy(),
+    )
+    monkeypatch.setattr(mod, 'data_store', fake_df, raising=True)
+    return sample_stats_df
+
+@pytest.fixture
+def patched_pitching_data_store(monkeypatch, sample_stats_df):
+    import utils.stats_utils.generate_basic_pitching_stats_df as mod
 
     fake_df = types.SimpleNamespace(
         get_data= lambda: sample_stats_df.copy(),
