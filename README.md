@@ -7,11 +7,11 @@ which can be found here: [GithubLink](https://github.com/davwright3/au_ootp_tour
 
 Please visit this link if you have any feature requests: [Feature Requests](https://docs.google.com/forms/d/1I01oUCsnH41OVFDkNjZeQurVAMr5zBd8103BPOorBUw/edit)
 
-## Current Version 0.1.2
+## Current Version 0.2.0
 
 ### Updated: 
 
-11 Sep 2025
+02 Oct 2025
 
 New Features:
 
@@ -26,6 +26,12 @@ New Features:
   - Settings updates are handled by the individual setting instead of in a setting menu
   - Better UI indications on valid/invalid file paths and file selections
   - Improved checks for invalid files, allowing for reduced errors from stat calculations and missing data
+
+- Improved main view display options
+
+  - Ability to control Joe Unknown cutoff limits
+  - View only cards in your collection
+  - More robust stats selections (i.e. K-BB pct, Last 10 pricing, etc.)
 
 - New User Messaging System 💬
 
@@ -67,6 +73,15 @@ New Features:
 
     - This folder will be where the initial file dialog opens when you prepare to process files.
 
+- Create your view on the OOTP Sortable Stats page and export the file (with both batters and pitchers) to CSV
+
+  - View should include the following stats, in this order:
+  
+    - Tag Controls, PT Card ID, Organization, PT Card Value, PT Is Variant, PT Variant Level, (Batter) G, GS, PA, AB, H, 1B, 2B, 3B, HR, RBI, R, BB, IBB,
+      HP, SH, SF, SO, GIDP, EBH, TB, RC, RC/27, wOBA, WPA, WAR, SB, CS, wSB, UBR, BsR, (Pitcher) G, GS, W, L, SVO, SV, BS, HLD, SD, MD, IP, BF, AB, HA, 1B,
+      2B, 3B, HR, TB, R, ER, BB, IBB, K, HP, SH, SF, WP, DP, IR, IRS, QS, CG, SHO, GB, FB, SB, CS, FIP, WAR, TC, A, PO, E, DP, TP, PCT, ZR, SBA, RTO
+
+  - Once exported, copy the file into your desired raw data folder, and name according the the file naming conventions below
 
 ## Recommended file structure:
 
@@ -87,6 +102,47 @@ New Features:
   ||-- tournament_name.csv
 
   ||-- tournament_2_name.csv
+
+## File Naming Conventions
+
+- When files are processed, the app uses the names of the files to determine if they have already been added to the 'ready' CSV
+- When loading, the app will parse these filenames to the best of its ability in order to be able to process data
+- <span style='color:red'>For best results:</span>
+
+  - For daily and weekly tournaments, use a DD Mmm format (i.e. 03 Sep)
+  - For quick tournaments use a four digit integer number referencing the tournament (i.e. 0345)
+
+- Adding extraneous letters or numbers may cause errors in data processing
+
+## Processing Files
+
+- A template file, with headings that match the required view, is provided for the file processing app
+
+  - After clicking the create a new file button, you will be asked to enter a name for the file
+  - A new empty file with proper headings will be copied to the location in your settings for your Ready File Location
+  - This location can be viewed on the home page of the app, if you have trouble finding the file after creation
+
+- Processing steps:
+
+  - Select target file: this is the file you want the raw data to be concatenated to
+  - Select raw data folder: this is the folder where your raw data is stored.  
+
+    - It is normal to not see any files when selecting, as this step is looking for a folder
+
+  - Process files
+
+    - The app uses the filename to enter into the 'Trny' column in the concatenated file
+    - This allows the app to avoid copying duplicate files into the new folder
+    - You will see the names of the processed files and how many lines are added in the window messaging system
+
+## Viewing Statistics
+
+- Upon opening the Basic Stats section of the app, you will need to use the file select button to select the tournament data you wish to view
+
+  - Until a valid CSV file is selected, the batting and pitching stats view buttons will be inactive (unclickable)
+
+- Upon opening the stats view, all possible stats to view will be selected, and will default to baseline filter (i.e. minimum of 600 plate appearances)
+- You will then be able to make your options and filter selections and press the reload button to view only the options that you want
 
 
 ## Project Roadmap
@@ -122,4 +178,15 @@ New Features:
 
   - At the moment I have no plans to utilize a community dataset.  While I appreciate the thought, 
   the program is designed for personal use, and allowing external sources to input data would introduce security 
-  concerns that are outside of the 
+  concerns that are outside of the scope of this project.
+
+- <span style="font-weight:bold">Why are my tables empty?</span>
+
+  - There are a few reasons your table may populate as empty, plase check the following:
+
+    - Ensure that the headings you exported from OOTP are accurate, and that the dataset contains both batters and pitchers
+
+      - If batters and pitchers are exported in separate datasets, the cull teams functions will not work and all of your players will be removed from the data set
+
+    - Check your filenames for the proper format (DD MMM or XXXX depending on tournament type)
+    - Check your minimum settings for plate appearances or innings pitched

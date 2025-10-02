@@ -5,6 +5,7 @@ from utils.stats_utils.generate_basic_pitching_stats_df import generate_basic_pi
 from utils.view_utils import pitcher_type_select_frame
 from utils.view_utils.header_frame import Header
 from utils.view_utils.footer_frame import Footer
+from utils.view_utils.table_formatters import fmt_leading_dot
 from utils.view_utils.dataframe_table_frame import DataFrameTableFrame
 from utils.view_utils.scrollable_frame import ScrollableFrame
 from utils.view_utils.min_max_rating_frame import MinMaxFrame
@@ -48,8 +49,24 @@ class PitchStatsApp(tk.Toplevel):
         self.footer_frame.grid(row=2, column=0, sticky="nsew")
 
         # Main Frame details
+        fmt = {
+            'ERA': fmt_leading_dot(2, '.00'),
+            'FIP': fmt_leading_dot(2, '.00'),
+            'WHIP': fmt_leading_dot(3, '.000'),
+            'K%': fmt_leading_dot(3, '.000'),
+            'BB%': fmt_leading_dot(3, '.000'),
+            'K-BB': fmt_leading_dot(3, '.000'),
+            'HR/9': fmt_leading_dot(1, '.0'),
+            'SV%': fmt_leading_dot(3, '.000'),
+            'SD:MD': fmt_leading_dot(2, '.00'),
+            'IRS%': fmt_leading_dot(3, '.000'),
+            'GB%': fmt_leading_dot(3, '.000'),
+            'WAR/200': fmt_leading_dot(1, '.0'),
+            'IP/G': fmt_leading_dot(1, '.0')
+        }
         self.stats_frame = DataFrameTableFrame(
             self.main_frame,
+            formatters=fmt
         )
         self.stats_frame.grid(row=0, column=0, sticky="nsew")
 
@@ -142,8 +159,8 @@ class PitchStatsApp(tk.Toplevel):
         row += 1
 
 
-        stats = generate_basic_pitching_stats()
-        self.stats_frame.set_dataframe(stats)
+        stats_df = generate_basic_pitching_stats()
+        self.stats_frame.set_dataframe(stats_df)
 
     def reload_data(self):
         min_ip_select = self.min_innings_frame.get_min_innings()
