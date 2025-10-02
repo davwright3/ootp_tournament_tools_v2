@@ -2,8 +2,12 @@ name: CI
 
 on:
   push:
-    branches: []
+    branches:
+      - '**'
   pull_request:
+    branches:
+      - '**'
+  workflow_dispatch:
 
 jobs:
   test:

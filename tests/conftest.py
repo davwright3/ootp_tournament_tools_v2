@@ -117,7 +117,31 @@ def sample_stats_df():
         'WAR': [.3, .6, .1, .3],
         'R': [3, 3, 2, 9],
         'IP': [6.1, 5.2, 7.1, 8.0],
+        'G.1': [1, 1, 1, 2],
         'GS.1': [1, 0, 1, 0],
+        'BF': [24, 21, 30, 34],
+        'ER': [1, 2, 1, 3],
+        'K': [4, 6, 5, 3],
+        'BB.1': [1, 2, 0, 1],
+        'IBB.1': [0, 0, 0, 0],
+        'HA': [5, 4, 3, 6],
+        '1B.1': [3, 2, 2, 3],
+        '2B.1': [1, 0, 1, 1],
+        '3B.1': [0, 1, 0, 0],
+        'HR.1': [1, 1, 0, 2],
+        'SV': [1, 0, 2, 0],
+        'SVO': [2, 0, 3, 0],
+        'SD': [1, 1, 1, 2],
+        'MD': [0, 1, 0, 1],
+        'HP.1': [0, 1, 0, 0],
+        'SH.1': [0, 0, 1, 0],
+        'SF.1': [1, 0, 0, 0],
+        'QS': [0, 0, 1, 0],
+        'IR': [0, 2, 0, 3],
+        'IRS': [0, 1, 0, 1],
+        'GB': [8, 4, 7, 9],
+        'FB': [4, 2, 3, 4],
+        'WAR.1': [.4, .3, .6, .7],
         'Trny': [1, 1, 1, 1]
     }
     df = pd.DataFrame(data)
@@ -133,8 +157,12 @@ def patched_batting_data_store(monkeypatch, sample_stats_df):
     monkeypatch.setattr(mod, 'data_store', fake_df, raising=True)
     return sample_stats_df
 
+@pytest.fixture
+def patched_pitching_data_store(monkeypatch, sample_stats_df):
+    import utils.stats_utils.generate_basic_pitching_stats_df as mod
 
-
-
-
-
+    fake_df = types.SimpleNamespace(
+        get_data= lambda: sample_stats_df.copy(),
+    )
+    monkeypatch.setattr(mod, 'data_store', fake_df, raising=True)
+    return sample_stats_df

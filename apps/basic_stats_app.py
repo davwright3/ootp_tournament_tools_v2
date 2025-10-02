@@ -11,6 +11,7 @@ from utils.data_utils.select_load_stats_data_file import select_load_stats_data_
 from utils.view_utils.message_panel import MessagePanel
 from utils.log_utils.attach import attach_panel
 from apps.batting_stats import BattingStatsApp
+from apps.pitching_stats import PitchStatsApp
 
 
 
@@ -124,6 +125,13 @@ class BasicStatsApp(tk.Toplevel):
         )
         self.batting_app_select_button.grid(row=0, column=0, sticky="nsew")
 
+        self.pitching_app_select_button = tk.Button(
+            self.app_select_frame,
+            text="Pitching Stats",
+            command=open_pitching_stats
+        )
+        self.pitching_app_select_button.grid(row=0, column=1, sticky="nsew")
+
         self.message_panel = MessagePanel(self.main_frame, height=12)
         self.message_panel.grid(row=0, column=1, sticky="nsew")
         attach_panel(self.message_panel, 'apps.basic_stats_app')
@@ -135,4 +143,5 @@ class BasicStatsApp(tk.Toplevel):
 def open_batting_stats():
     BattingStatsApp()
 
-
+def open_pitching_stats():
+    PitchStatsApp()
