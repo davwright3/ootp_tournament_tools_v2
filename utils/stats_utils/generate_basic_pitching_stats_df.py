@@ -47,7 +47,7 @@ def generate_basic_pitching_stats(
         calculated_stats_df = calculated_stats_df[stat_return_columns]
 
     if general_list is not None:
-        general_return_columns = ['CID', 'Title']
+        general_return_columns = ['CID', 'Title', 'Val']
         general_return_columns.extend(general_list)
         eligible_player_set = eligible_player_set[general_return_columns]
 

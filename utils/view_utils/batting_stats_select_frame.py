@@ -17,7 +17,6 @@ class BattingStatsSelectFrame(tk.Frame):
 
         def set_active_stats():
             self.selected_stats.clear()
-            self.selected_stats.clear()
             for child in self.winfo_children():
                 if isinstance(child, CTkCheckBox):
                     if child.get() != 'off':

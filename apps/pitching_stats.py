@@ -11,6 +11,10 @@ from utils.view_utils.min_max_rating_frame import MinMaxFrame
 from utils.view_utils.min_ip_frame import MinIPFrame
 from utils.view_utils.pitcher_side_select_frame import PitcherSideSelectFrame
 from utils.view_utils.pitcher_type_select_frame import PitcherTypeSelectFrame
+from utils.view_utils.pitcher_stats_select_frame import PitcherStatsSelectFrame
+from utils.view_utils.general_info_select_frame import GeneralInfoFrame
+from utils.view_utils.select_in_collection_frame import SelectInCollectionFrame
+from utils.view_utils.set_cull_teams_limit_frame import SetCullTeamsFrame
 
 
 class PitchStatsApp(tk.Toplevel):
@@ -49,24 +53,32 @@ class PitchStatsApp(tk.Toplevel):
         )
         self.stats_frame.grid(row=0, column=0, sticky="nsew")
 
-        self.settings_frame = tk.Frame(
+        self.options_frame = tk.Frame(
             self.main_frame,
         )
-        self.settings_frame.grid(row=0, column=1, sticky="nsew")
+        self.options_frame.grid(row=0, column=1, sticky="nsew")
 
-        self.settings_frame.columnconfigure(0, weight=1)
-        self.settings_frame.rowconfigure(0, weight=0)
-        self.settings_frame.rowconfigure(1, weight=1)
+        self.options_frame.columnconfigure(0, weight=1)
+        self.options_frame.rowconfigure(0, weight=0)
+        self.options_frame.rowconfigure(1, weight=1)
+
+        self.options_button_frame = tk.Frame(self.options_frame)
+        self.options_button_frame.grid(row=0, column=0, sticky='nsew')
+        self.options_button_frame.columnconfigure(0, weight=1)
+        self.options_button_frame.columnconfigure(1, weight=0)
+        self.options_button_frame.columnconfigure(2, weight=1)
 
         self.reload_button = tk.Button(
-            self.settings_frame,
+            self.options_button_frame,
             text="Reload",
-            command=self.reload_data
+            command=self.reload_data,
+            width=5,
+            height=1
         )
-        self.reload_button.grid(row=0, column=0, sticky="nsew")
+        self.reload_button.grid(row=0, column=1, sticky="nsew")
 
         self.settings_options_frame = ScrollableFrame(
-            self.settings_frame,
+            self.options_frame,
         )
         self.settings_options_frame.grid(row=1, column=0, sticky="nsew")
 
@@ -105,11 +117,55 @@ class PitchStatsApp(tk.Toplevel):
         self.pitcher_type_select_frame.grid(row=row, column=0, sticky="nsew")
         row += 1
 
+        self.pitcher_stats_select_frame = PitcherStatsSelectFrame(
+            inner_frame,
+        )
+        self.pitcher_stats_select_frame.grid(row=row, column=0, sticky="nsew")
+        row += 1
+
+        self.general_items_frame = GeneralInfoFrame(
+            inner_frame
+        )
+        self.general_items_frame.grid(row=row, column=0, sticky="nsew")
+        row += 1
+
+        self.collection_only_frame = SelectInCollectionFrame(
+            inner_frame,
+        )
+        self.collection_only_frame.grid(row=row, column=0, sticky="nsew")
+        row += 1
+
+        self.cull_teams_frame = SetCullTeamsFrame(
+            inner_frame,
+        )
+        self.cull_teams_frame.grid(row=row, column=0, sticky="nsew")
+        row += 1
 
 
         stats = generate_basic_pitching_stats()
         self.stats_frame.set_dataframe(stats)
 
     def reload_data(self):
-        stats = generate_basic_pitching_stats()
+        min_ip_select = self.min_innings_frame.get_min_innings()
+        start_relief_cutoff_select = self.pitcher_type_select_frame.get_pitcher_type_cutoff()
+        min_select, max_select = self.min_max_ratings_frame.get_min_max_rating()
+        stat_list_select = self.pitcher_stats_select_frame.get_active_stats()
+        general_list_select = self.general_items_frame.get_selected_items()
+        throws_side_select = self.pitcher_side_select_frame.get_pitcher_side_select()
+        pitcher_type_select = self.pitcher_type_select_frame.get_pitcher_type()
+        collection_only_select = self.collection_only_frame.get_collection_only_value()
+        cull_team_var_select = self.cull_teams_frame.get_cull_teams_limit()
+
+        stats = generate_basic_pitching_stats(
+            min_ip=min_ip_select,
+            start_relief_cutoff=start_relief_cutoff_select,
+            min_value=min_select,
+            max_value=max_select,
+            stat_list=stat_list_select,
+            general_list=general_list_select,
+            throws_side_select=throws_side_select,
+            pitcher_type_select=pitcher_type_select,
+            collection_only_select=collection_only_select,
+            cull_team_limit_select=cull_team_var_select,
+        )
         self.stats_frame.set_dataframe(stats)

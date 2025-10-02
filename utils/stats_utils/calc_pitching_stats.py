@@ -9,7 +9,17 @@ def calculate_pitching_stats(df, min_ip_sel=200):
                'MD', 'HP.1', 'SH.1', 'SF.1', 'QS', 'IR', 'IRS', 'GB',
                'FB', 'WAR.1', 'Trny']].groupby(['CID'], as_index=False).sum()
 
+    lg_era = (df1['ER'].sum()/df1['IPC'].sum())*9
+    fip_const = (lg_era -
+                (
+                    ((13 * df1['HR.1'].sum()) + (3 * (df1['BB.1'].sum() + df1['HP.1'].sum())) - (2 * df1['K'].sum())) /
+                    df1['IPC'].sum())
+                )
+
     df1['ERA'] = ((df1['ER'] / df1['IPC'])*9).round(2)
+
+    df1['FIP'] = ((((13 * df1['HR.1']) + (3 * (df1['BB.1'] + df1['HP.1'])) - (2 * df1['K'])) /
+                   df1['IPC']) + fip_const).round(2)
 
     df1['WHIP'] = ((df1['BB.1'] + df1['HA']) / df1['IPC']).round(3)
 
@@ -35,7 +45,7 @@ def calculate_pitching_stats(df, min_ip_sel=200):
 
 
     df1['IPC'] = df1['IPC'].round(2)
-    df2 = df1[['CID', 'IPC', 'ERA', 'WHIP', 'K%', 'BB%', 'K-BB', 'HR/9',
+    df2 = df1[['CID', 'IPC', 'ERA', 'FIP', 'WHIP', 'K%', 'BB%', 'K-BB', 'HR/9',
                'SV%', 'SD/MD', 'IRS%', 'GB%', 'WAR/200', 'IP/G']]
     df2 = df2[df2['IPC'] >= min_ip_sel]
     return df2
