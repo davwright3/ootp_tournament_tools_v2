@@ -8,12 +8,12 @@ def test_basic_pitching_stats_return_accurate_calcs(monkeypatch, patched_pitchin
 
     assert df.loc[df['CID'] == 73691, 'ERA'].squeeze() == 2.25
     assert df.loc[df['CID'] == 73691, 'WHIP'].squeeze() == 1.00
-    assert df.loc[df['CID'] == 73691, 'Kpct'].squeeze() == .222
-    assert df.loc[df['CID'] == 73691, 'BBpct'].squeeze() == .067
-    assert df.loc[df['CID'] == 73691, 'KmBB'].squeeze() == .155
+    assert df.loc[df['CID'] == 73691, 'K%'].squeeze() == .222
+    assert df.loc[df['CID'] == 73691, 'BB%'].squeeze() == .067
+    assert df.loc[df['CID'] == 73691, 'K-BB'].squeeze() == .155
     assert df.loc[df['CID'] == 73691, 'HR/9'].squeeze() == 1.50
     assert df.loc[df['CID'] == 73691, 'SV%'].squeeze() == .50
-    assert df.loc[df['CID'] == 73691, 'SDpMD'].squeeze() == 2.00
+    assert df.loc[df['CID'] == 73691, 'SD/MD'].squeeze() == 2.00
     assert df.loc[df['CID'] == 73691, 'IRS%'].squeeze() == .50
     assert df.loc[df['CID'] == 73691, 'GB%'].squeeze() == .667
     assert df.loc[df['CID'] == 73691, 'WAR/200'].squeeze() == 11.7
@@ -48,11 +48,11 @@ def test_stats_select_returns_correct_columns(monkeypatch, patched_pitching_data
     df = mod.generate_basic_pitching_stats(min_ip=1, cull_team_limit_select=12, stat_list=['ERA', 'HR/9'])
 
     assert 'ERA', 'HR/9' in df.columns.tolist()
-    assert 'WHIP', 'BBpct' not in df.columns.tolist()
+    assert 'WHIP', 'BB%' not in df.columns.tolist()
 
     df = mod.generate_basic_pitching_stats(min_ip=1, cull_team_limit_select=12)
 
-    assert 'ERA', 'BBpct' in df.columns.tolist()
+    assert 'ERA', 'BB%' in df.columns.tolist()
 
 def test_general_items_return_properly(monkeypatch, patched_pitching_data_store):
     df = mod.generate_basic_pitching_stats(min_ip=1, cull_team_limit_select=12, general_list=['owned'])

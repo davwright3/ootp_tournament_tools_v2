@@ -2,6 +2,7 @@
 import tkinter as tk
 from utils.data_utils.data_store import data_store
 from utils.stats_utils.generate_basic_pitching_stats_df import generate_basic_pitching_stats
+from utils.view_utils import pitcher_type_select_frame
 from utils.view_utils.header_frame import Header
 from utils.view_utils.footer_frame import Footer
 from utils.view_utils.dataframe_table_frame import DataFrameTableFrame
@@ -9,6 +10,7 @@ from utils.view_utils.scrollable_frame import ScrollableFrame
 from utils.view_utils.min_max_rating_frame import MinMaxFrame
 from utils.view_utils.min_ip_frame import MinIPFrame
 from utils.view_utils.pitcher_side_select_frame import PitcherSideSelectFrame
+from utils.view_utils.pitcher_type_select_frame import PitcherTypeSelectFrame
 
 
 class PitchStatsApp(tk.Toplevel):
@@ -95,6 +97,12 @@ class PitchStatsApp(tk.Toplevel):
             inner_frame,
         )
         self.pitcher_side_select_frame.grid(row=row, column=0, sticky="nsew")
+        row += 1
+
+        self.pitcher_type_select_frame = PitcherTypeSelectFrame(
+            inner_frame,
+        )
+        self.pitcher_type_select_frame.grid(row=row, column=0, sticky="nsew")
         row += 1
 
 

@@ -13,17 +13,17 @@ def calculate_pitching_stats(df, min_ip_sel=200):
 
     df1['WHIP'] = ((df1['BB.1'] + df1['HA']) / df1['IPC']).round(3)
 
-    df1['Kpct'] = (df1['K'] / df1['BF']).round(3)
+    df1['K%'] = (df1['K'] / df1['BF']).round(3)
 
-    df1['BBpct'] = (df1['BB.1'] / df1['BF']).round(3)
+    df1['BB%'] = (df1['BB.1'] / df1['BF']).round(3)
 
-    df1['KmBB'] = (df1['Kpct'] - df1['BBpct']).round(3)
+    df1['K-BB'] = (df1['K%'] - df1['BB%']).round(3)
 
     df1['HR/9'] = ((df1['HR.1'] / df1['IPC']) * 9).round(3)
 
     df1['SV%'] = (df1['SV'] / df1['SVO']).round(3)
 
-    df1['SDpMD'] = (df1['SD'] / df1['MD']).round(3)
+    df1['SD/MD'] = (df1['SD'] / df1['MD']).round(3)
 
     df1['IRS%'] = (df1['IRS'] / df1['IR']).round(3)
 
@@ -35,8 +35,8 @@ def calculate_pitching_stats(df, min_ip_sel=200):
 
 
     df1['IPC'] = df1['IPC'].round(2)
-    df2 = df1[['CID', 'IPC', 'ERA', 'WHIP', 'Kpct', 'BBpct', 'KmBB', 'HR/9',
-               'SV%', 'SDpMD', 'IRS%', 'GB%', 'WAR/200', 'IP/G']]
+    df2 = df1[['CID', 'IPC', 'ERA', 'WHIP', 'K%', 'BB%', 'K-BB', 'HR/9',
+               'SV%', 'SD/MD', 'IRS%', 'GB%', 'WAR/200', 'IP/G']]
     df2 = df2[df2['IPC'] >= min_ip_sel]
     return df2
 
