@@ -21,3 +21,5 @@ def select_target_file(target_var):
     if path:
         settings_module.update_setting('TargetFiles', 'target_card_list', path)
         target_var.set(path)
+        return path
+

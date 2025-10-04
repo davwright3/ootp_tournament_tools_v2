@@ -5,6 +5,7 @@ target_card_list path.
 from utils.data_utils.select_return_target_file import select_return_target_file
 from utils.config_utils.load_save_settings import settings
 import pandas as pd
+import os
 
 class CardListStore:
     """
@@ -23,17 +24,22 @@ class CardListStore:
             cls._instance = super(CardListStore, cls).__new__(cls)
         return cls._instance
 
-    def __init__(self):
-        if self._card_list_dataframe is None and self.card_list_path:
-            self.load_card_list(self.card_list_path)
-
-    def load_card_list(self, filepath):
+    def load_card_list(self, filepath=None):
         """
         Load card list from target path into a DataFrame.
         :param filepath: The path of the csv file, str.
         """
+        if filepath is None:
+            filepath = settings.get('TargetFiles', 'target_card_list', fallback=None)
+        filepath = os.path.normpath(filepath)
+
+        if not filepath or not os.path.isfile(filepath):
+            raise FileNotFoundError(
+                f'File {filepath} not found.'
+            )
         df = pd.read_csv(filepath)
         self._card_list_dataframe = df
+        return df
 
     def get_card_list(self):
         """Return the loaded DataFrame for use by other apps."""
