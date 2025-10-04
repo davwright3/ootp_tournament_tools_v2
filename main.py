@@ -60,16 +60,6 @@ class MainApp(tk.Tk):
 
         self.card_list_target_path = self.settings['TargetFiles']['target_card_list']
 
-        def check_card_list_valid():
-            if not os.path.isfile(self.card_list_target_path):
-                self.card_list_target_path = None
-                self.card_list_valid_display.set("Invalid \u274c")
-            elif not self.card_list_target_path.lower().endswith(".csv"):
-                self.card_list_target_path = None
-                self.card_list_valid_display.set("Invalid \u274c")
-            else:
-                self.card_list_valid_display.set("Valid \u2713")
-
         # Page rows and columns
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=0)
@@ -117,6 +107,25 @@ class MainApp(tk.Tk):
         self.buttons_frame = tk.Frame(self.content_frame, bg='red')
         self.buttons_frame.grid(row=0, column=0, sticky="nsew")
 
+        def check_card_list_valid():
+            if not os.path.isfile(str(self.card_list_target_path)):
+                self.card_list_target_path = None
+                self.card_list_valid_display.set("Invalid \u274c")
+                for widget in self.buttons_frame.winfo_children():
+                    if isinstance(widget, tk.Button):
+                        widget.configure(state=tk.DISABLED)
+            elif not self.card_list_target_path.lower().endswith(".csv"):
+                self.card_list_target_path = None
+                self.card_list_valid_display.set("Invalid \u274c")
+                for widget in self.buttons_frame.winfo_children():
+                    if isinstance(widget, tk.Button):
+                        widget.configure(state=tk.DISABLED)
+            else:
+                self.card_list_valid_display.set("Valid \u2713")
+                for widget in self.buttons_frame.winfo_children():
+                    if isinstance(widget, tk.Button):
+                        widget.configure(state=tk.NORMAL)
+
         self.buttons_frame.columnconfigure(0, weight=1)
         self.buttons_frame.columnconfigure(1, weight=1)
         self.buttons_frame.columnconfigure(2, weight=1)
@@ -160,11 +169,16 @@ class MainApp(tk.Tk):
         self.message_panel = MessagePanel(self.message_frame, height=12)
         self.message_panel.grid(row=0, column=0, sticky="nsew")
 
+        def on_select_card_file():
+            path = select_target_file(self.target_card_list_var)
+            self.card_list_target_path = self.settings.get('TargetFiles', 'target_card_list', fallback='')
+            check_card_list_valid()
+
         # Settings frame content
         self.select_target_card_list_button = tk.Button(
             self.settings_frame,
             text="Select File",
-            command=lambda: select_target_file(self.target_card_list_var)
+            command=on_select_card_file,
         )
         self.select_target_card_list_button.grid(row=0, column=0, sticky="w", padx=3, pady=3)
 
