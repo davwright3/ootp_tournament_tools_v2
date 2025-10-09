@@ -67,7 +67,12 @@ def calc_batting_stats(df, min_pa=0):
         ((df1['WAR'] / df1['PA']) * 600).round(1)
     )
 
-    df2 = df1[['CID', 'PA', 'AVG', 'OBP', 'SLG', 'OPS', 'wOBA', 'HRrate', 'Krate', 'BBrate', 'SBrate', 'SBpct', 'WARrate']]
-    df2 = df2[df2['PA'] >= min_pa]
+    if 'CID' in df1.columns:
+        df2 = df1[['CID', 'PA', 'AVG', 'OBP', 'SLG', 'OPS', 'wOBA', 'HRrate', 'Krate', 'BBrate', 'SBrate', 'SBpct', 'WARrate']]
+        df2 = df2[df2['PA'] >= min_pa]
+    else:
+        df2 = df1[['ORG', 'PA', 'AVG', 'OBP', 'SLG', 'OPS', 'wOBA', 'HRrate', 'Krate', 'BBrate', 'SBrate', 'SBpct',
+                   'WARrate']]
+
     del df1
     return df2

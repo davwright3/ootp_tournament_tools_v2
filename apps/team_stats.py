@@ -4,6 +4,10 @@ from utils.view_utils.header_frame import Header
 from utils.view_utils.footer_frame import Footer
 from utils.view_utils.dataframe_table_frame import DataFrameTableFrame
 from utils.view_utils.scrollable_frame import ScrollableFrame
+from utils.view_utils.batting_stats_select_frame import BattingStatsSelectFrame
+from utils.view_utils.pitcher_stats_select_frame import PitcherStatsSelectFrame
+from utils.view_utils.min_team_games_frame import MinTeamGamesFrame
+from utils.stats_utils.generate_basic_team_stats_df import generate_basic_team_stats_df
 
 class TeamStatsApp(tk.Toplevel):
     def __init__(self, master=None):
@@ -37,8 +41,10 @@ class TeamStatsApp(tk.Toplevel):
         self.main_frame.columnconfigure(1, weight=0)
         self.main_frame.rowconfigure(0, weight=1)
 
+        stats_df = generate_basic_team_stats_df()
         self.stats_frame = DataFrameTableFrame(
             self.main_frame,
+            df=stats_df,
         )
         self.stats_frame.grid(row=0, column=0, sticky="nsew")
 
@@ -71,6 +77,36 @@ class TeamStatsApp(tk.Toplevel):
         )
         self.options_frame.grid(row=1, column=0, sticky="nsew")
 
+        inner_frame = self.options_frame.inner
+        row = 0
+
+        self.min_team_games_frame = MinTeamGamesFrame(
+            inner_frame,
+        )
+        self.min_team_games_frame.grid(row=row, column=0, sticky="nsew")
+        row += 1
+
+        self.batting_stats_select = BattingStatsSelectFrame(
+            inner_frame,
+        )
+        self.batting_stats_select.grid(row=row, column=0, sticky="nsew")
+        row += 1
+
+        self.pitching_stats_select = PitcherStatsSelectFrame(
+            inner_frame
+        )
+        self.pitching_stats_select.grid(row=row, column=0, sticky="nsew")
+        row += 1
+
 
     def reload_data(self):
-        return
+        batting_stats_list = self.batting_stats_select.get_selected_stats()
+        pitching_stats_list = self.pitching_stats_select.get_active_stats()
+        min_games_select = self.min_team_games_frame.get_min_games()
+
+        stats_df = generate_basic_team_stats_df(
+            selected_batting_stats=batting_stats_list,
+            selected_pitching_stats=pitching_stats_list,
+            min_games=min_games_select,
+        )
+        self.stats_frame.set_dataframe(stats_df)
