@@ -9,6 +9,7 @@ from utils.view_utils.header_frame import Header
 from utils.view_utils.footer_frame import Footer
 from utils.data_utils.select_load_stats_data_file import select_load_stats_data_file
 from utils.view_utils.message_panel import MessagePanel
+from utils.data_utils.card_list_store import card_list_store
 from utils.log_utils.attach import attach_panel
 from apps.batting_stats import BattingStatsApp
 from apps.pitching_stats import PitchStatsApp
@@ -139,6 +140,8 @@ class BasicStatsApp(tk.Toplevel):
         self.log.info("Initializing Basic Stats App")
 
         set_active_buttons(self.app_select_frame)
+        card_list_store.load_card_list()
+
 
 def open_batting_stats():
     BattingStatsApp()
