@@ -24,6 +24,12 @@ def generate_basic_pitching_stats(
 ):
     stats_df = cull_teams(data_store.get_data().copy(), run_cutoff=cull_team_limit_select)
     stats_df['IPC'] = stats_df['IP'].apply(normalize_innings_pitched)
+    stats_df1 = stats_df.copy()
+    del stats_df
+    stats_df1 = stats_df1[['CID', 'IPC', 'G.1', 'GS.1', 'BF', 'ER', 'K', 'BB.1', 'IBB.1',
+               'HA', '1B.1', '2B.1', '3B.1', 'HR.1', 'SV', 'SVO', 'SD',
+               'MD', 'HP.1', 'SH.1', 'SF.1', 'QS', 'IR', 'IRS', 'GB',
+               'FB', 'WAR.1', 'Trny']].groupby(['CID'], as_index=False).sum()
     card_list = card_list_store.get_card_list().copy()
 
     eligible_player_set = get_eligible_players(
@@ -34,7 +40,8 @@ def generate_basic_pitching_stats(
         collection_only=collection_only_select,
     )
 
-    calculated_stats_df =  calculate_pitching_stats(stats_df, min_ip_sel=float(min_ip))
+    calculated_stats_df =  calculate_pitching_stats(stats_df1, min_ip_sel=float(min_ip))
+    del stats_df1
 
     if pitcher_type_select == 'SP':
         calculated_stats_df = calculated_stats_df[calculated_stats_df['IP/G'] >= start_relief_cutoff]

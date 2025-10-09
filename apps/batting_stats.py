@@ -11,7 +11,6 @@ from tkinter import ttk
 from utils.view_utils.header_frame import Header
 from utils.view_utils.footer_frame import Footer
 from utils.stats_utils.generate_basic_batting_stats_df import calc_basic_batting_stats_df
-from utils.data_utils.card_list_store import card_list_store
 from utils.view_utils.dataframe_table_frame import DataFrameTableFrame
 from utils.view_utils.table_formatters import fmt_leading_dot
 from utils.view_utils.min_max_rating_frame import MinMaxFrame
@@ -123,8 +122,6 @@ class BattingStatsApp(tk.Toplevel):
         self.cull_teams_limit_frame = SetCullTeamsFrame(inner_frame)
         self.cull_teams_limit_frame.grid(row=item, column=0, sticky='ew')
         item += 1
-
-        card_list_store.load_card_list()
 
         # Set up initial dataframe for the table
         stats_df = calc_basic_batting_stats_df()

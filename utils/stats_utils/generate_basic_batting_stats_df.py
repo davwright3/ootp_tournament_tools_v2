@@ -39,6 +39,11 @@ def calc_basic_batting_stats_df(
     :return: Dataframe
     """
     df = cull_teams(data_store.get_data().copy(), run_cutoff=cull_team_limit_select)
+    df1 = df.copy()
+    del df
+    df1 = df1[['CID', 'PA', 'AB', 'H', '1B', '2B', '3B',
+             'HR','TB', 'SO', 'HP', 'BB', 'IBB', 'SF', 'SB',
+             'CS', 'WAR']].groupby(['CID'], as_index=False).sum()
     card_list = card_list_store.get_card_list().copy()
 
     eligible_player_set = get_eligible_players(
@@ -50,8 +55,8 @@ def calc_basic_batting_stats_df(
         collection_only=collection_only_select
     )
     del card_list
-    player_stats = calc_batting_stats(df, min_pa)
-    del df
+    player_stats = calc_batting_stats(df1, min_pa)
+    del df1
 
     # If stat list is not empty
     if stat_list:

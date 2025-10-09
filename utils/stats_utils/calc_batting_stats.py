@@ -10,10 +10,6 @@ def calc_batting_stats(df, min_pa=0):
     :return player_stats: DataFrame containing calculated basic batting stats, pd.DataFrame
     """
     df1 = df.copy()
-    df1 = df1[['CID', 'PA', 'AB', 'H', '1B', '2B', '3B',
-             'HR','TB', 'SO', 'HP', 'BB', 'IBB', 'SF', 'SB',
-             'CS', 'WAR']].groupby(['CID'], as_index=False).sum()
-
 
     df1['AVG'] = (
         (df1['H'] / df1['AB']).round(3)

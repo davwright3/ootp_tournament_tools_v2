@@ -2,13 +2,7 @@
 import pandas as pd
 from utils.stats_utils.normalize_innings_pitched import normalize_innings_pitched
 
-def calculate_pitching_stats(df, min_ip_sel=200):
-    df1 = df.copy()
-    df1 = df1[['CID', 'IPC', 'G.1', 'GS.1', 'BF', 'ER', 'K', 'BB.1', 'IBB.1',
-               'HA', '1B.1', '2B.1', '3B.1', 'HR.1', 'SV', 'SVO', 'SD',
-               'MD', 'HP.1', 'SH.1', 'SF.1', 'QS', 'IR', 'IRS', 'GB',
-               'FB', 'WAR.1', 'Trny']].groupby(['CID'], as_index=False).sum()
-
+def calculate_pitching_stats(df1, min_ip_sel=200):
     lg_era = (df1['ER'].sum()/df1['IPC'].sum())*9
     fip_const = (lg_era -
                 (
