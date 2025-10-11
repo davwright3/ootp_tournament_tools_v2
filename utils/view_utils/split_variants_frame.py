@@ -15,14 +15,14 @@ class SplitVariantsFrame(tk.Frame):
             text='Variant Split',
             justify='right'
         )
-        self.label.grid(row=0, column=0)
+        self.label.grid(row=0, column=0, sticky='e')
 
         self.split_select = tk.Checkbutton(
             self,
             variable=self.variant_split_select,
             justify='left'
         )
-        self.split_select.grid(row=0, column=1)
+        self.split_select.grid(row=0, column=1, sticky='w')
 
     def get_variant_split(self):
         return self.variant_split_select.get()

@@ -15,14 +15,14 @@ class SearchFrame(tk.Frame):
             text="Search",
             justify='right'
         )
-        self.label.grid(row=0, column=0)
+        self.label.grid(row=0, column=0, sticky='e')
 
         self.search_entry = tk.Entry(
             self,
             textvariable=self.search_term,
             justify='left'
         )
-        self.search_entry.grid(row=0, column=1)
+        self.search_entry.grid(row=0, column=1, sticky='w')
 
     def get_search_term(self):
         if self.search_term.get() == '':
