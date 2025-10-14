@@ -51,7 +51,6 @@ def generate_basic_pitching_stats(
     )
 
     calculated_stats_df =  calculate_pitching_stats(stats_df1, min_ip_sel=float(min_ip))
-    print(calculated_stats_df.head())
     del stats_df1
 
     if pitcher_type_select == 'SP':
