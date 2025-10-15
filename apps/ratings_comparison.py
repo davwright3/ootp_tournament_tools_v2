@@ -7,6 +7,7 @@ from utils.view_utils.scrollable_frame import ScrollableFrame
 from utils.view_utils.min_max_rating_frame import MinMaxFrame
 from utils.view_utils.min_max_years import MinMaxYearsFrame
 from utils.view_utils.ratings_select_frame import RatingsSelectFrame
+from utils.stats_utils.generate_ratings_df import generate_ratings_df
 
 
 class RatingsComparisonApp(tk.Toplevel):
@@ -78,9 +79,22 @@ class RatingsComparisonApp(tk.Toplevel):
         self.rating_select_frame.grid(column=0, row=row, sticky='nsew')
         row += 1
 
-    def reload_data(self):
-        print("Reloading data")
-        self.rating_select_frame.get_active_ratings()
+        ratings_df = generate_ratings_df()
+        self.dataview_frame.set_dataframe(ratings_df)
 
+    def reload_data(self):
+        selected_min_year, selected_max_year = self.year_range_select.get_min_max_years()
+        selected_min_rating, selected_max_rating = self.min_max_select.get_min_max_rating()
+        selected_ratings = self.rating_select_frame.get_active_ratings()
+
+        ratings_df = generate_ratings_df(
+            min_year=selected_min_year,
+            max_year=selected_max_year,
+            min_rating=selected_min_rating,
+            max_rating=selected_max_rating,
+            selected_ratings_list=selected_ratings
+        )
+        self.dataview_frame.set_dataframe(ratings_df)
+        del ratings_df
 
 

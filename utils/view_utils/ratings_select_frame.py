@@ -37,7 +37,6 @@ class RatingsSelectFrame(tk.Frame):
             item += 1
 
     def get_active_ratings(self):
-        print(self.selected_ratings_list)
         return self.selected_ratings_list
 
 
