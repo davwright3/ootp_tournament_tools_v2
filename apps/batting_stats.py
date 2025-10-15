@@ -22,6 +22,8 @@ from utils.view_utils.batting_side_select_frame import BattingSideSelectFrame
 from utils.view_utils.min_plate_appearance_frame import MinPlateAppearanceFrame
 from utils.view_utils.select_in_collection_frame import SelectInCollectionFrame
 from utils.view_utils.set_cull_teams_limit_frame import SetCullTeamsFrame
+from utils.view_utils.search_frame import SearchFrame
+from utils.view_utils.split_variants_frame import SplitVariantsFrame
 
 
 class BattingStatsApp(tk.Toplevel):
@@ -91,6 +93,16 @@ class BattingStatsApp(tk.Toplevel):
         inner_frame.rowconfigure(3, weight=1)
 
         item = 0
+        self.search_frame = SearchFrame(inner_frame)
+        self.search_frame.grid(row=item, column=0, sticky='nsew')
+        item += 1
+
+        self.split_variants_frame = SplitVariantsFrame(
+            inner_frame,
+        )
+        self.split_variants_frame.grid(row=item, column=0, sticky='nsew')
+        item += 1
+
         self.min_max_frame = MinMaxFrame(inner_frame)
         self.min_max_frame.grid(row=item, column=0, sticky='ew')
         item += 1
@@ -154,6 +166,8 @@ class BattingStatsApp(tk.Toplevel):
         min_plate_app = self.min_plate_app_frame.get_min_plate_app()
         collection_only_sel = self.collection_only_frame.get_collection_only_value()
         cull_teams_limit = self.cull_teams_limit_frame.get_cull_teams_limit()
+        search_term = self.search_frame.get_search_term()
+        split_variants_select = self.split_variants_frame.get_variant_split()
         stats_df = calc_basic_batting_stats_df(
             stat_list=selected_stats,
             position_select=selected_position,
@@ -164,6 +178,8 @@ class BattingStatsApp(tk.Toplevel):
             min_pa=min_plate_app,
             collection_only_select=collection_only_sel,
             cull_team_limit_select=cull_teams_limit,
+            selected_search_term=search_term,
+            variant_split_select=split_variants_select
         )
         self.dataframe_frame.set_dataframe(stats_df)
 

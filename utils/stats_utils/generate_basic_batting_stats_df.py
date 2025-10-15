@@ -22,7 +22,9 @@ def calc_basic_batting_stats_df(
         bat_side_select='All',
         position_select: str= None,
         collection_only_select: bool=False,
-        cull_team_limit_select: int=8
+        cull_team_limit_select: int=8,
+        selected_search_term: str=None,
+        variant_split_select: bool=False,
 ):
     """
     Calculates basic batting stats and returns a dataframe with the
@@ -36,14 +38,22 @@ def calc_basic_batting_stats_df(
     :param position_select: The position that the user wants to view, str
     :param collection_only_select: whether to display only cards in collection, bool
     :param cull_team_limit_select: runs limit for where teams get removed, int
+    :param selected_search_term: player to search for, str
+    :param variant_split_select: whether to split variant selection, bool
     :return: Dataframe
     """
     df = cull_teams(data_store.get_data().copy(), run_cutoff=cull_team_limit_select)
     df1 = df.copy()
     del df
-    df1 = df1[['CID', 'PA', 'AB', 'H', '1B', '2B', '3B',
-             'HR','TB', 'SO', 'HP', 'BB', 'IBB', 'SF', 'SB',
-             'CS', 'WAR']].groupby(['CID'], as_index=False).sum()
+    if variant_split_select:
+        df1 = df1[['CID', 'VLvl', 'PA', 'AB', 'H', '1B', '2B', '3B',
+                   'HR', 'TB', 'SO', 'HP', 'BB', 'IBB', 'SF', 'SB',
+                   'CS', 'WAR']].groupby(['CID', 'VLvl'], as_index=False).sum()
+    else:
+        df1 = df1[['CID', 'PA', 'AB', 'H', '1B', '2B', '3B',
+                 'HR','TB', 'SO', 'HP', 'BB', 'IBB', 'SF', 'SB',
+                 'CS', 'WAR']].groupby(['CID'], as_index=False).sum()
+
     card_list = card_list_store.get_card_list().copy()
 
     eligible_player_set = get_eligible_players(
@@ -52,7 +62,8 @@ def calc_basic_batting_stats_df(
         min_value=min_value,
         max_value=max_value,
         bats_side=bat_side_select,
-        collection_only=collection_only_select
+        collection_only=collection_only_select,
+        selected_search_term=selected_search_term,
     )
     del card_list
     player_stats = calc_batting_stats(df1, min_pa)

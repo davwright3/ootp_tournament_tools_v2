@@ -16,6 +16,8 @@ from utils.view_utils.pitcher_stats_select_frame import PitcherStatsSelectFrame
 from utils.view_utils.general_info_select_frame import GeneralInfoFrame
 from utils.view_utils.select_in_collection_frame import SelectInCollectionFrame
 from utils.view_utils.set_cull_teams_limit_frame import SetCullTeamsFrame
+from utils.view_utils.search_frame import SearchFrame
+from utils.view_utils.split_variants_frame import SplitVariantsFrame
 
 
 class PitchStatsApp(tk.Toplevel):
@@ -110,6 +112,18 @@ class PitchStatsApp(tk.Toplevel):
         inner_frame.rowconfigure(5, weight=0)
 
         row = 0
+        self.search_frame = SearchFrame(
+            inner_frame,
+        )
+        self.search_frame.grid(row=row, column=0, sticky="nsew")
+        row += 1
+
+        self.split_variants_frame = SplitVariantsFrame(
+            inner_frame
+        )
+        self.split_variants_frame.grid(row=row, column=0, sticky="nsew")
+        row += 1
+
         self.min_max_ratings_frame = MinMaxFrame(
             inner_frame,
         )
@@ -172,6 +186,8 @@ class PitchStatsApp(tk.Toplevel):
         pitcher_type_select = self.pitcher_type_select_frame.get_pitcher_type()
         collection_only_select = self.collection_only_frame.get_collection_only_value()
         cull_team_var_select = self.cull_teams_frame.get_cull_teams_limit()
+        search_term = self.search_frame.get_search_term()
+        variant_split_select = self.split_variants_frame.get_variant_split()
 
         stats = generate_basic_pitching_stats(
             min_ip=min_ip_select,
@@ -184,5 +200,7 @@ class PitchStatsApp(tk.Toplevel):
             pitcher_type_select=pitcher_type_select,
             collection_only_select=collection_only_select,
             cull_team_limit_select=cull_team_var_select,
+            selected_search_term=search_term,
+            selected_variant_split=variant_split_select,
         )
         self.stats_frame.set_dataframe(stats)

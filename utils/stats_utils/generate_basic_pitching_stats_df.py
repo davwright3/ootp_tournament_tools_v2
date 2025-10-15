@@ -21,23 +21,33 @@ def generate_basic_pitching_stats(
         pitcher_type_select='All',
         collection_only_select=False,
         cull_team_limit_select=8,
+        selected_search_term=None,
+        selected_variant_split=False,
 ):
     stats_df = cull_teams(data_store.get_data().copy(), run_cutoff=cull_team_limit_select)
     stats_df['IPC'] = stats_df['IP'].apply(normalize_innings_pitched)
     stats_df1 = stats_df.copy()
     del stats_df
-    stats_df1 = stats_df1[['CID', 'IPC', 'G.1', 'GS.1', 'BF', 'ER', 'K', 'BB.1', 'IBB.1',
-               'HA', '1B.1', '2B.1', '3B.1', 'HR.1', 'SV', 'SVO', 'SD',
-               'MD', 'HP.1', 'SH.1', 'SF.1', 'QS', 'IR', 'IRS', 'GB',
-               'FB', 'WAR.1', 'Trny']].groupby(['CID'], as_index=False).sum()
-    card_list = card_list_store.get_card_list().copy()
+    if selected_variant_split:
+        stats_df1 = stats_df1[['CID', 'VLvl', 'IPC', 'G.1', 'GS.1', 'BF', 'ER', 'K', 'BB.1', 'IBB.1',
+                   'HA', '1B.1', '2B.1', '3B.1', 'HR.1', 'SV', 'SVO', 'SD',
+                   'MD', 'HP.1', 'SH.1', 'SF.1', 'QS', 'IR', 'IRS', 'GB',
+                   'FB', 'WAR.1', 'Trny']].groupby(['CID', 'VLvl'], as_index=False).sum()
+    else:
+        stats_df1 = stats_df1[['CID', 'IPC', 'G.1', 'GS.1', 'BF', 'ER', 'K', 'BB.1', 'IBB.1',
+                   'HA', '1B.1', '2B.1', '3B.1', 'HR.1', 'SV', 'SVO', 'SD',
+                   'MD', 'HP.1', 'SH.1', 'SF.1', 'QS', 'IR', 'IRS', 'GB',
+                   'FB', 'WAR.1', 'Trny']].groupby(['CID'], as_index=False).sum()
 
+
+    card_list = card_list_store.get_card_list().copy()
     eligible_player_set = get_eligible_players(
         card_list,
         min_value=min_value,
         max_value=max_value,
         throws_side=throws_side_select,
         collection_only=collection_only_select,
+        selected_search_term=selected_search_term,
     )
 
     calculated_stats_df =  calculate_pitching_stats(stats_df1, min_ip_sel=float(min_ip))
@@ -50,6 +60,8 @@ def generate_basic_pitching_stats(
 
     if stat_list is not None:
         stat_return_columns = ['CID']
+        if selected_variant_split:
+            stat_return_columns.extend(['VLvl'])
         stat_return_columns.extend(stat_list)
         calculated_stats_df = calculated_stats_df[stat_return_columns]
 

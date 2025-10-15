@@ -39,9 +39,21 @@ def calculate_pitching_stats(df1, min_ip_sel=200):
 
 
     df1['IPC'] = df1['IPC'].round(2)
-    df2 = df1[['CID', 'IPC', 'ERA', 'FIP', 'WHIP', 'K%', 'BB%', 'K-BB', 'HR/9',
-               'SV%', 'SD/MD', 'IRS%', 'GB%', 'WAR/200', 'IP/G']]
-    df2 = df2[df2['IPC'] >= min_ip_sel]
+    df2 = df1.copy()
+    if 'CID' in df1.columns:
+        if 'VLvl' in df1.columns:
+            df2 = df2[['CID', 'VLvl', 'IPC', 'ERA', 'FIP', 'WHIP', 'K%', 'BB%', 'K-BB', 'HR/9',
+                       'SV%', 'SD/MD', 'IRS%', 'GB%', 'WAR/200', 'IP/G']]
+        else:
+            df2 = df2[['CID', 'IPC', 'ERA', 'FIP', 'WHIP', 'K%', 'BB%', 'K-BB', 'HR/9',
+                       'SV%', 'SD/MD', 'IRS%', 'GB%', 'WAR/200', 'IP/G']]
+        df2 = df2[df2['IPC'] >= min_ip_sel]
+    else:
+        df2 = df2[['ORG', 'IPC', 'ERA', 'FIP', 'WHIP', 'K%', 'BB%', 'K-BB', 'HR/9',
+                   'SV%', 'SD/MD', 'IRS%', 'GB%', 'WAR/200', 'IP/G']]
+
+
+    del df1
     return df2
 
 

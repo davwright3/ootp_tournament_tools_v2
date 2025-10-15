@@ -8,7 +8,8 @@ def get_eligible_players(
         max_value=105,
         bats_side='All',
         throws_side='All',
-        collection_only=False
+        collection_only=False,
+        selected_search_term: str = None,
 ):
     """
     Returns eligible players based on user selections.
@@ -19,6 +20,7 @@ def get_eligible_players(
     :param bats_side: Bats side, str
     :param throws_side: Throws side, str
     :param collection_only: If true, only return eligible players
+    :param selected_search_term: Search term to filter by, str
     :return: DataFrame
     """
     eligible_players = player_list.copy()
@@ -42,6 +44,9 @@ def get_eligible_players(
 
     if throws_side != 'All':
         eligible_players = eligible_players[eligible_players['T'] == throws_side]
+
+    if selected_search_term is not None:
+        eligible_players = eligible_players[eligible_players['//Card Title'].str.contains(selected_search_term, case=False, na=False)]
 
     eligible_players = eligible_players.rename(
         columns= {'Card ID': 'CID', '//Card Title': 'Title', 'Card Value': 'Val',
