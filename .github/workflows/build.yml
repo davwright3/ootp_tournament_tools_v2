@@ -160,4 +160,4 @@ jobs:
           name: Release $PP github.ref_name }}
           files: release/*.zip
         env:
-          GITHUB_TOKEN: ${{ secrects.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
