@@ -9,6 +9,7 @@ from utils.view_utils.min_max_years import MinMaxYearsFrame
 from utils.view_utils.ratings_select_frame import RatingsSelectFrame
 from utils.stats_utils.generate_ratings_df import generate_ratings_df
 from utils.view_utils.batter_rating_weights_frame import BatterWeightsFrame
+from utils.view_utils.pitcher_rating_weights_frame import PitcherWeightsFrame
 
 
 class RatingsComparisonApp(tk.Toplevel):
@@ -82,6 +83,10 @@ class RatingsComparisonApp(tk.Toplevel):
 
         self.bat_ratings_weight_frame = BatterWeightsFrame(inner_frame)
         self.bat_ratings_weight_frame.grid(column=0, row=row, sticky='nsew')
+        row += 1
+
+        self.pitch_ratings_weight_frame = PitcherWeightsFrame(inner_frame)
+        self.pitch_ratings_weight_frame.grid(column=0, row=row, sticky='nsew')
         row += 1
 
         ratings_df = generate_ratings_df()
