@@ -1,21 +1,44 @@
 """Return dataframe with selected calculated ratings to be viewed."""
 import pandas as pd
 from utils.data_utils.card_list_store import card_list_store
+from utils.stats_utils.calc_ratings import calc_ratings
 
 def generate_ratings_df(
         min_rating=40,
         max_rating=105,
         min_year=1871,
         max_year=2025,
-        selected_ratings_list=None
+        selected_ratings_list=None,
+        batter_weights=None,
 ):
+    return_columns = ['CID', 'Title', 'Val']
+    if selected_ratings_list:
+        return_columns.extend(selected_ratings_list)
+
     card_df = card_list_store.get_card_list().copy()
-    card_df = card_df.rename(columns={'Card ID': 'CID', '//Card Title': 'Title', 'Card Value': 'Val'})
+    card_df = card_df.rename(columns={'Card ID': 'CID', '//Card Title': 'Title', 'Card Value': 'Val',
+                                      'Card Type': 'Type'})
+    card_df = card_df[['CID', 'Title', 'Val', 'Year', 'Type', 'Bats', 'Throws', 'Contact', 'Gap',
+                       'Power', 'Eye', 'Avoid Ks', 'BABIP', 'Contact vL', 'Gap vL', 'Power vL',
+                       'Eye vL', 'Avoid K vL', 'BABIP vL', 'Contact vR', 'Gap vR', 'Power vR',
+                       'Eye vR', 'Avoid K vR', 'BABIP vR', 'Speed', 'Steal Rate', 'Stealing',
+                       'Baserunning', 'Stuff', 'Movement', 'Control', 'pHR', 'pBABIP',
+                       'Stuff vL', 'Movement vL', 'Control vL', 'pHR vL', 'pBABIP vL',
+                       'Stuff vR', 'Movement vR', 'Control vR', 'pHR vR', 'pBABIP vR', 'Stamina',
+                       'Hold', 'GB', 'Infield Range', 'Infield Error', 'Infield Arm', 'DP',
+                       'CatcherAbil', 'CatcherFrame', 'Catcher Arm', 'OF Range', 'OF Error',
+                       'OF Arm', 'LearnC', 'Learn1B', 'Learn2B', 'Learn3B', 'LearnSS', 'LearnLF',
+                       'LearnCF', 'LearnRF', 'era', 'tier', 'owned', 'Last 10 Price', 'Last 10 Price(VAR)',
+                       'Pitcher Role', 'date']]
 
     card_df = card_df[(card_df['Val'] >= min_rating) & (card_df['Val'] <= max_rating)]
     card_df = card_df[(card_df['Year'] >= min_year) & (card_df['Year'] <= max_year)]
 
+    ratings_df = calc_ratings(
+        card_df,
+        batter_weights=batter_weights,
+    )
+    ratings_df = ratings_df[return_columns]
+    del card_df
 
-    card_df = card_df[['CID', 'Title', 'Year']]
-
-    return card_df
+    return ratings_df

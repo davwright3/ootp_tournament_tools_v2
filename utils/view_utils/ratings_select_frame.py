@@ -10,7 +10,9 @@ class RatingsSelectFrame(tk.Frame):
         self.columnconfigure(1, weight=1)
         self.columnconfigure(2, weight=1)
 
-        ratings_list = ['BatOA', 'BatvL', 'BatvR', 'Def', 'Bsr', 'PitOA', 'PitvL', 'PitvR']
+        ratings_list = ['BatOA', 'BatvL', 'BatvR', 'Catch Def', 'IF Def',
+                        'OF Def', 'Bsr', 'PitOA', 'PitvL', 'PitvR',
+                        'Stamina', 'GB']
         self.selected_ratings_list = []
 
         def set_active_ratings():
