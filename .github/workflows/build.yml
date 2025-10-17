@@ -147,7 +147,7 @@ jobs:
         run: |
           version="${{ github.ref_name }}"
           mkdir -p release
-          mv dist/main-macos-intel.zip "release/AU-Tournament-Utilities-${version}-macos-intel.zip
+          mv dist/main-macos-intel.zip "release/AU-Tournament-Utilities-${version}-macos-intel.zip"
 
       - name: List Release Files
         run: ls -la release
