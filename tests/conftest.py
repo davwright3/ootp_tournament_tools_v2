@@ -166,3 +166,14 @@ def patched_pitching_data_store(monkeypatch, sample_stats_df):
     )
     monkeypatch.setattr(mod, 'data_store', fake_df, raising=True)
     return sample_stats_df
+
+@pytest.fixture
+def patched_team_data_store(monkeypatch, sample_stats_df):
+    import utils.stats_utils.generate_basic_team_stats_df as mod
+
+    fake_df = types.SimpleNamespace(
+        get_data= lambda: sample_stats_df.copy(),
+    )
+    monkeypatch.setattr(mod, 'data_store', fake_df, raising=True)
+    return sample_stats_df
+

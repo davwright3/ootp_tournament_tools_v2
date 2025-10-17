@@ -9,7 +9,7 @@ from utils.stats_utils.calc_pitching_stats import calculate_pitching_stats
 def generate_basic_team_stats_df(
         selected_batting_stats = None,
         selected_pitching_stats = None,
-        min_games = 20
+        min_games = 20,
 ):
     df1 = cull_teams(data_store.get_data().copy())
     df1['IPC'] = df1['IP'].apply(normalize_innings_pitched)
