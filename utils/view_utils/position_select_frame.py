@@ -5,7 +5,7 @@ from tkinter import Radiobutton
 
 class PositionSelectFrame(tk.Frame):
     def __init__(self, parent):
-        super().__init__(parent, relief='ridge', bd=3, bg='white')
+        super().__init__(parent, relief='ridge', bd=3, bg='lightgrey')
 
         self.selected_position = tk.StringVar(value='All')
 
@@ -87,6 +87,15 @@ class PositionSelectFrame(tk.Frame):
             value='LearnRF'
         )
         self.rightfield_select.grid(row=item // 3 + 1, column=item % 3, sticky='nsew')
+        item +=1
+
+        self.pitcher_select = Radiobutton(
+            self,
+            variable=self.selected_position,
+            text='P',
+            value='Pitcher Role'
+        )
+        self.pitcher_select.grid(row=item // 3 + 1, column=item % 3, sticky='nsew')
         item +=1
 
         self.allbatters_select = Radiobutton(

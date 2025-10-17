@@ -50,8 +50,26 @@ class ScrollableFrame(ttk.Frame):
 
         self.inner.grid_columnconfigure(0, weight=1)
 
+        if yscroll:
+            self._bind_mousewheel(self.canvas)
+
 
     # Helpers
+    def _bind_mousewheel(self, widget):
+        # Windows and Mac
+        widget.bind_all("<MouseWheel>", self._on_mousewheel)
+        # Linux
+        widget.bind_all("<Button-4>", self._on_mousewheel)
+        widget.bind_all("<Button-5>", self._on_mousewheel)
+
+    def _on_mousewheel(self, event):
+        if event.num == 4: # Linux scroll up
+            self.canvas.yview_scroll(-1, 'units')
+        elif event.num == 5:
+            self.canvas.yview_scroll(1, 'units')
+        else:
+            self.canvas.yview_scroll(int(-1 * (event.delta /120)), 'units')
+
     def _on_inner_configure(self, event):
         # Update the scrollable area to the bounding box
         self.canvas.configure(scrollregion=self.canvas.bbox('all'))

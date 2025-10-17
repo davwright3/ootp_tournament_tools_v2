@@ -30,7 +30,7 @@ def get_eligible_players(
         ]]
     else:
         eligible_players = eligible_players[
-            eligible_players[position_select] == 1
+            eligible_players[position_select] != 0
         ][['Card ID', '//Card Title', 'Card Value', 'Bats', 'Throws', 'owned', 'Last 10 Price', 'Last 10 Price(VAR)']]
 
     eligible_players.loc[:, 'B'] = eligible_players['Bats'].apply(lambda x: 'R' if x == 1 else 'L' if x == 2 else 'S')
