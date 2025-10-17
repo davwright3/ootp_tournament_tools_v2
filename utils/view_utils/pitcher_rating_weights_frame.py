@@ -1,5 +1,7 @@
 """Custom frame for user entry of weights for pitcher ratings."""
 import tkinter as tk
+import math
+from utils.stats_utils.coerce_float import coerce_float
 
 class PitcherWeightsFrame(tk.Frame):
     def __init__(self, parent):
@@ -63,11 +65,60 @@ class PitcherWeightsFrame(tk.Frame):
         self.control_label.grid(row=5, column=0, sticky='nsew')
 
         # Entries
-        self.stuff_oa_entry = tk.Entry(self, textvariable=self.stuff_oa_weight)
+        self.stuff_oa_entry = tk.Entry(self, textvariable=self.stuff_oa_weight, width=2)
         self.stuff_oa_entry.grid(row=2, column=1, sticky='nsew')
 
-        self.stuff_vL_entry = tk.Entry(self, textvariable=self.stuff_vL_weight)
+        self.stuff_vL_entry = tk.Entry(self, textvariable=self.stuff_vL_weight, width=2)
         self.stuff_vL_entry.grid(row=2, column=2, sticky='nsew')
 
-        self.stuff_vR_entry = tk.Entry(self, textvariable=self.stuff_vR_weight)
+        self.stuff_vR_entry = tk.Entry(self, textvariable=self.stuff_vR_weight, width=2)
         self.stuff_vR_entry.grid(row=2, column=3, sticky='nsew')
+
+        self.phr_oa_entry = tk.Entry(self, textvariable=self.phr_oa_weight, width=2)
+        self.phr_oa_entry.grid(row=3, column=1, sticky='nsew')
+
+        self.phr_vL_entry = tk.Entry(self, textvariable=self.phr_vL_weight, width=2)
+        self.phr_vL_entry.grid(row=3, column=2, sticky='nsew')
+
+        self.phr_vR_entry = tk.Entry(self, textvariable=self.phr_vR_weight, width=2)
+        self.phr_vR_entry.grid(row=3, column=3, sticky='nsew')
+
+        self.pbabip_oa_entry = tk.Entry(self, textvariable=self.pbabip_oa_weight, width=2)
+        self.pbabip_oa_entry.grid(row=4, column=1, sticky='nsew')
+
+        self.pbabip_vL_entry = tk.Entry(self, textvariable=self.pbabip_vL_weight, width=2)
+        self.pbabip_vL_entry.grid(row=4, column=2, sticky='nsew')
+
+        self.pbabip_vR_entry = tk.Entry(self, textvariable=self.pbabip_vR_weight, width=2)
+        self.pbabip_vR_entry.grid(row=4, column=3, sticky='nsew')
+
+        self.control_oa_entry = tk.Entry(self, textvariable=self.control_oa, width=2)
+        self.control_oa_entry.grid(row=5, column=1, sticky='nsew')
+
+        self.control_vL_entry = tk.Entry(self, textvariable=self.control_vL_weight, width=2)
+        self.control_vL_entry.grid(row=5, column=2, sticky='nsew')
+
+        self.control_vR_entry = tk.Entry(self, textvariable=self.control_vR_weight, width=2)
+        self.control_vR_entry.grid(row=5, column=3, sticky='nsew')
+
+    def get_pitcher_rating_weights(self):
+        weight_vars = {
+            'stuff': self.stuff_oa_weight,
+            'stuff_vL': self.stuff_vL_weight,
+            'stuff_vR': self.stuff_vR_weight,
+            'phr': self.phr_oa_weight,
+            'phr_vL': self.phr_vL_weight,
+            'phr_vR': self.phr_vR_weight,
+            'pbabip': self.pbabip_oa_weight,
+            'pbabip_vL': self.pbabip_vL_weight,
+            'pbabip_vR': self.pbabip_vR_weight,
+            'control': self.control_oa,
+            'control_vL': self.control_vL_weight,
+            'control_vR': self.control_vR_weight,
+        }
+
+        weights = {
+            f"weight_{name}": coerce_float(var, default=1.0)
+            for name, var in weight_vars.items()
+        }
+        return weights

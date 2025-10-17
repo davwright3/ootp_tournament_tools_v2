@@ -10,6 +10,10 @@ def generate_ratings_df(
         max_year=2025,
         selected_ratings_list=None,
         batter_weights=None,
+        pitcher_weights=None,
+        defense_weights=None,
+        baserunning_weights=None,
+        selected_position='All'
 ):
     return_columns = ['CID', 'Title', 'Val']
     if selected_ratings_list:
@@ -34,9 +38,15 @@ def generate_ratings_df(
     card_df = card_df[(card_df['Val'] >= min_rating) & (card_df['Val'] <= max_rating)]
     card_df = card_df[(card_df['Year'] >= min_year) & (card_df['Year'] <= max_year)]
 
+    if selected_position != 'All':
+        card_df = card_df[card_df[selected_position] != 0]
+
     ratings_df = calc_ratings(
         card_df,
         batter_weights=batter_weights,
+        pitcher_weights=pitcher_weights,
+        defense_weights=defense_weights,
+        baserunning_weights=baserunning_weights
     )
     ratings_df = ratings_df[return_columns]
     del card_df

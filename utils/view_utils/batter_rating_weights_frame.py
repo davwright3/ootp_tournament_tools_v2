@@ -1,6 +1,7 @@
 """Modular frame for user to set weights for batting ratings."""
 import tkinter as tk
 import math
+from utils.stats_utils.coerce_float import coerce_float
 
 class BatterWeightsFrame(tk.Frame):
     def __init__(self, parent):
@@ -136,24 +137,8 @@ class BatterWeightsFrame(tk.Frame):
             'eye_vR': self.eye_vR_weight,
         }
 
-        def _coerce_float(sv: tk.StringVar, default=1.0) -> float:
-            """Return a float or default if invalid entry."""
-            try:
-                s = sv.get()
-                if s is None:
-                    return default
-                s = s.strip()
-                if not s:
-                    return default
-                v = float(s)
-                if math.isnan(v) or math.isinf(v):
-                    return default
-                return v
-            except Exception:
-                return default
-
         weights = {
-            f'weight_{name}': _coerce_float(var, default=1.0)
+            f'weight_{name}': coerce_float(var, default=1.0)
             for name, var in weight_vars.items()
         }
         return weights

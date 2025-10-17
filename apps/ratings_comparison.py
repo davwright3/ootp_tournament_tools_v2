@@ -10,6 +10,9 @@ from utils.view_utils.ratings_select_frame import RatingsSelectFrame
 from utils.stats_utils.generate_ratings_df import generate_ratings_df
 from utils.view_utils.batter_rating_weights_frame import BatterWeightsFrame
 from utils.view_utils.pitcher_rating_weights_frame import PitcherWeightsFrame
+from utils.view_utils.defense_weights_frame import DefenseWeightsFrame
+from utils.view_utils.baserunning_weights_frame import BaserunningWeightFrame
+from utils.view_utils.position_select_frame import PositionSelectFrame
 
 
 class RatingsComparisonApp(tk.Toplevel):
@@ -89,6 +92,18 @@ class RatingsComparisonApp(tk.Toplevel):
         self.pitch_ratings_weight_frame.grid(column=0, row=row, sticky='nsew')
         row += 1
 
+        self.defense_weights_frame = DefenseWeightsFrame(inner_frame)
+        self.defense_weights_frame.grid(column=0, row=row, sticky='nsew')
+        row += 1
+
+        self.baserunning_weight_frame = BaserunningWeightFrame(inner_frame)
+        self.baserunning_weight_frame.grid(column=0, row=row, sticky='nsew')
+        row += 1
+
+        self.position_select_frame = PositionSelectFrame(inner_frame)
+        self.position_select_frame.grid(column=0, row=row, sticky='nsew')
+        row += 1
+
         ratings_df = generate_ratings_df()
         self.dataview_frame.set_dataframe(ratings_df)
 
@@ -97,13 +112,21 @@ class RatingsComparisonApp(tk.Toplevel):
         selected_min_rating, selected_max_rating = self.min_max_select.get_min_max_rating()
         selected_ratings = self.rating_select_frame.get_active_ratings()
         selected_batter_weights = self.bat_ratings_weight_frame.get_batter_rating_weights()
+        selected_pitcher_weights = self.pitch_ratings_weight_frame.get_pitcher_rating_weights()
+        selected_defense_weights = self.defense_weights_frame.get_defense_ratings_weights()
+        selected_baserunning_weights = self.baserunning_weight_frame.get_baserunning_weights()
+        selected_position = self.position_select_frame.get_position_select()
         ratings_df = generate_ratings_df(
             min_year=selected_min_year,
             max_year=selected_max_year,
             min_rating=selected_min_rating,
             max_rating=selected_max_rating,
             selected_ratings_list=selected_ratings,
-            batter_weights=selected_batter_weights
+            batter_weights=selected_batter_weights,
+            pitcher_weights=selected_pitcher_weights,
+            defense_weights=selected_defense_weights,
+            baserunning_weights=selected_baserunning_weights,
+            selected_position=selected_position,
         )
         self.dataview_frame.set_dataframe(ratings_df)
         del ratings_df
