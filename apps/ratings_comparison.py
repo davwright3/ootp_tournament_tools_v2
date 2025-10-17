@@ -13,7 +13,8 @@ from utils.view_utils.pitcher_rating_weights_frame import PitcherWeightsFrame
 from utils.view_utils.defense_weights_frame import DefenseWeightsFrame
 from utils.view_utils.baserunning_weights_frame import BaserunningWeightFrame
 from utils.view_utils.position_select_frame import PositionSelectFrame
-
+from utils.view_utils.general_info_select_frame import GeneralInfoFrame
+from utils.view_utils.select_in_collection_frame import SelectInCollectionFrame
 
 class RatingsComparisonApp(tk.Toplevel):
     def __init__(self):
@@ -104,6 +105,14 @@ class RatingsComparisonApp(tk.Toplevel):
         self.position_select_frame.grid(column=0, row=row, sticky='nsew')
         row += 1
 
+        self.general_info_select_frame = GeneralInfoFrame(inner_frame)
+        self.general_info_select_frame.grid(column=0, row=row, sticky='nsew')
+        row += 1
+
+        self.in_collection_frame = SelectInCollectionFrame(inner_frame)
+        self.in_collection_frame.grid(column=0, row=row, sticky='nsew')
+        row += 1
+
         ratings_df = generate_ratings_df()
         self.dataview_frame.set_dataframe(ratings_df)
 
@@ -111,22 +120,26 @@ class RatingsComparisonApp(tk.Toplevel):
         selected_min_year, selected_max_year = self.year_range_select.get_min_max_years()
         selected_min_rating, selected_max_rating = self.min_max_select.get_min_max_rating()
         selected_ratings = self.rating_select_frame.get_active_ratings()
+        selected_general_items=self.general_info_select_frame.get_selected_items()
         selected_batter_weights = self.bat_ratings_weight_frame.get_batter_rating_weights()
         selected_pitcher_weights = self.pitch_ratings_weight_frame.get_pitcher_rating_weights()
         selected_defense_weights = self.defense_weights_frame.get_defense_ratings_weights()
         selected_baserunning_weights = self.baserunning_weight_frame.get_baserunning_weights()
         selected_position = self.position_select_frame.get_position_select()
+        selected_in_collection_only = self.in_collection_frame.get_collection_only_value()
         ratings_df = generate_ratings_df(
             min_year=selected_min_year,
             max_year=selected_max_year,
             min_rating=selected_min_rating,
             max_rating=selected_max_rating,
             selected_ratings_list=selected_ratings,
+            selected_general_list=selected_general_items,
             batter_weights=selected_batter_weights,
             pitcher_weights=selected_pitcher_weights,
             defense_weights=selected_defense_weights,
             baserunning_weights=selected_baserunning_weights,
             selected_position=selected_position,
+            collection_only=selected_in_collection_only,
         )
         self.dataview_frame.set_dataframe(ratings_df)
         del ratings_df
