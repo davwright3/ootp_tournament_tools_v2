@@ -38,7 +38,6 @@ class PitcherStatsSelectFrame(tk.Frame):
                 onvalue=stat,
                 offvalue='off',
                 command=set_active_stats,
-                font=('Arial', 12),
             )
             checkbox.grid(
                 row=stat_num // 3 + 1,
