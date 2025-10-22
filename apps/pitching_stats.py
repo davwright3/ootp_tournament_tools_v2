@@ -1,5 +1,9 @@
 """Display pitching stats from CSV file."""
 import tkinter as tk
+
+import pandas as pd
+
+from apps.pitcher_card import PitcherCard
 from utils.data_utils.data_store import data_store
 from utils.stats_utils.generate_basic_pitching_stats_df import generate_basic_pitching_stats
 from utils.view_utils import pitcher_type_select_frame
@@ -68,7 +72,8 @@ class PitchStatsApp(tk.Toplevel):
         }
         self.stats_frame = DataFrameTableFrame(
             self.main_frame,
-            formatters=fmt
+            formatters=fmt,
+            on_row_double_click=open_pitcher_card
         )
         self.stats_frame.grid(row=0, column=0, sticky="nsew")
 
@@ -204,3 +209,7 @@ class PitchStatsApp(tk.Toplevel):
             selected_variant_split=variant_split_select,
         )
         self.stats_frame.set_dataframe(stats)
+
+def open_pitcher_card(row: pd.Series):
+    cid = int(row.get('CID')) if 'CID' in row else None
+    PitcherCard(cid)
