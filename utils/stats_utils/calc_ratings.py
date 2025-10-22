@@ -32,6 +32,7 @@ def calc_ratings(
                        (df['Avoid K vR'] * batter_weights['weight_avoidk_vR']) +
                        (df['BABIP vR'] * batter_weights['weight_babip_vR'])
                        )
+    df['BatSplit'] = df['BatvL'] - df['BatvR']
 
     # Pitcher ratings
 
@@ -53,7 +54,10 @@ def calc_ratings(
         df['PitvR'] = ((df['Stuff vR'] * pitcher_weights['weight_stuff_vR']) +
                          (df['pHR vR'] * pitcher_weights['weight_phr_vR']) +
                          (df['pBABIP vR'] * pitcher_weights['weight_pbabip_vR']) +
-                         (df['Control vR'] * pitcher_weights['weight_control_vR'])                         )
+                         (df['Control vR'] * pitcher_weights['weight_control_vR'])
+                       )
+
+    df['PitSplit'] = df['PitvL'] - df['PitvR']
 
 
     # Fielder ratings

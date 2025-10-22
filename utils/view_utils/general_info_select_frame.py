@@ -13,10 +13,10 @@ class GeneralInfoFrame(tk.Frame):
 
         def set_active_items():
             self.selected_items.clear()
-            for item in self.winfo_children():
-                if isinstance(item, CTkCheckBox):
-                    if item.get() != 'off':
-                        self.selected_items.append(item.get())
+            for widget in self.winfo_children():
+                if isinstance(widget, CTkCheckBox):
+                    if widget.get() != 'off':
+                        self.selected_items.append(widget.get())
 
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=1)
@@ -33,7 +33,6 @@ class GeneralInfoFrame(tk.Frame):
                 onvalue=item,
                 offvalue='off',
                 command=set_active_items,
-                font=('Arial', 12)
             )
             checkbox.grid(column=item_num % 3, row=item_num // 3 +1, sticky='nsew')
             item_num += 1

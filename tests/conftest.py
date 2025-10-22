@@ -15,6 +15,24 @@ if str(ROOT) not in sys.path:
 
 collect_ignore_glob = ['utils/view_utils/*.py']
 
+REQUIRED_COLS = [
+    'CID', '//Card Title', 'Card Value', 'Year', 'Card Type', 'Bats', 'Throws',
+    'Contact', 'Gap', 'Power', 'Eye', 'Avoid Ks', 'BABIP',
+    'Contact vL', 'Gap vL', 'Power vL', 'Eye vL', 'Avoid K vL', 'BABIP vL',
+    'Contact vR', 'Gap vR', 'Power vR', 'Eye vR', 'Avoid K vR', 'BABIP vR',
+    'Speed', 'Steal Rate', 'Stealing', 'Baserunning',
+    'Stuff', 'Movement', 'Control', 'pHR', 'pBABIP',
+    'Stuff vL', 'Movement vL', 'Control vL', 'pHR vL', 'pBABIP vL',
+    'Stuff vR', 'Movement vR', 'Control vR', 'pHR vR', 'pBABIP vR',
+    'Stamina', 'Hold', 'GB',
+    'Infield Range', 'Infield Error', 'Infield Arm', 'DP',
+    'CatcherAbil', 'CatcherFrame', 'Catcher Arm',
+    'OF Range', 'OF Error', 'OF Arm',
+    'LearnC', 'Learn1B', 'Learn2B', 'Learn3B', 'LearnSS', 'LearnLF', 'LearnCF', 'LearnRF',
+    'era', 'tier', 'owned', 'Last 10 Price', 'Last 10 Price(VAR)',
+    'Pitcher Role', 'date'
+]
+
 def pytest_configure(config):
     """Configuration for global testing."""
     df_default = pd.DataFrame(
@@ -179,3 +197,68 @@ def patched_team_data_store(monkeypatch, sample_stats_df):
     monkeypatch.setattr(mod, 'data_store', fake_df, raising=True)
     return sample_stats_df
 
+
+@pytest.fixture
+def sample_card_df():
+    base = {c: 0 for c in REQUIRED_COLS}
+
+    # Row A
+    a = base.copy()
+    a.update({
+        'CID': 11111,
+        '//Card Title': 'Player A',
+        'Card Value': 50,
+        'Year': 1999,
+        'Card Type': 5,
+        'Bats': 2,
+        'Throws': 1,
+        'Contact': 60,
+        'Power': 55,
+        'Gap': 50,
+        'LearnCF': 1,
+        'owned': 1,
+        'Last 10 Price': 125,
+        'Last 10 Price(VAR)': 250
+    })
+
+    b = base.copy()
+    b.update({
+        'CID': 22222,
+        '//Card Title': 'Player B',
+        'Card Value': 30,
+        'Year': 2010,
+        'Card Type': 5,
+        'Bats': 1,
+        'Throws': 2,
+        'Contact': 60,
+        'Power': 55,
+        'Gap': 50,
+        'LearnCF': 0,
+        'owned': 0,
+        'Last 10 Price': 125,
+        'Last 10 Price(VAR)': 250
+    })
+
+    return pd.DataFrame([a, b])
+
+
+@pytest.fixture
+def stub_card_list_store(monkeypatch, sample_card_df):
+    from types import SimpleNamespace
+    fake_store = SimpleNamespace(get_card_list=lambda: sample_card_df)
+    monkeypatch.setattr(
+        'utils.stats_utils.generate_ratings_df.card_list_store',
+        fake_store,
+        raising=True
+    )
+
+@pytest.fixture
+def stub_calc_ratings(monkeypatch):
+    def _fake(df, **kwargs):
+        return df.copy()
+
+    monkeypatch.setattr(
+        'utils.stats_utils.calc_ratings.calc_ratings',
+        _fake,
+        raising=True
+    )
