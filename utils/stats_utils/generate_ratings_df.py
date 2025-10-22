@@ -15,7 +15,8 @@ def generate_ratings_df(
         defense_weights=None,
         baserunning_weights=None,
         selected_position=None,
-        collection_only=False
+        collection_only=False,
+        selected_card_types=None,
 ):
     return_columns = ['CID', 'Title', 'Val']
     if selected_ratings_list:
@@ -39,6 +40,9 @@ def generate_ratings_df(
                        'OF Arm', 'LearnC', 'Learn1B', 'Learn2B', 'Learn3B', 'LearnSS', 'LearnLF',
                        'LearnCF', 'LearnRF', 'era', 'tier', 'owned', 'L10', 'VL10',
                        'Pitcher Role', 'date']]
+    if selected_card_types:
+        card_df = card_df[card_df['Type'].isin(selected_card_types)]
+
     if collection_only:
         card_df = card_df[card_df['owned'] != 0]
     card_df = card_df[(card_df['Val'] >= min_rating) & (card_df['Val'] <= max_rating)]

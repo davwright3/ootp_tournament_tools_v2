@@ -1,5 +1,7 @@
 """App for comparing ratings of selected players."""
 import tkinter as tk
+
+from utils.view_utils.card_type_select_frame import CardTypeSelectFrame
 from utils.view_utils.header_frame import Header
 from utils.view_utils.footer_frame import Footer
 from utils.view_utils.dataframe_table_frame import DataFrameTableFrame
@@ -109,6 +111,10 @@ class RatingsComparisonApp(tk.Toplevel):
         self.general_info_select_frame.grid(column=0, row=row, sticky='nsew')
         row += 1
 
+        self.card_type_select_frame = CardTypeSelectFrame(inner_frame)
+        self.card_type_select_frame.grid(column=0, row=row, sticky='nsew')
+        row += 1
+
         self.in_collection_frame = SelectInCollectionFrame(inner_frame)
         self.in_collection_frame.grid(column=0, row=row, sticky='nsew')
         row += 1
@@ -127,6 +133,7 @@ class RatingsComparisonApp(tk.Toplevel):
         selected_baserunning_weights = self.baserunning_weight_frame.get_baserunning_weights()
         selected_position = self.position_select_frame.get_position_select()
         selected_in_collection_only = self.in_collection_frame.get_collection_only_value()
+        selected_card_types = self.card_type_select_frame.get_selected_card_types()
         ratings_df = generate_ratings_df(
             min_year=selected_min_year,
             max_year=selected_max_year,
@@ -140,6 +147,7 @@ class RatingsComparisonApp(tk.Toplevel):
             baserunning_weights=selected_baserunning_weights,
             selected_position=selected_position,
             collection_only=selected_in_collection_only,
+            selected_card_types=selected_card_types,
         )
         self.dataview_frame.set_dataframe(ratings_df)
         del ratings_df

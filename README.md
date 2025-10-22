@@ -7,37 +7,28 @@ which can be found here: [GithubLink](https://github.com/davwright3/au_ootp_tour
 
 Please visit this link if you have any feature requests: [Feature Requests](https://docs.google.com/forms/d/1I01oUCsnH41OVFDkNjZeQurVAMr5zBd8103BPOorBUw/edit)
 
-## Current Version 0.2.0
+## Current Version 0.3.4
 
 ### Updated: 
 
-02 Oct 2025
+22 Oct 2025
 
 New Features:
 
-- File Processing System 🗃️
+- Team Statistics App 🔢
 
-  - Uses Pandas Dataframes to quickly append raw CSV files into a single file for stat calculations
-  - Improved responsiveness and error protection/detection
-  - Updated UI/UX to provide better readability and usability for users
+  - Display team wins, losses, winning percentages
+  - Select minimum number of games played (default: 20)
+  - All stats that are in the batter and pitcher stats are available to view
 
-- Simpler settings updates 🛠️
+- Ratings Comparison Tool ➕➖
 
-  - Settings updates are handled by the individual setting instead of in a setting menu
-  - Better UI indications on valid/invalid file paths and file selections
-  - Improved checks for invalid files, allowing for reduced errors from stat calculations and missing data
+  - View batting, pitching, defense, baserunning ratings and compare across players
+  - View overall ratings, by side, and splits
+  - Select year and value ranges, as well as card types
+  - Select weight for each rating (user determined, default: 1x)
 
-- Improved main view display options
 
-  - Ability to control Joe Unknown cutoff limits
-  - View only cards in your collection
-  - More robust stats selections (i.e. K-BB pct, Last 10 pricing, etc.)
-
-- New User Messaging System 💬
-
-  - New logs on various pages provide improved communication to the user
-  - Provides instant feedback to the user, without having to override other data labels
-  - Color coded by message tag
 
 ## Installation
 
@@ -190,3 +181,33 @@ New Features:
 
     - Check your filenames for the proper format (DD MMM or XXXX depending on tournament type)
     - Check your minimum settings for plate appearances or innings pitched
+
+### Previous Versions
+
+02 Oct 2025 v0.2.0
+
+New Features:
+
+- File Processing System 🗃️
+
+  - Uses Pandas Dataframes to quickly append raw CSV files into a single file for stat calculations
+  - Improved responsiveness and error protection/detection
+  - Updated UI/UX to provide better readability and usability for users
+
+- Simpler settings updates 🛠️
+
+  - Settings updates are handled by the individual setting instead of in a setting menu
+  - Better UI indications on valid/invalid file paths and file selections
+  - Improved checks for invalid files, allowing for reduced errors from stat calculations and missing data
+
+- Improved main view display options
+
+  - Ability to control Joe Unknown cutoff limits
+  - View only cards in your collection
+  - More robust stats selections (i.e. K-BB pct, Last 10 pricing, etc.)
+
+- New User Messaging System 💬
+
+  - New logs on various pages provide improved communication to the user
+  - Provides instant feedback to the user, without having to override other data labels
+  - Color coded by message tag
