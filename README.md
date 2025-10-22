@@ -7,7 +7,7 @@ which can be found here: [GithubLink](https://github.com/davwright3/au_ootp_tour
 
 Please visit this link if you have any feature requests: [Feature Requests](https://docs.google.com/forms/d/1I01oUCsnH41OVFDkNjZeQurVAMr5zBd8103BPOorBUw/edit)
 
-## Current Version 0.3.4
+## Current Version 0.3.3
 
 ### Updated: 
 
