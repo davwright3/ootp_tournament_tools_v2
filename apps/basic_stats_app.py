@@ -86,7 +86,9 @@ class BasicStatsApp(tk.Toplevel):
                     loaded_file_var=self.dataframe_loaded_var,
                     file_loaded_bool=self.is_dataframe_loaded,
                 ),
-                set_active_buttons(self.app_select_frame)
+                set_active_buttons(self.app_select_frame),
+
+
             )
         )
         self.data_file_select_button.grid(row=0, column=0, sticky="e")
