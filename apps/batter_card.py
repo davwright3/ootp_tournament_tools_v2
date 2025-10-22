@@ -1,7 +1,8 @@
 """Batter card for displaying individual batter stats."""
 import tkinter as tk
 from utils.stats_utils.set_batter_card_data import set_batter_card_data
-from utils.view_utils.player_card_bat_rattings_frame import BatterRattingFrame
+from utils.view_utils.player_card_bat_rattings_frame import BatterRatingFrame
+from utils.view_utils.baserunning_profile_frame import BaserunningProfileFrame
 from utils.view_utils.batter_profile_frame import BatterProfileFrame
 from utils.view_utils.header_frame import Header
 from utils.view_utils.footer_frame import Footer
@@ -31,8 +32,11 @@ class BatterCard(tk.Toplevel):
         self.footer_frame.grid(row=2, column=0, sticky='nsew')
 
         # Individual frames
-        self.batting_ratings_frame = BatterRattingFrame(self.main_frame, df=player_df)
+        self.batting_ratings_frame = BatterRatingFrame(self.main_frame, df=player_df)
         self.batting_ratings_frame.grid(row=0, column=0, sticky='nsew')
 
+        self.baserunning_frame = BaserunningProfileFrame(self.main_frame, df=player_df)
+        self.baserunning_frame.grid(row=0, column=1, sticky='nsew')
+
         self.batter_profile_frame = BatterProfileFrame(self.main_frame, df=player_df)
-        self.batter_profile_frame.grid(row=0, column=1, sticky='nsew')
+        self.batter_profile_frame.grid(row=0, column=2, sticky='nsew')

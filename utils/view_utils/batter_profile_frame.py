@@ -1,9 +1,9 @@
 import tkinter as tk
+from utils.view_utils import program_fonts as fonts
 
 class BatterProfileFrame(tk.Frame):
     def __init__(self, parent, df):
         super().__init__(parent, relief='groove', bd=3)
-        self.font = ('Arial', 16)
 
         self.gb_profile = df.iloc[0]['GB Hitter Type']
         self.fb_profile = df.iloc[0]['FB Hitter Type']
@@ -40,36 +40,48 @@ class BatterProfileFrame(tk.Frame):
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=1)
 
-        self.label = tk.Label(self, text='Batter Profile', font=self.font)
-        self.label.grid(row=0, column=0, sticky='nsew', columnspan=2)
+        self.rowconfigure(0, weight=1)
+        self.rowconfigure(1, weight=0)
+        self.rowconfigure(2, weight=0)
+        self.rowconfigure(3, weight=0)
+        self.rowconfigure(4, weight=0)
+        self.rowconfigure(5, weight=1)
 
-        self.gb_profile_label = tk.Label(self, text='GB Profile:', font=self.font)
-        self.gb_profile_label.grid(row=1, column=0, sticky='e', padx=5)
+        row = 1
+        self.label = tk.Label(self, text='Batter Profile', font=fonts.frame_title_font)
+        self.label.grid(row=row, column=0, sticky='nsew', columnspan=2)
+        row += 1
 
-        self.fb_profile_label = tk.Label(self, text='FB Profile:', font=self.font)
-        self.fb_profile_label.grid(row=2, column=0, sticky='e', padx=5)
-
-        self.batted_ball_profile_label = tk.Label(self, text='Batted Ball:', font=self.font)
-        self.batted_ball_profile_label.grid(row=3, column=0, sticky='e', padx=5)
+        self.gb_profile_label = tk.Label(self, text='GB Profile:', font=fonts.basic_font)
+        self.gb_profile_label.grid(row=row, column=0, sticky='e', padx=5)
 
         self.gb_profile_string_label = tk.Label(
             self,
             text=self.gb_profile_string,
-            font=self.font
+            font=fonts.basic_font,
         )
-        self.gb_profile_string_label.grid(row=1, column=1, sticky='nsew')
+        self.gb_profile_string_label.grid(row=row, column=1, sticky='nsew')
+        row += 1
+
+        self.fb_profile_label = tk.Label(self, text='FB Profile:', font=fonts.basic_font)
+        self.fb_profile_label.grid(row=row, column=0, sticky='e', padx=5)
 
         self.fb_profile_string_label = tk.Label(
             self,
             text=self.fb_profile_string,
-            font=self.font
+            font=fonts.basic_font,
         )
-        self.fb_profile_string_label.grid(row=2, column=1, sticky='nsew')
+        self.fb_profile_string_label.grid(row=row, column=1, sticky='nsew')
+        row += 1
 
+        self.batted_ball_profile_label = tk.Label(self, text='Batted Ball:', font=fonts.basic_font)
+
+        self.batted_ball_profile_label.grid(row=row, column=0, sticky='e', padx=5)
         self.batted_ball_profile_string_label = tk.Label(
             self,
             text=self.batted_ball_profile_string,
-            font=self.font
+            font=fonts.basic_font,
         )
-        self.batted_ball_profile_string_label.grid(row=3, column=1, sticky='nsew')
+        self.batted_ball_profile_string_label.grid(row=row, column=1, sticky='nsew')
+        row += 1
 
