@@ -68,7 +68,9 @@ class PitchStatsApp(tk.Toplevel):
             'IRS%': fmt_leading_dot(3, '.000'),
             'GB%': fmt_leading_dot(3, '.000'),
             'WAR/200': fmt_leading_dot(1, '.0'),
-            'IP/G': fmt_leading_dot(1, '.0')
+            'IP/G': fmt_leading_dot(1, '.0'),
+            'QS%': fmt_leading_dot(3, '.000'),
+            'oBABIP': fmt_leading_dot(3, '.000'),
         }
         self.stats_frame = DataFrameTableFrame(
             self.main_frame,

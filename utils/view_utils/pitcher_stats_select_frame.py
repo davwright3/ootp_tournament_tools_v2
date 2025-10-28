@@ -10,7 +10,7 @@ class PitcherStatsSelectFrame(tk.Frame):
 
         self.available_stats = ['IPC', 'ERA', 'FIP', 'WHIP', 'K%', 'BB%',
                                 'K-BB', 'HR/9', 'SV%', 'SD/MD', 'IRS%',
-                                'GB%', 'WAR/200', 'IP/G']
+                                'GB%', 'WAR/200', 'IP/G', 'QS%', 'oBABIP']
 
         self.selected_stats = []
 

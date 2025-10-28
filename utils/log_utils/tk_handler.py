@@ -30,7 +30,10 @@ class TkTextHandler(logging.Handler):
         try:
             while True:
                 record = self.q.get_nowait()
-                msg = self.format(record)
+                try:
+                    msg = self.format(record)
+                except Exception:
+                    msg = f"Logging error: {record}"
                 tag = record.levelname if record.levelname in ("INFO", "WARNING", "ERROR") else None
                 self.sink.append(msg, tag)
         except queue.Empty:

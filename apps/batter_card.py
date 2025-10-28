@@ -4,6 +4,7 @@ from utils.stats_utils.set_batter_card_data import set_batter_card_data
 from utils.view_utils.player_card_bat_rattings_frame import BatterRatingFrame
 from utils.view_utils.baserunning_profile_frame import BaserunningProfileFrame
 from utils.view_utils.batter_profile_frame import BatterProfileFrame
+from utils.view_utils.player_card_league_stats_frame import PlayerCardLeagueStatsFrame
 from utils.view_utils.header_frame import Header
 from utils.view_utils.footer_frame import Footer
 
@@ -40,3 +41,6 @@ class BatterCard(tk.Toplevel):
 
         self.batter_profile_frame = BatterProfileFrame(self.main_frame, df=player_df)
         self.batter_profile_frame.grid(row=0, column=2, sticky='nsew')
+
+        self.league_stats_frame = PlayerCardLeagueStatsFrame(self.main_frame)
+        self.league_stats_frame.grid(row=0, column=3, sticky='nsew')

@@ -52,11 +52,11 @@ def calc_league_stats():
                 (1.27 * lg_double) + (1.608 * lg_triple) + (2.072 * lg_hr)) /
                (lg_ab + lg_bb - lg_ibb + lg_sf + lg_hp)).round(3)
     lg_ops = (lg_obp + lg_slg).round(3)
-    lg_so_rate = (lg_so / lg_pa).round(3)
-    lg_bb_rate = (lg_bb / lg_pa).round(3)
-    lg_hr_rate = ((lg_hr / lg_pa) * 600).round(3)
-    lg_sb_rate = (lg_sb / lg_pa).round(1)
-    lg_sb_pct = (lg_sb / (lg_sb + lg_cs)).round(1)
+    lg_so_rate = (lg_so / lg_pa).round(1)
+    lg_bb_rate = (lg_bb / lg_pa).round(1)
+    lg_hr_rate = ((lg_hr / lg_pa) * 600).round(1)
+    lg_sb_rate = ((lg_sb / lg_pa)*600).round(1)
+    lg_sb_pct = (lg_sb / (lg_sb + lg_cs)).round(3)
 
     # Calculated pitching stats
     lg_era = ((lg_er / lg_ip) * 9).round(2)

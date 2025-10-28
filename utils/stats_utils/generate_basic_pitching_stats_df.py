@@ -29,12 +29,12 @@ def generate_basic_pitching_stats(
     stats_df1 = stats_df.copy()
     del stats_df
     if selected_variant_split:
-        stats_df1 = stats_df1[['CID', 'VLvl', 'IPC', 'G.1', 'GS.1', 'BF', 'ER', 'K', 'BB.1', 'IBB.1',
+        stats_df1 = stats_df1[['CID', 'VLvl', 'IPC', 'G.1', 'GS.1', 'BF', 'AB.1', 'ER', 'K', 'BB.1', 'IBB.1',
                    'HA', '1B.1', '2B.1', '3B.1', 'HR.1', 'SV', 'SVO', 'SD',
                    'MD', 'HP.1', 'SH.1', 'SF.1', 'QS', 'IR', 'IRS', 'GB',
                    'FB', 'WAR.1', 'Trny']].groupby(['CID', 'VLvl'], as_index=False).sum()
     else:
-        stats_df1 = stats_df1[['CID', 'IPC', 'G.1', 'GS.1', 'BF', 'ER', 'K', 'BB.1', 'IBB.1',
+        stats_df1 = stats_df1[['CID', 'IPC', 'G.1', 'GS.1', 'BF', 'AB.1', 'ER', 'K', 'BB.1', 'IBB.1',
                    'HA', '1B.1', '2B.1', '3B.1', 'HR.1', 'SV', 'SVO', 'SD',
                    'MD', 'HP.1', 'SH.1', 'SF.1', 'QS', 'IR', 'IRS', 'GB',
                    'FB', 'WAR.1', 'Trny']].groupby(['CID'], as_index=False).sum()
