@@ -51,7 +51,7 @@ def calc_batting_stats(df, min_pa=0):
     )
 
     df1['SBrate'] = (
-        ((df1['SB'] / df1['PA']) * 600).round(3)
+        ((df1['SB'] / df1['PA']) * 600).round(1)
     )
 
     den = df1['SB'] + df1 ['CS']

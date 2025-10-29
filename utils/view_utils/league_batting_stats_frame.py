@@ -1,6 +1,6 @@
 import tkinter as tk
 from utils.view_utils import program_fonts as fonts
-from utils.view_utils.lg_stat_label import LeagueStatLabel
+from utils.view_utils.stat_label import StatLabel
 
 
 class LeagueBattingStatsFrame(tk.Frame):
@@ -30,6 +30,6 @@ class LeagueBattingStatsFrame(tk.Frame):
         row = 1
 
         for text, value in stat_labels:
-            lbl = LeagueStatLabel(self, text, value)
+            lbl = StatLabel(self, text, value)
             lbl.grid(row=row, column=0, pady=(0, 2), sticky='ew')
             row += 1

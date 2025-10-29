@@ -25,6 +25,8 @@ def calc_basic_batting_stats_df(
         cull_team_limit_select: int=8,
         selected_search_term: str=None,
         variant_split_select: bool=False,
+        card_id_select: int=None,
+        team_select: str=None,
 ):
     """
     Calculates basic batting stats and returns a dataframe with the
@@ -40,11 +42,19 @@ def calc_basic_batting_stats_df(
     :param cull_team_limit_select: runs limit for where teams get removed, int
     :param selected_search_term: player to search for, str
     :param variant_split_select: whether to split variant selection, bool
+    :param card_id_select: the id of the card, int
+    :param team_select: the name of the team, str
     :return: Dataframe
     """
     df = cull_teams(data_store.get_data().copy(), run_cutoff=cull_team_limit_select)
     df1 = df.copy()
     del df
+    if team_select is not None:
+        df1 = df1[df1['ORG'] == team_select]
+
+    if card_id_select is not None:
+        df1 = df1[df1['CID'] == card_id_select]
+
     if variant_split_select:
         df1 = df1[['CID', 'VLvl', 'PA', 'AB', 'H', '1B', '2B', '3B',
                    'HR', 'TB', 'SO', 'HP', 'BB', 'IBB', 'SF', 'SB',

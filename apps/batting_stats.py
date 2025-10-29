@@ -29,11 +29,12 @@ from apps.batter_card import BatterCard
 
 
 class BattingStatsApp(tk.Toplevel):
-    def __init__(self):
+    def __init__(self, selected_team=None):
         super().__init__()
 
         self.geometry('1920x1080')
         self.title('Batting Stats')
+        self.selected_team = selected_team
 
         self.rowconfigure(0, weight=0)
         self.rowconfigure(1, weight=1)
@@ -155,7 +156,7 @@ class BattingStatsApp(tk.Toplevel):
             'WARrate': fmt_leading_dot(1, '.0')
         }
 
-        self.dataframe_frame = DataFrameTableFrame(self.main_frame, df=stats_df, formatters=fmt, on_row_double_click=open_batter_card)
+        self.dataframe_frame = DataFrameTableFrame(self.main_frame, df=stats_df, formatters=fmt, on_row_double_click=self.open_batter_card)
         self.dataframe_frame.grid(row=0, column=0, sticky='nsew')
 
     def reload_data(self):
@@ -185,7 +186,8 @@ class BattingStatsApp(tk.Toplevel):
         )
         self.dataframe_frame.set_dataframe(stats_df)
 
-def open_batter_card(row: pd.Series):
-    cid = int(row.get('CID')) if 'CID' in row else None
-    BatterCard(cid)
+    def open_batter_card(self, row: pd.Series):
+        cid = int(row.get('CID')) if 'CID' in row else None
+        team_select = self.selected_team
+        BatterCard(cid, team_select)
 

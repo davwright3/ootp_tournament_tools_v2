@@ -2,11 +2,12 @@ import tkinter as tk
 from utils.view_utils import program_fonts as fonts
 
 
-class LeagueStatLabel(tk.Frame):
+class StatLabel(tk.Frame):
     def __init__(self, parent, label_name, stat):
         super().__init__(parent)
 
         self.columnconfigure(0, weight=1)
+        self.columnconfigure(1, weight=1)
         self.rowconfigure(0, weight=1)
 
         self.label = tk.Label(
