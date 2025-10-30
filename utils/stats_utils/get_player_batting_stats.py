@@ -2,7 +2,6 @@ from utils.stats_utils.generate_basic_batting_stats_df import calc_basic_batting
 
 
 def get_player_batting_stats(card_id, selected_team=None):
-    print("Getting player stats")
     if selected_team is None:
         df = calc_basic_batting_stats_df(
             min_pa=1,

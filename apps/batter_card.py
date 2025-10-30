@@ -6,6 +6,7 @@ from utils.view_utils.baserunning_profile_frame import BaserunningProfileFrame
 from utils.view_utils.player_card_batting_stats_frame import PlayerBattingStatsFrame
 from utils.view_utils.batter_profile_frame import BatterProfileFrame
 from utils.view_utils.player_card_league_stats_frame import PlayerCardLeagueStatsFrame
+from utils.view_utils.player_card_defense_ratings_frame import PlayerCardDefenseRatingsFrame
 from utils.view_utils.header_frame import Header
 from utils.view_utils.footer_frame import Footer
 
@@ -45,8 +46,11 @@ class BatterCard(tk.Toplevel):
         self.batter_profile_frame = BatterProfileFrame(self.main_frame, df=player_df)
         self.batter_profile_frame.grid(row=0, column=2, sticky='nsew')
 
+        self.defense_ratings_frame = PlayerCardDefenseRatingsFrame(self.main_frame, df=player_df)
+        self.defense_ratings_frame.grid(row=1, column=0, columnspan=3, sticky='nsew')
+
         self.player_batting_stats_frame = PlayerBattingStatsFrame(self.main_frame, card_id=int(card_id), team_select=self.selected_team)
-        self.player_batting_stats_frame.grid(row=0, column=3, sticky='nsew')
+        self.player_batting_stats_frame.grid(row=0, column=3, rowspan=2, sticky='nsew')
 
         self.league_stats_frame = PlayerCardLeagueStatsFrame(self.main_frame)
-        self.league_stats_frame.grid(row=0, column=4, sticky='nsew')
+        self.league_stats_frame.grid(row=0, column=4, rowspan=2, sticky='nsew')
