@@ -31,7 +31,7 @@ jobs:
 
       - name: Build executable with PyInstaller
         run: |
-          pyinstaller --clean main.spec
+          pyinstaller --clean --log-level=DEBUG main.spec
 
       - name: Show PyInstaller dist tree
         shell: pwsh

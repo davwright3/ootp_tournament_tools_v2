@@ -24,7 +24,7 @@ class PitcherCard(tk.Toplevel):
 
         self.columnconfigure(0, weight=1)
 
-        self.header_frame = Header(self, app_name=f'Pitcher Card for {player_ratings_df.iloc[0]['//Card Title']}')
+        self.header_frame = Header(self, app_name=f'Pitcher Card for {player_ratings_df.iloc[0]["//Card Title"]}')
         self.header_frame.grid(row=0, column=0, columnspan=3, sticky='nsew')
 
         self.main_frame = tk.Frame(self)
