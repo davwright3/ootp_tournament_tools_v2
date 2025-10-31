@@ -170,7 +170,7 @@ class BasicStatsApp(tk.Toplevel):
 
     def open_pitching_stats(self):
         team_select = self.team_select_entry.get_selected_team()
-        PitchStatsApp()
+        PitchStatsApp(selected_team=team_select)
 
     def open_team_stats(self):
         team_select = self.team_select_entry.get_selected_team()

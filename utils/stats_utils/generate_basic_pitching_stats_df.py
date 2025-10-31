@@ -23,8 +23,17 @@ def generate_basic_pitching_stats(
         cull_team_limit_select=8,
         selected_search_term=None,
         selected_variant_split=False,
+        card_id=None,
+        team_select=None,
 ):
     stats_df = cull_teams(data_store.get_data().copy(), run_cutoff=cull_team_limit_select)
+
+    if card_id is not None:
+        stats_df = stats_df[stats_df['CID'] == card_id]
+
+    if team_select is not None:
+        stats_df = stats_df[stats_df['ORG'] == team_select]
+
     stats_df['IPC'] = stats_df['IP'].apply(normalize_innings_pitched)
     stats_df1 = stats_df.copy()
     del stats_df

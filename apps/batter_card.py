@@ -27,7 +27,7 @@ class BatterCard(tk.Toplevel):
 
         player_df = set_batter_card_data(card_id=int(card_id))
 
-        self.header_frame = Header(self, app_name=f'Batter Card for {card_id}')
+        self.header_frame = Header(self, app_name=f'Batter Card for {player_df.iloc[0]["//Card Title"]}')
         self.header_frame.grid(row=0, column=0, sticky='nsew')
 
         self.main_frame = tk.Frame(self)

@@ -9,7 +9,10 @@ class ColorRatingLabel(tk.Label):
         self.configure(text=rating)
         self.configure(font=font)
 
-        if rating < 50:
+        if rating == 0:
+            self.configure(text='-')
+            self.configure(bg='white')
+        elif rating < 50:
             self.configure(bg='#ff5959')
         elif rating < 60:
             self.configure(bg='#ff9700')
