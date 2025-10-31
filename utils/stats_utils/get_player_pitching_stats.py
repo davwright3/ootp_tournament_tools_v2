@@ -27,21 +27,21 @@ def get_player_pitching_stats(card_id, team_select=None):
         }
     else:
         stats = {
-            'ply_ip': f'{df.iloc[0]['IPC']}',
-            'ply_era': f'{df.iloc[0]['ERA']}'.lstrip('0'),
-            'ply_fip': f'{df.iloc[0]['FIP']}'.lstrip('0'),
-            'ply_k_pct': f'{df.iloc[0]['K%']}'.lstrip('0'),
-            'ply_bb_pct': f'{df.iloc[0]['BB%']}'.lstrip('0'),
-            'ply_k-bb': f'{df.iloc[0]['K-BB']}'.lstrip('0'),
-            'ply_hr_rate': f'{df.iloc[0]['HR/9']}'.lstrip('0'),
-            'ply_sv_pct': f'{df.iloc[0]['SV%']}'.lstrip('0'),
-            'ply_sd_md': f'{df.iloc[0]['SD/MD']}'.lstrip('0'),
-            'ply_irs_pct': f'{df.iloc[0]['IRS%']}'.lstrip('0'),
-            'ply_ipg': f'{df.iloc[0]['IP/G']}'.lstrip('0'),
-            'ply_gb_pct': f'{df.iloc[0]['GB%']}'.lstrip('0'),
-            'ply_qs_pct': f'{df.iloc[0]['QS%']}'.lstrip('0'),
-            'ply_war_rate': f'{df.iloc[0]['WAR/200']}'.lstrip('0'),
-            'ply_babip': f'{df.iloc[0]['oBABIP']}'.lstrip('0'),
+            'ply_ip': f"{df.iloc[0]['IPC']}",
+            'ply_era': f"{df.iloc[0]['ERA']}".lstrip('0'),
+            'ply_fip': f"{df.iloc[0]['FIP']}".lstrip('0'),
+            'ply_k_pct': f"{df.iloc[0]['K%']}".lstrip('0'),
+            'ply_bb_pct': f"{df.iloc[0]['BB%']}".lstrip('0'),
+            'ply_k-bb': f"{df.iloc[0]['K-BB']}".lstrip('0'),
+            'ply_hr_rate': f"{df.iloc[0]['HR/9']}".lstrip('0'),
+            'ply_sv_pct': f"{df.iloc[0]['SV%']}".lstrip('0'),
+            'ply_sd_md': f"{df.iloc[0]['SD/MD']}".lstrip('0'),
+            'ply_irs_pct': f"{df.iloc[0]['IRS%']}".lstrip('0'),
+            'ply_ipg': f"{df.iloc[0]['IP/G']}".lstrip('0'),
+            'ply_gb_pct': f"{df.iloc[0]['GB%']}".lstrip('0'),
+            'ply_qs_pct': f"{df.iloc[0]['QS%']}".lstrip('0'),
+            'ply_war_rate': f"{df.iloc[0]['WAR/200']}".lstrip('0'),
+            'ply_babip': f"{df.iloc[0]['oBABIP']}".lstrip('0'),
         }
 
     return stats
