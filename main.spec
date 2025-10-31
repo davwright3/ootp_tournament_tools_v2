@@ -3,7 +3,7 @@
 
 a = Analysis(
     ['main.py'],
-    pathex=[],
+    pathex=['.'],
     binaries=[],
     datas=[('image_assets', 'au_ootp_tournament_utilities_v2\\image_assets'), ('settings_default.ini', '.'), ('README.md', '.')],
     hiddenimports=[],
