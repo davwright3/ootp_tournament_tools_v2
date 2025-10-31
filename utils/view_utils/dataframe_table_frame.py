@@ -14,6 +14,7 @@ class DataFrameTableFrame(ttk.Frame):
             sort_keys: Optional[Dict[str, Callable[[pd.Series], pd.Series]]] = None,
             height: int = 18,
             show_index: bool = False,
+            on_row_double_click: Optional[Callable[[pd.Series], None]] = None,
             **kwargs
     ):
         super().__init__(parent, **kwargs)
@@ -22,6 +23,8 @@ class DataFrameTableFrame(ttk.Frame):
         self._sort_keys = sort_keys or {}
         self._show_index = show_index
         self._sort_state = {'col': None, 'reverse': False}
+        self._on_row_double_click_cb = on_row_double_click
+        self._iid_to_row: Dict[str, pd.Series] = {}
 
         logger = logging.getLogger('apps.basic_stats_app.data_utils')
 
@@ -63,6 +66,7 @@ class DataFrameTableFrame(ttk.Frame):
         self.tree.tag_configure('odd', background='#f7f7f7')
         self.tree.tag_configure('even', background='#ffffff')
         self.tree.tag_configure('right', anchor='e')
+        self.tree.bind("<Double-1>", self._on_row_double_click)
 
         # Set headings and widths
         for col in self._tree_columns():
@@ -139,6 +143,8 @@ class DataFrameTableFrame(ttk.Frame):
             for col in use_cols:
                 values.append(self._format_value(col, row.get(col)))
             iid = self.tree.insert('', 'end', values=values, tags=tags)
+            self._iid_to_row[iid] = row
+
             # Add right align tag for numeric
             if self._show_index:
                 start = 1
@@ -194,3 +200,34 @@ class DataFrameTableFrame(ttk.Frame):
             # Char -> pixel adjustment
             width = int(max_len * 8.0) + 24
             self.tree.column(c, width=max(min_w[c], min(width, 420)))
+
+    def _on_row_double_click(self, event=None):
+        iid = None
+        if event is not None:
+            # Ignore headers and empty regions
+            region = self.tree.identify('region', event.x, event.y)
+            if region != 'cell':
+                return
+            iid = self.tree.identify_row(event.y)
+
+        if not iid:
+            iid = self.tree.focus()
+
+        if not iid:
+            return
+
+        row = self._iid_to_row.get(iid)
+        if row is None:
+            try:
+                pos = list(self.tree.get_children()).index(iid)
+                row = self._df.iloc[pos]
+            except Exception:
+                return
+
+        if callable(self._on_row_double_click_cb):
+            try:
+                self._on_row_double_click_cb(row)
+            except Exception as e:
+                logging.getLogger('apps.basic_stats_app.data_utils').exception("Double click callback failed", e)
+
+

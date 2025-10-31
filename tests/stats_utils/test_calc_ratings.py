@@ -70,6 +70,20 @@ bat_weights = {
     'weight_eye_vR': 2,
 }
 
+pit_weights = {
+    'weight_stuff': 2,
+    'weight_phr': 2,
+    'weight_pbabip': 2,
+    'weight_control': 2,
+    'weight_stuff_vL': 2,
+    'weight_stuff_vR': 2,
+    'weight_phr_vL':2,
+    'weight_phr_vR': 2,
+    'weight_pbabip_vL': 2,
+    'weight_pbabip_vR': 2,
+    'weight_control_vL': 2,
+    'weight_control_vR': 2,
+}
 
 
 def test_ratings_no_weights():
@@ -78,10 +92,17 @@ def test_ratings_no_weights():
     assert df['BatOA'] == 5
     assert df['BatvL'] == 5
     assert df['Catch Def'] == 3
+    assert df['IF Def'] == 4
+    assert df['PitOA'] == 4
+    assert df['PitvL'] == 4
 
-def test_batter_ratings_weighted(
+def test_ratings_weighted(
 ):
-    df = mod.calc_ratings(card_df, batter_weights=bat_weights)
+    df = mod.calc_ratings(card_df, batter_weights=bat_weights, pitcher_weights=pit_weights)
 
     assert df['BatOA'] == 10
     assert df['BatvL'] == 10
+    assert df['Catch Def'] == 3
+    assert df['PitOA'] == 8
+    assert df['PitvL'] == 8
+

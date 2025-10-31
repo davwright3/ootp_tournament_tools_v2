@@ -4,6 +4,7 @@ import logging
 from tkinter import filedialog
 from utils.config_utils import load_save_settings as settings_module
 from utils.data_utils.data_store import data_store
+from utils.data_utils.league_stats_store import league_stats_store
 
 def select_load_stats_data_file(parent, loaded_file_var, file_loaded_bool):
     """
@@ -30,6 +31,7 @@ def select_load_stats_data_file(parent, loaded_file_var, file_loaded_bool):
         data_store.load_data(filepath)
         loaded_file_var.set(filepath)
         file_loaded_bool.set(True)
+        league_stats_store.load_stats()
         logger.info(f'Data loaded from {filepath}')
         logger.info(f'Loaded file contains {len(data_store.get_data())} rows of data.')
     except Exception as e:

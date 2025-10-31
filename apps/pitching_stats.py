@@ -1,5 +1,9 @@
 """Display pitching stats from CSV file."""
 import tkinter as tk
+
+import pandas as pd
+
+from apps.pitcher_card import PitcherCard
 from utils.data_utils.data_store import data_store
 from utils.stats_utils.generate_basic_pitching_stats_df import generate_basic_pitching_stats
 from utils.view_utils import pitcher_type_select_frame
@@ -21,11 +25,13 @@ from utils.view_utils.split_variants_frame import SplitVariantsFrame
 
 
 class PitchStatsApp(tk.Toplevel):
-    def __init__(self):
+    def __init__(self, selected_team=None):
         super().__init__()
 
         self.title("Pitching Stats")
         self.geometry("1920x1080")
+
+        self.selected_team = selected_team
 
         self.rowconfigure(0, weight=0)
         self.rowconfigure(1, weight=1)
@@ -64,11 +70,14 @@ class PitchStatsApp(tk.Toplevel):
             'IRS%': fmt_leading_dot(3, '.000'),
             'GB%': fmt_leading_dot(3, '.000'),
             'WAR/200': fmt_leading_dot(1, '.0'),
-            'IP/G': fmt_leading_dot(1, '.0')
+            'IP/G': fmt_leading_dot(1, '.0'),
+            'QS%': fmt_leading_dot(3, '.000'),
+            'oBABIP': fmt_leading_dot(3, '.000'),
         }
         self.stats_frame = DataFrameTableFrame(
             self.main_frame,
-            formatters=fmt
+            formatters=fmt,
+            on_row_double_click=self.open_pitcher_card
         )
         self.stats_frame.grid(row=0, column=0, sticky="nsew")
 
@@ -204,3 +213,8 @@ class PitchStatsApp(tk.Toplevel):
             selected_variant_split=variant_split_select,
         )
         self.stats_frame.set_dataframe(stats)
+
+    def open_pitcher_card(self, row: pd.Series):
+        cid = int(row.get('CID')) if 'CID' in row else None
+        selected_team = self.selected_team
+        PitcherCard(cid, selected_team)

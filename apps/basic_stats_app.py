@@ -9,6 +9,7 @@ from utils.view_utils.header_frame import Header
 from utils.view_utils.footer_frame import Footer
 from utils.data_utils.select_load_stats_data_file import select_load_stats_data_file
 from utils.view_utils.message_panel import MessagePanel
+from utils.view_utils.team_select_frame import TeamSelectFrame
 from utils.data_utils.card_list_store import card_list_store
 from utils.log_utils.attach import attach_panel
 from apps.batting_stats import BattingStatsApp
@@ -86,7 +87,8 @@ class BasicStatsApp(tk.Toplevel):
                     loaded_file_var=self.dataframe_loaded_var,
                     file_loaded_bool=self.is_dataframe_loaded,
                 ),
-                set_active_buttons(self.app_select_frame)
+                set_active_buttons(self.app_select_frame),
+                self.team_select_entry.update_list()
             )
         )
         self.data_file_select_button.grid(row=0, column=0, sticky="e")
@@ -107,6 +109,9 @@ class BasicStatsApp(tk.Toplevel):
         )
         self.valid_file_label.grid(row=0, column=3, sticky="e")
 
+        self.team_select_entry = TeamSelectFrame(self.select_data_file_frame)
+        self.team_select_entry.grid(row=1, column=0, sticky="w", padx=(10, 0), pady=(5, 0), columnspan=3)
+
         # Data for main frame
         self.app_select_frame = tk.Frame(
             self.main_frame,
@@ -124,21 +129,21 @@ class BasicStatsApp(tk.Toplevel):
         self.batting_app_select_button = tk.Button(
             self.app_select_frame,
             text="Batting Stats",
-            command=open_batting_stats
+            command=self.open_batting_stats
         )
         self.batting_app_select_button.grid(row=0, column=0, sticky="nsew")
 
         self.pitching_app_select_button = tk.Button(
             self.app_select_frame,
             text="Pitching Stats",
-            command=open_pitching_stats
+            command=self.open_pitching_stats
         )
         self.pitching_app_select_button.grid(row=0, column=1, sticky="nsew")
 
         self.team_app_select_button = tk.Button(
             self.app_select_frame,
             text="Team Stats",
-            command=open_team_stats
+            command=self.open_team_stats
         )
         self.team_app_select_button.grid(row=0, column=2, sticky="nsew")
 
@@ -159,14 +164,17 @@ class BasicStatsApp(tk.Toplevel):
         card_list_store.load_card_list()
 
 
-def open_batting_stats():
-    BattingStatsApp()
+    def open_batting_stats(self):
+        team_select = self.team_select_entry.get_selected_team()
+        BattingStatsApp(selected_team=team_select)
 
-def open_pitching_stats():
-    PitchStatsApp()
+    def open_pitching_stats(self):
+        team_select = self.team_select_entry.get_selected_team()
+        PitchStatsApp(selected_team=team_select)
 
-def open_team_stats():
-    TeamStatsApp()
+    def open_team_stats(self):
+        team_select = self.team_select_entry.get_selected_team()
+        TeamStatsApp()
 
 def open_ratings_comparison():
     RatingsComparisonApp()
