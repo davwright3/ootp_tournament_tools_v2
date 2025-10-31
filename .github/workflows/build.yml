@@ -29,6 +29,22 @@ jobs:
           pip install customtkinter==5.2.2 darkdetect=0.8.0
           pip install pyinstaller
 
+      - name: "Preflight: verify apps/pitcher_card.py is present and importable."
+        shell: bash
+        run: |
+          echo "=== verifying apps/pitcher_card.py is present ==="
+          git ls-files apps | sort | sed -n '/pitcher_card.py/p'
+          
+          echo "=== python import preflight ==="
+          python - <<'PY'
+          import sys
+          sys.path.insert(0, '.')
+          import importlib
+          import apps.pitcher_card  # should import cleanly after the f-string fix
+          print("OK: apps.pitcher_card import")
+          PY
+
+
       - name: Build executable with PyInstaller
         run: |
           pyinstaller --clean --log-level=DEBUG main.spec
