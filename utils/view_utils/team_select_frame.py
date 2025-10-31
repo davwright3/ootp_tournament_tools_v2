@@ -33,14 +33,17 @@ class TeamSelectFrame(tk.Frame):
         self.entry.bind('<Return>', on_enter_pressed)
 
     def update_list(self):
-        df = data_store.get_data().copy()
+        try:
+            df = data_store.get_data().copy()
 
-        if self.team_search_term.get() != '':
-            df = df[df['ORG'].str.lower().str.contains(self.team_search_term.get().lower())]
+            if self.team_search_term.get() != '':
+                df = df[df['ORG'].str.lower().str.contains(self.team_search_term.get().lower())]
 
-        self.team_list = df['ORG'].unique().tolist()
-        self.team_select_dropdown.configure(values=self.team_list)
-        del df
+            self.team_list = df['ORG'].unique().tolist()
+            self.team_select_dropdown.configure(values=self.team_list)
+            del df
+        except Exception as e:
+            return
 
 
     def get_selected_team(self):
