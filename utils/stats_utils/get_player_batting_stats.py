@@ -30,7 +30,7 @@ def get_player_batting_stats(card_id, selected_team=None):
             'ply_war': '0.0',
         }
     else:
-        player_pa = f'{df['PA'].iloc[0]}'.lstrip('0')
+        player_pa = f"{df['PA'].iloc[0]}".lstrip('0')
         player_avg = f"{df['AVG'].iloc[0]}".lstrip('0')
         player_obp = f"{df['OBP'].iloc[0]}".lstrip('0')
         player_slg = f"{df['SLG'].iloc[0]}".lstrip('0')

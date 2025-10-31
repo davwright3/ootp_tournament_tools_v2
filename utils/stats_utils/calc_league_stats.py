@@ -1,6 +1,4 @@
 import pandas as pd
-from PIL.Image import linear_gradient
-
 from utils.data_utils.data_store import data_store
 from utils.log_utils.readme_messaging import log_readme_section
 from utils.stats_utils.normalize_innings_pitched import normalize_innings_pitched
