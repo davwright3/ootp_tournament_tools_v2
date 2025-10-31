@@ -26,28 +26,28 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install customtkinter==5.2.2 darkdetect=0.8.0
+          pip install customtkinter==5.2.2 darkdetect==0.8.0
           pip install pyinstaller
 
-      - name: "Preflight: verify apps/pitcher_card.py is present and importable."
-        shell: bash
+      - name: "Preflight: verify apps/pitcher_card.py is present and importable"
+        shell: pwsh
         run: |
-          echo "=== verifying apps/pitcher_card.py is present ==="
-          git ls-files apps | sort | sed -n '/pitcher_card.py/p'
-          
-          echo "=== python import preflight ==="
-          python - <<'PY'
-          import sys
-          sys.path.insert(0, '.')
-          import importlib
-          import apps.pitcher_card  # should import cleanly after the f-string fix
-          print("OK: apps.pitcher_card import")
-          PY
-
+          git ls-files apps | Sort-Object | Select-String 'pitcher_card.py'
+          python -c "import sys,import importlib.util; sys.path.insert(0,'.'); assert importlib.util.find_spec('apps.pitcher_card') is not None, 'Spec not found'; import apps.pitcher_card; print('OK: apps.pitcher_card import')"
+      
 
       - name: Build executable with PyInstaller
         run: |
           pyinstaller --clean --log-level=DEBUG main.spec
+
+      - name: "Inspect PyInstaller Analysis TOC for apps.pitcher_card"
+        shell: pwsh
+        run: |
+          Get-ChildItem build -Recurse -Filter "*Analysis*.toc" | ForEach-Object {
+            Write-Host "=== Inspecting $($_.FullName) ==="
+            Select-String -Path $_.FullName -Pattern "apps.pitcher_card" -SimpleMatch
+          }
+
 
       - name: Show PyInstaller dist tree
         shell: pwsh
