@@ -33,7 +33,7 @@ jobs:
         shell: pwsh
         run: |
           git ls-files apps | Sort-Object | Select-String 'pitcher_card.py'
-          python -c "import sys,import importlib.util; sys.path.insert(0,'.'); assert importlib.util.find_spec('apps.pitcher_card') is not None, 'Spec not found'; import apps.pitcher_card; print('OK: apps.pitcher_card import')"
+          python -c "import sys, importlib.util; sys.path.insert(0,'.'); assert importlib.util.find_spec('apps.pitcher_card') is not None, 'Spec not found'; import apps.pitcher_card; print('OK: apps.pitcher_card import')"
       
 
       - name: Build executable with PyInstaller
