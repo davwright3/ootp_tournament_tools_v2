@@ -18,6 +18,7 @@ from utils.view_utils.general_info_select_frame import GeneralInfoFrame
 from utils.view_utils.select_in_collection_frame import SelectInCollectionFrame
 from utils.view_utils.set_cull_teams_limit_frame import SetCullTeamsFrame
 from utils.view_utils.search_frame import SearchFrame
+from utils.view_utils.team_only_checkbox_frame import TeamOnlyCheckboxFrame
 from utils.view_utils.split_variants_frame import SplitVariantsFrame
 
 
@@ -172,6 +173,10 @@ class PitchStatsApp(tk.Toplevel):
         self.collection_only_frame.grid(row=row, column=0, sticky="nsew")
         row += 1
 
+        self.selected_team_only_checkbox_frame = TeamOnlyCheckboxFrame(inner_frame)
+        self.selected_team_only_checkbox_frame.grid(row=row, column=0, sticky="nsew")
+        row += 1
+
         self.cull_teams_frame = SetCullTeamsFrame(
             inner_frame,
         )
@@ -194,6 +199,10 @@ class PitchStatsApp(tk.Toplevel):
         cull_team_var_select = self.cull_teams_frame.get_cull_teams_limit()
         search_term = self.search_frame.get_search_term()
         variant_split_select = self.split_variants_frame.get_variant_split()
+        if self.selected_team_only_checkbox_frame.get_selected_team_bool():
+            selected_team = self.selected_team
+        else:
+            selected_team = None
 
         stats = generate_basic_pitching_stats(
             min_ip=min_ip_select,
@@ -208,6 +217,7 @@ class PitchStatsApp(tk.Toplevel):
             cull_team_limit_select=cull_team_var_select,
             selected_search_term=search_term,
             selected_variant_split=variant_split_select,
+            team_select=selected_team
         )
         self.stats_frame.set_dataframe(stats)
 

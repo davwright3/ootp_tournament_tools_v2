@@ -23,9 +23,11 @@ from utils.view_utils.batting_side_select_frame import BattingSideSelectFrame
 from utils.view_utils.min_plate_appearance_frame import MinPlateAppearanceFrame
 from utils.view_utils.select_in_collection_frame import SelectInCollectionFrame
 from utils.view_utils.set_cull_teams_limit_frame import SetCullTeamsFrame
+from utils.view_utils.team_only_checkbox_frame import TeamOnlyCheckboxFrame
 from utils.view_utils.search_frame import SearchFrame
 from utils.view_utils.split_variants_frame import SplitVariantsFrame
 from apps.batter_card import BatterCard
+from utils.view_utils.team_select_frame import TeamSelectFrame
 
 
 class BattingStatsApp(tk.Toplevel):
@@ -134,9 +136,15 @@ class BattingStatsApp(tk.Toplevel):
         self.collection_only_frame.grid(row=item, column=0, sticky='ew')
         item += 1
 
+        self.selected_team_only_frame = TeamOnlyCheckboxFrame(inner_frame)
+        self.selected_team_only_frame.grid(row=item, column=0, sticky='ew')
+        item += 1
+
         self.cull_teams_limit_frame = SetCullTeamsFrame(inner_frame)
         self.cull_teams_limit_frame.grid(row=item, column=0, sticky='ew')
         item += 1
+
+
 
         # Set up initial dataframe for the table
         stats_df = calc_basic_batting_stats_df()
@@ -171,6 +179,10 @@ class BattingStatsApp(tk.Toplevel):
         cull_teams_limit = self.cull_teams_limit_frame.get_cull_teams_limit()
         search_term = self.search_frame.get_search_term()
         split_variants_select = self.split_variants_frame.get_variant_split()
+        if self.selected_team_only_frame.get_selected_team_bool():
+            selected_team = self.selected_team
+        else:
+            selected_team = None
         stats_df = calc_basic_batting_stats_df(
             stat_list=selected_stats,
             position_select=selected_position,
@@ -182,7 +194,8 @@ class BattingStatsApp(tk.Toplevel):
             collection_only_select=collection_only_sel,
             cull_team_limit_select=cull_teams_limit,
             selected_search_term=search_term,
-            variant_split_select=split_variants_select
+            variant_split_select=split_variants_select,
+            team_select=selected_team,
         )
         self.dataframe_frame.set_dataframe(stats_df)
 
