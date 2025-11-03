@@ -38,6 +38,10 @@ def calc_batting_stats(df, min_pa=0):
          (df1['AB'] + df1['BB'] - df1['IBB'] + df1['SF'] + df1['HP'])).round(3)
     )
 
+    df1['RCrate'] = (
+        np.where(df1['PA'] != 0, ((df1['RC'] / df1['PA']) * 600).round(2), 0.0)
+    )
+
     df1['HRrate'] = (
         ((df1['HR'] / df1['PA']) * 600).round(1)
     )
@@ -67,16 +71,20 @@ def calc_batting_stats(df, min_pa=0):
         ((df1['WAR'] / df1['PA']) * 600).round(1)
     )
 
+    df1['ZRrate'] = ((df1['ZR'] / df1['PA']) * 600).round(1)
+
+    df1['Fld%'] = ((df1['PO'] + df1['A']) / (df1['PO'] + df1['A'] + df1['E'])).round(3)
+
     if 'CID' in df1.columns:
         if 'VLvl' in df1.columns:
-            df2 = df1[['CID', 'VLvl', 'PA', 'AVG', 'OBP', 'SLG', 'OPS', 'wOBA', 'HRrate', 'Krate', 'BBrate', 'SBrate', 'SBpct',
-                       'WARrate']]
+            df2 = df1[['CID', 'VLvl', 'PA', 'AVG', 'OBP', 'SLG', 'OPS', 'wOBA', 'RCrate', 'HRrate', 'Krate', 'BBrate', 'SBrate', 'SBpct',
+                       'WARrate', 'ZRrate', 'Fld%']]
         else:
-            df2 = df1[['CID', 'PA', 'AVG', 'OBP', 'SLG', 'OPS', 'wOBA', 'HRrate', 'Krate', 'BBrate', 'SBrate', 'SBpct', 'WARrate']]
+            df2 = df1[['CID', 'PA', 'AVG', 'OBP', 'SLG', 'OPS', 'wOBA', 'RCrate', 'HRrate', 'Krate', 'BBrate', 'SBrate', 'SBpct', 'WARrate', 'ZRrate', 'Fld%']]
         df2 = df2[df2['PA'] >= min_pa]
     else:
-        df2 = df1[['ORG', 'PA', 'AVG', 'OBP', 'SLG', 'OPS', 'wOBA', 'HRrate', 'Krate', 'BBrate', 'SBrate', 'SBpct',
-                   'WARrate']]
+        df2 = df1[['ORG', 'PA', 'AVG', 'OBP', 'SLG', 'OPS', 'wOBA', 'RCrate', 'HRrate', 'Krate', 'BBrate', 'SBrate', 'SBpct',
+                   'WARrate', 'ZRrate', 'Fld%']]
 
     del df1
     return df2

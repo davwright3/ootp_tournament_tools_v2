@@ -58,11 +58,13 @@ def calc_basic_batting_stats_df(
     if variant_split_select:
         df1 = df1[['CID', 'VLvl', 'PA', 'AB', 'H', '1B', '2B', '3B',
                    'HR', 'TB', 'SO', 'HP', 'BB', 'IBB', 'SF', 'SB',
-                   'CS', 'WAR']].groupby(['CID', 'VLvl'], as_index=False).sum()
+                   'CS', 'WAR', 'RC', 'TC', 'A', 'PO', 'E', 'ZR',
+                   'SBA', 'RTO']].groupby(['CID', 'VLvl'], as_index=False).sum()
     else:
         df1 = df1[['CID', 'PA', 'AB', 'H', '1B', '2B', '3B',
                  'HR','TB', 'SO', 'HP', 'BB', 'IBB', 'SF', 'SB',
-                 'CS', 'WAR']].groupby(['CID'], as_index=False).sum()
+                 'CS', 'WAR','RC', 'TC', 'A', 'PO', 'E', 'ZR',
+                   'SBA', 'RTO']].groupby(['CID'], as_index=False).sum()
 
     card_list = card_list_store.get_card_list().copy()
 

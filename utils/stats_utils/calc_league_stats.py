@@ -90,6 +90,7 @@ def calc_league_stats():
 
 
     lg_stats = {
+        'lg_fip_const': fip_const,
         'lg_avg': lg_avg_string,
         'lg_obp': lg_obp_string,
         'lg_slg': lg_slg_string,

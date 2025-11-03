@@ -9,8 +9,8 @@ class BattingStatsSelectFrame(tk.Frame):
         tk.Frame.__init__(self, parent, relief='ridge', bd=3)
 
         self.available_stats =[
-            'PA', 'AVG', 'OBP', 'SLG', 'OPS', 'wOBA', 'HRrate',
-            'Krate', 'BBrate', 'SBrate', 'SBpct', 'WARrate'
+            'PA', 'AVG', 'OBP', 'SLG', 'OPS', 'wOBA', 'RCrate', 'HRrate',
+            'Krate', 'BBrate', 'SBrate', 'SBpct', 'WARrate', 'ZRrate', 'Fld%'
         ]
 
         self.selected_stats = []

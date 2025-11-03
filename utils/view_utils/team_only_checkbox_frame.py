@@ -5,7 +5,7 @@ from pygments.lexers import q
 
 class TeamOnlyCheckboxFrame(tk.Frame):
     def __init__(self, parent):
-        super().__init__(parent)
+        super().__init__(parent, relief='groove', bd=3)
 
         self.selected_team_bool = tk.BooleanVar(value=False)
 
