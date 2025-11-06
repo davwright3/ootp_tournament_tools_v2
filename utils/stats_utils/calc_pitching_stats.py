@@ -4,22 +4,21 @@ import numpy as np
 from utils.stats_utils.normalize_innings_pitched import normalize_innings_pitched
 from utils.data_utils.data_store import data_store
 from utils.stats_utils.cull_teams import cull_teams
+from utils.data_utils.league_stats_store import league_stats_store
 
 def calculate_pitching_stats(df1, min_ip_sel=200):
-    lg_data = cull_teams(data_store.get_data().copy())
-    lg_data['IPC'] = lg_data['IP'].apply(normalize_innings_pitched)
-    lg_era = (lg_data['ER'].sum()/lg_data['IPC'].sum())*9
-
-    total_ipc = lg_data['IPC'].sum()
-    num = (13 * lg_data['HR.1'].sum()) + (3 * (lg_data['BB.1'].sum() + lg_data['HP.1'].sum())) - (2 * lg_data['K'].sum())
-
-    if total_ipc != 0:
-        fip_constant = (lg_era - (num / total_ipc)).round(2)
-    else:
-        fip_constant = 0
-
-    del lg_data
-
+#     lg_data = cull_teams(data_store.get_data().copy())
+#     lg_data['IPC'] = lg_data['IP'].apply(normalize_innings_pitched)
+#     lg_era = (lg_data['ER'].sum()/lg_data['IPC'].sum())*9
+#     total_ipc = lg_data['IPC'].sum()
+#     num = (13 * lg_data['HR.1'].sum()) + (3 * (lg_data['BB.1'].sum() + lg_data['HP.1'].sum())) - (2 * lg_data['K'].sum())
+#
+#     if total_ipc != 0:
+#         fip_constant = (lg_era - (num / total_ipc)).round(2)
+#     else:
+#         fip_constant = 0
+    lg_stats = league_stats_store.get_stats()
+    fip_constant = lg_stats['lg_fip_const']
     df1['ERA'] = np.where(df1['IPC'] != 0, ((df1['ER'] / df1['IPC'])*9).round(2), 0.00)
 
     df1['FIP'] = np.where(df1['IPC'] != 0, ((((13 * df1['HR.1']) + (3 * (df1['BB.1'] + df1['HP.1'])) - (2 * df1['K'])) /
@@ -45,7 +44,7 @@ def calculate_pitching_stats(df1, min_ip_sel=200):
 
     df1['WAR/200'] = np.where(df1['IPC'] != 0, ((df1['WAR.1'] / df1['IPC']) * 200).round(1), 0.0)
 
-    df1['IP/G'] = (df1['IPC'] / df1['G.1']).round(2)
+    df1['IP/G'] = np.where(df1['G.1'] != 0, (df1['IPC'] / df1['G.1']).round(2), 0.0)
 
     df1['QS%']= np.where(
         df1['GS.1'] == 0,

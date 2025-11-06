@@ -43,6 +43,12 @@ def generate_ratings_df(
     if selected_card_types:
         card_df = card_df[card_df['Type'].isin(selected_card_types)]
 
+    card_df['B'] = card_df['Bats'].apply(lambda x: 'R' if x == 1 else 'L' if x == 2 else 'S')
+    card_df['T'] = card_df['Throws'].apply(lambda x: 'R' if x == 1 else 'L')
+
+
+
+
     if collection_only:
         card_df = card_df[card_df['owned'] != 0]
     card_df = card_df[(card_df['Val'] >= min_rating) & (card_df['Val'] <= max_rating)]

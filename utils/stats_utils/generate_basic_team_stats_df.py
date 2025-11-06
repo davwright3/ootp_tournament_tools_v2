@@ -14,11 +14,11 @@ def generate_basic_team_stats_df(
     df1 = cull_teams(data_store.get_data().copy())
     df1['IPC'] = df1['IP'].apply(normalize_innings_pitched)
     df1 = df1[['ORG', 'PA', 'AB', 'H', '1B', '2B', '3B',
-             'HR','TB', 'SO', 'HP', 'BB', 'IBB', 'SF', 'SB',
-             'CS', 'WAR', 'IPC', 'G.1', 'GS.1', 'W', 'L', 'BF', 'AB.1', 'ER', 'K', 'BB.1', 'IBB.1',
-               'HA', '1B.1', '2B.1', '3B.1', 'HR.1', 'SV', 'SVO', 'SD',
-               'MD', 'HP.1', 'SH.1', 'SF.1', 'QS', 'IR', 'IRS', 'GB',
-               'FB', 'WAR.1', 'Trny']].groupby(['ORG'], as_index=False).sum()
+            'HR','TB', 'SO', 'HP', 'BB', 'IBB', 'SF', 'SB', 'RC', 'ZR', 'PO', 'A', 'E',
+            'CS', 'WAR', 'IPC', 'G.1', 'GS.1', 'W', 'L', 'BF', 'AB.1', 'ER', 'K', 'BB.1', 'IBB.1',
+            'HA', '1B.1', '2B.1', '3B.1', 'HR.1', 'SV', 'SVO', 'SD',
+            'MD', 'HP.1', 'SH.1', 'SF.1', 'QS', 'IR', 'IRS', 'GB',
+            'FB', 'WAR.1', 'Trny']].groupby(['ORG'], as_index=False).sum()
     df1['Win%'] = (df1['W'] / (df1['W'] + df1['L'])).round(3)
 
     df2 = df1[['ORG', 'GS.1', 'W', 'L', 'Win%']]

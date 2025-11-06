@@ -8,7 +8,6 @@ displaying DataFrames.
 import tkinter as tk
 from tkinter import ttk
 import pandas as pd
-
 from utils.view_utils.header_frame import Header
 from utils.view_utils.footer_frame import Footer
 from utils.stats_utils.generate_basic_batting_stats_df import calc_basic_batting_stats_df
