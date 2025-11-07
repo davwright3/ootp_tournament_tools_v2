@@ -19,6 +19,7 @@ def calculate_pitching_stats(df1, min_ip_sel=200):
 #         fip_constant = 0
     lg_stats = league_stats_store.get_stats()
     fip_constant = lg_stats['lg_fip_const']
+
     df1['ERA'] = np.where(df1['IPC'] != 0, ((df1['ER'] / df1['IPC'])*9).round(2), 0.00)
 
     df1['FIP'] = np.where(df1['IPC'] != 0, ((((13 * df1['HR.1']) + (3 * (df1['BB.1'] + df1['HP.1'])) - (2 * df1['K'])) /
