@@ -39,10 +39,9 @@ def generate_player_stats_for_team_df(team_name=None):
     pitchers = pitchers[['CID', 'VLvl', 'IPC', 'ERA']]
 
     batters_full = pd.merge(card_list[['CID', 'Title']], batters, how='inner', on='CID')
-    batter_full = batters_full.sort_values(by='PA', ascending=False)
+    batters_full = batters_full.sort_values(by='PA', ascending=False)
     pitchers_full = pd.merge(card_list_2[['CID', 'Title']], pitchers, how='inner', on='CID')
-
-
+    pitchers_full = pitchers_full.sort_values(by='IPC', ascending=False)
 
     return batters_full, pitchers_full
 
