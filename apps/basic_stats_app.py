@@ -174,7 +174,7 @@ class BasicStatsApp(tk.Toplevel):
 
     def open_team_stats(self):
         team_select = self.team_select_entry.get_selected_team()
-        TeamStatsApp()
+        TeamStatsApp(team_select=team_select)
 
 def open_ratings_comparison():
     RatingsComparisonApp()

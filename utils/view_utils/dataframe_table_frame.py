@@ -15,7 +15,8 @@ class DataFrameTableFrame(ttk.Frame):
             height: int = 18,
             show_index: bool = False,
             on_row_double_click: Optional[Callable[[pd.Series], None]] = None,
-            **kwargs
+            selected_team=None,
+            **kwargs,
     ):
         super().__init__(parent, **kwargs)
         self._df: pd.DataFrame = pd.DataFrame() if df is None else df.copy()
@@ -25,6 +26,8 @@ class DataFrameTableFrame(ttk.Frame):
         self._sort_state = {'col': None, 'reverse': False}
         self._on_row_double_click_cb = on_row_double_click
         self._iid_to_row: Dict[str, pd.Series] = {}
+
+        self.selected_team = selected_team
 
         logger = logging.getLogger('apps.basic_stats_app.data_utils')
 
@@ -65,6 +68,7 @@ class DataFrameTableFrame(ttk.Frame):
         style.configure('Treeview', rowheight=22)
         self.tree.tag_configure('odd', background='#f7f7f7')
         self.tree.tag_configure('even', background='#ffffff')
+        self.tree.tag_configure('selected_team', background='#AFE1AF')
         self.tree.tag_configure('right', anchor='e')
         self.tree.bind("<Double-1>", self._on_row_double_click)
 
@@ -136,7 +140,12 @@ class DataFrameTableFrame(ttk.Frame):
             return
         use_cols = self._columns
         for i, (idx, row) in enumerate(self._df.iterrows()):
-            tags = ('odd',) if (i % 2) else ('even',)
+            if row['ORG'] == self.selected_team:
+                tags = ('selected_team',)
+            elif i % 2:
+                tags = ('odd',)
+            else:
+                tags = ('even',)
             values = []
             if self._show_index:
                 values.append(idx)

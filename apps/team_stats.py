@@ -47,6 +47,7 @@ class TeamStatsApp(tk.Toplevel):
         self.stats_frame = DataFrameTableFrame(
             self.main_frame,
             df=stats_df,
+            selected_team=team_select,
             on_row_double_click=self.open_team_card
         )
         self.stats_frame.grid(row=0, column=0, sticky="nsew")
