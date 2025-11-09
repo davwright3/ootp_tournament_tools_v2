@@ -140,7 +140,7 @@ class DataFrameTableFrame(ttk.Frame):
             return
         use_cols = self._columns
         for i, (idx, row) in enumerate(self._df.iterrows()):
-            if row['ORG'] == self.selected_team:
+            if 'ORG' in list(self._columns) and row['ORG'] == self.selected_team:
                 tags = ('selected_team',)
             elif i % 2:
                 tags = ('odd',)

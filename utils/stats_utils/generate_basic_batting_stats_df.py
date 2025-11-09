@@ -13,7 +13,7 @@ from utils.stats_utils.get_eligible_players import get_eligible_players
 from utils.stats_utils.cull_teams import cull_teams
 import pandas as pd
 
-def calc_basic_batting_stats_df(
+def generate_basic_batting_stats_df(
         min_pa=600,
         min_value=40,
         max_value=105,

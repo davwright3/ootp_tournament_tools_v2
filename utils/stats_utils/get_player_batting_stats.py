@@ -1,14 +1,14 @@
-from utils.stats_utils.generate_basic_batting_stats_df import calc_basic_batting_stats_df
+from utils.stats_utils.generate_basic_batting_stats_df import generate_basic_batting_stats_df
 
 
 def get_player_batting_stats(card_id, selected_team=None):
     if selected_team is None:
-        df = calc_basic_batting_stats_df(
+        df = generate_basic_batting_stats_df(
             min_pa=1,
             card_id_select=card_id
         )
     else:
-        df = calc_basic_batting_stats_df(
+        df = generate_basic_batting_stats_df(
             min_pa=1,
             card_id_select=card_id,
             team_select=selected_team

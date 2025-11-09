@@ -3,18 +3,17 @@ import tkinter as tk
 import os
 import logging
 from logging.handlers import MemoryHandler
-
-root = logging.getLogger()
-root.setLevel(logging.INFO)
-BOOTSTRAP_MEM = MemoryHandler(capacity=10000, flushLevel=logging.CRITICAL)
-root.addHandler(BOOTSTRAP_MEM)
-
-from utils.config_utils.load_save_settings import settings as loaded_settings
+from utils.config_utils.load_save_settings import (
+    settings as loaded_settings
+)
 from utils.config_utils.load_save_settings import get_setting
-from utils.config_utils.select_target_card_list_file import select_target_file
-from utils.config_utils.select_starting_folder_dirs import select_initial_target_folder, select_initial_raw_data_folder
+from utils.config_utils.select_starting_folder_dirs import (
+    select_initial_target_folder, select_initial_raw_data_folder
+)
 from utils.log_utils.readme_messaging import log_readme_section
-from utils.config_utils.get_base_resource_path import get_base_resource_path
+from utils.config_utils.get_base_resource_path import (
+    get_base_resource_path
+)
 from utils.view_utils.header_frame import Header
 from utils.view_utils.footer_frame import Footer
 from utils.view_utils.message_panel import MessagePanel
@@ -22,11 +21,20 @@ from utils.log_utils.tk_handler import TkTextHandler
 from apps.file_processing_app import FileProcessingApp
 from apps.basic_stats_app import BasicStatsApp
 
+root = logging.getLogger()
+root.setLevel(logging.INFO)
+BOOTSTRAP_MEM = MemoryHandler(
+    capacity=10000,
+    flushLevel=logging.CRITICAL
+)
+root.addHandler(BOOTSTRAP_MEM)
+
 
 class ExcludeNamespaces(logging.Filter):
     def __init__(self, *prefixes: str):
         super().__init__()
         self.prefixes = prefixes
+
     def filter(self, record: logging.LogRecord) -> bool:
         return not any(record.name.startswith(p) for p in self.prefixes)
 
@@ -46,10 +54,16 @@ class MainApp(tk.Tk):
             value=get_setting('TargetFiles', 'target_card_list')
         )
         self.initial_target_folder_var = tk.StringVar(
-            value=get_setting('InitialTargetDirs', 'starting_target_folder')
+            value=get_setting(
+                'InitialTargetDirs',
+                'starting_target_folder'
+            )
         )
         self.initial_raw_data_folder_var = tk.StringVar(
-            value=get_setting('InitialTargetDirs', 'starting_data_folder')
+            value=get_setting(
+                'InitialTargetDirs',
+                'starting_data_folder'
+            )
         )
 
         self.is_card_list_valid = tk.BooleanVar(value=False)
@@ -58,7 +72,9 @@ class MainApp(tk.Tk):
         # Variables for settings
         self.settings = loaded_settings
 
-        self.card_list_target_path = self.settings['TargetFiles']['target_card_list']
+        self.card_list_target_path = (
+            self.settings['TargetFiles']['target_card_list']
+        )
 
         # Page rows and columns
         self.columnconfigure(0, weight=1)
@@ -72,19 +88,44 @@ class MainApp(tk.Tk):
         # Main frames for setting up the page
         row = 0
         self.header_frame = Header(self)
-        self.header_frame.grid(row=row, column=0, columnspan=2, sticky="nsew")
+        self.header_frame.grid(
+            row=row,
+            column=0,
+            columnspan=2,
+            sticky="nsew"
+        )
         row += 1
 
         self.content_frame = tk.Frame(self, bg='red')
-        self.content_frame.grid(row=row, column=0, columnspan=2, sticky="nsew")
+        self.content_frame.grid(
+            row=row,
+            column=0,
+            columnspan=2,
+            sticky="nsew"
+        )
         row += 1
 
-        self.settings_frame = tk.Frame(self, bg='lightgray', relief='groove', bd=3)
-        self.settings_frame.grid(row=row, column=0, columnspan=2, sticky="nsew")
+        self.settings_frame = tk.Frame(
+            self,
+            bg='lightgray',
+            relief='groove',
+            bd=3
+        )
+        self.settings_frame.grid(
+            row=row,
+            column=0,
+            columnspan=2,
+            sticky="nsew"
+        )
         row += 1
 
         self.footer_frame = Footer(self)
-        self.footer_frame.grid(row=row, column=0, columnspan=2, sticky="nsew")
+        self.footer_frame.grid(
+            row=row,
+            column=0,
+            columnspan=2,
+            sticky="nsew"
+        )
 
         # Content frame configuration
         self.content_frame.columnconfigure(0, weight=1)
@@ -151,7 +192,11 @@ class MainApp(tk.Tk):
             padx=5,
             pady=5,
         )
-        self.file_processing_button.grid(row=int(main_row / 3), column=main_column % 3, sticky="nsew")
+        self.file_processing_button.grid(
+            row=int(main_row / 3),
+            column=main_column % 3,
+            sticky="nsew"
+        )
         main_row += 1
         main_column += 1
 
@@ -162,7 +207,11 @@ class MainApp(tk.Tk):
             padx=5,
             pady=5,
         )
-        self.basic_stats_app_button.grid(row=int(main_row / 3), column=main_column % 3, sticky="nsew")
+        self.basic_stats_app_button.grid(
+            row=int(main_row / 3),
+            column=main_column % 3,
+            sticky="nsew"
+        )
         main_row += 1
         main_column += 1
 
@@ -170,8 +219,12 @@ class MainApp(tk.Tk):
         self.message_panel.grid(row=0, column=0, sticky="nsew")
 
         def on_select_card_file():
-            path = select_target_file(self.target_card_list_var)
-            self.card_list_target_path = self.settings.get('TargetFiles', 'target_card_list', fallback='')
+            self.card_list_target_path = (
+                self.settings.get(
+                    'TargetFiles',
+                    'target_card_list',
+                    fallback='')
+            )
             check_card_list_valid()
 
         # Settings frame content
@@ -180,7 +233,8 @@ class MainApp(tk.Tk):
             text="Select File",
             command=on_select_card_file,
         )
-        self.select_target_card_list_button.grid(row=0, column=0, sticky="w", padx=3, pady=3)
+        self.select_target_card_list_button.grid(
+            row=0, column=0, sticky="w", padx=3, pady=3)
 
         self.card_list_label = tk.Label(
             self.settings_frame,
@@ -188,7 +242,13 @@ class MainApp(tk.Tk):
             font=('Arial', 10, 'bold'),
             bg='lightgray'
         )
-        self.card_list_label.grid(row=0, column=1, sticky="nsew", padx=3, pady=3)
+        self.card_list_label.grid(
+            row=0,
+            column=1,
+            sticky="nsew",
+            padx=3,
+            pady=3
+        )
 
         self.card_list_target_location_label = tk.Label(
             self.settings_frame,
@@ -196,14 +256,30 @@ class MainApp(tk.Tk):
             font=("Arial", 10),
             bg='lightgray'
         )
-        self.card_list_target_location_label.grid(row=0, column=2, sticky="w", padx=3, pady=3)
+        self.card_list_target_location_label.grid(
+            row=0,
+            column=2,
+            sticky="w",
+            padx=3,
+            pady=3
+        )
 
         self.select_initial_target_file_dir_button = tk.Button(
             self.settings_frame,
             text="Select File",
-            command=lambda: select_initial_target_folder(self, self.initial_target_folder_var)
+            command=lambda: (
+                select_initial_target_folder(
+                    self,
+                    self.initial_target_folder_var)
+            )
         )
-        self.select_initial_target_file_dir_button.grid(row=1, column=0, sticky="w", padx=3, pady=3)
+        self.select_initial_target_file_dir_button.grid(
+            row=1,
+            column=0,
+            sticky="w",
+            padx=3,
+            pady=3
+        )
 
         self.initial_target_data_label = tk.Label(
             self.settings_frame,
@@ -211,7 +287,13 @@ class MainApp(tk.Tk):
             font=("Arial", 10, 'bold'),
             bg='lightgray'
         )
-        self.initial_target_data_label.grid(row=1, column=1, sticky="nsew", padx=3, pady=3)
+        self.initial_target_data_label.grid(
+            row=1,
+            column=1,
+            sticky="nsew",
+            padx=3,
+            pady=3
+        )
 
         self.select_initial_target_folder_location_label = tk.Label(
             self.settings_frame,
@@ -219,14 +301,30 @@ class MainApp(tk.Tk):
             font=("Arial", 10),
             bg='lightgray'
         )
-        self.select_initial_target_folder_location_label.grid(row=1, column=2, sticky="w", padx=3, pady=3)
+        self.select_initial_target_folder_location_label.grid(
+            row=1,
+            column=2,
+            sticky="w",
+            padx=3,
+            pady=3
+        )
 
         self.select_initial_raw_data_folder_button = tk.Button(
             self.settings_frame,
             text="Select File",
-            command=lambda: select_initial_raw_data_folder(self, self.initial_raw_data_folder_var)
+            command=lambda: (
+                select_initial_raw_data_folder(
+                    self,
+                    self.initial_raw_data_folder_var)
+            )
         )
-        self.select_initial_raw_data_folder_button.grid(row=2, column=0, sticky="w", padx=3, pady=3)
+        self.select_initial_raw_data_folder_button.grid(
+            row=2,
+            column=0,
+            sticky="w",
+            padx=3,
+            pady=3
+        )
 
         self.initial_raw_data_folder_label = tk.Label(
             self.settings_frame,
@@ -234,7 +332,13 @@ class MainApp(tk.Tk):
             font=("Arial", 10, 'bold'),
             bg='lightgray'
         )
-        self.initial_raw_data_folder_label.grid(row=2, column=1, sticky="nsew", padx=3, pady=3)
+        self.initial_raw_data_folder_label.grid(
+            row=2,
+            column=1,
+            sticky="nsew",
+            padx=3,
+            pady=3
+        )
 
         self.select_initial_raw_data_folder_location_label = tk.Label(
             self.settings_frame,
@@ -242,14 +346,26 @@ class MainApp(tk.Tk):
             font=("Arial", 10),
             bg='lightgray'
         )
-        self.select_initial_raw_data_folder_location_label.grid(row=2, column=2, sticky="w", padx=3, pady=3)
+        self.select_initial_raw_data_folder_location_label.grid(
+            row=2,
+            column=2,
+            sticky="w",
+            padx=3,
+            pady=3
+        )
 
         self.card_list_valid_label = tk.Label(
             self.settings_frame,
             textvariable=self.card_list_valid_display,
             font=("Arial", 10, 'bold')
         )
-        self.card_list_valid_label.grid(row=0, column=3, sticky="nsew", padx=3, pady=3)
+        self.card_list_valid_label.grid(
+            row=0,
+            column=3,
+            sticky="nsew",
+            padx=3,
+            pady=3
+        )
 
         check_card_list_valid()
 
@@ -259,24 +375,29 @@ class MainApp(tk.Tk):
 
         ui_handler = TkTextHandler(self.message_panel)
         ui_handler.setFormatter(logging.Formatter(fmt='%(message)s'))
-        # ui_handler.setFormatter(logging.Formatter(fmt='%(asctime)s %(levelname)-8s %(message)s', datefmt="%Y-%m-%d %H:%M:%S"))
 
-        # Set ui_handler to exclude log message from selected apps.  Add new apps as necessary.
-        ui_handler.addFilter(ExcludeNamespaces("apps.fileproc", 'apps.basic_stats_app'))
+        ui_handler.addFilter(ExcludeNamespaces(
+            "apps.fileproc",
+            'apps.basic_stats_app'
+            )
+        )
         root_logger.addHandler(ui_handler)
 
         BOOTSTRAP_MEM.setTarget(ui_handler)
         BOOTSTRAP_MEM.flush()
         root.removeHandler(BOOTSTRAP_MEM)
 
-        logging.info("Thank you for using my OOTP Tournament Statistics Utility Tool")
+        logging.info("Thank you for using my OOTP "
+                     "Tournament Statistics Utility Tool")
 
         readme_file = get_base_resource_path("README.md")
         log_readme_section(readme_file, 'Updated:')
 
+
 def open_file_processing_app():
     logging.info("Opening file processing app..")
     FileProcessingApp()
+
 
 def open_basic_stats_app():
     logging.info("Opening basic stats app..")

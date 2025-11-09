@@ -2,7 +2,7 @@
 import pandas as pd
 import logging
 
-def cull_teams(df, run_cutoff=8):
+def cull_teams(df, run_cutoff=12):
     """
     Cull teams based on runs scored per game.
     Base cut off point will be 8 runs per game.

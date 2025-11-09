@@ -9,8 +9,11 @@ class TeamOnlyCheckboxFrame(tk.Frame):
 
         self.selected_team_bool = tk.BooleanVar(value=False)
 
-        self.label = tk.Label(self, text='Selected Team Only: ')
-        self.label.grid(column=0, row=0, padx=10, pady=10, sticky='e')
+        self.columnconfigure(0, weight=1)
+        self.columnconfigure(1, weight=1)
+
+        self.label = tk.Label(self, text='Selected Team Only')
+        self.label.grid(column=1, row=0, padx=3, pady=3, sticky='w')
 
         self.checkbox = tk.Checkbutton(
             self,
@@ -18,7 +21,7 @@ class TeamOnlyCheckboxFrame(tk.Frame):
             onvalue=True,
             offvalue=False,
         )
-        self.checkbox.grid(column=1, row=0, padx=10, pady=10, sticky='w')
+        self.checkbox.grid(column=0, row=0, padx=3, pady=3, sticky='e')
 
     def get_selected_team_bool(self):
         return self.selected_team_bool.get()

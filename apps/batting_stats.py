@@ -10,7 +10,7 @@ from tkinter import ttk
 import pandas as pd
 from utils.view_utils.header_frame import Header
 from utils.view_utils.footer_frame import Footer
-from utils.stats_utils.generate_basic_batting_stats_df import calc_basic_batting_stats_df
+from utils.stats_utils.generate_basic_batting_stats_df import generate_basic_batting_stats_df
 from utils.view_utils.dataframe_table_frame import DataFrameTableFrame
 from utils.view_utils.table_formatters import fmt_leading_dot
 from utils.view_utils.min_max_rating_frame import MinMaxFrame
@@ -146,7 +146,7 @@ class BattingStatsApp(tk.Toplevel):
 
 
         # Set up initial dataframe for the table
-        stats_df = calc_basic_batting_stats_df()
+        stats_df = generate_basic_batting_stats_df()
 
 
         fmt = {
@@ -182,7 +182,7 @@ class BattingStatsApp(tk.Toplevel):
             selected_team = self.selected_team
         else:
             selected_team = None
-        stats_df = calc_basic_batting_stats_df(
+        stats_df = generate_basic_batting_stats_df(
             stat_list=selected_stats,
             position_select=selected_position,
             general_list=selected_general_items,

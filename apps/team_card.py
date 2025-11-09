@@ -46,7 +46,7 @@ class TeamCard(tk.Toplevel):
         self.batter_frame = DataFrameTableFrame(self.main_frame, batters, on_row_double_click=self.open_batter_card)
         self.batter_frame.grid(row=0, column=0, sticky="nsew")
 
-        self.pitcher_frame = DataFrameTableFrame(self.main_frame, pitchers)
+        self.pitcher_frame = DataFrameTableFrame(self.main_frame, pitchers, on_row_double_click=self.open_pitcher_card)
         self.pitcher_frame.grid(row=0, column=1, sticky="nsew")
 
     def open_batter_card(self, row: pd.Series):
