@@ -5,16 +5,21 @@ from typing import Optional
 
 logger = logging.getLogger(__name__)
 
+
 # Use a Github-like slug to pass visible heading or anchor
 def _sluggify_github(s: str) -> str:
     s = s.strip().lower()
     s = re.sub(r'[^\w\s-]', '', s)
     s = re.sub(r'\s+', '-', s)
-    s= re.sub(r'-{2,}', '-', s)
+    s = re.sub(r'-{2,}', '-', s)
     return s
 
-def extract_markdown_section(md_path: str, heading_query: str) -> Optional[str]:
-    """Return the markdown content under the first heading matching 'heading_query'."""
+
+def extract_markdown_section(
+        md_path: str,
+        heading_query: str) -> Optional[str]:
+    """Return the markdown content under the first
+    heading matching 'heading_query'."""
     p = pathlib.Path(md_path)
     if not p.exists():
         return None
@@ -33,7 +38,8 @@ def extract_markdown_section(md_path: str, heading_query: str) -> Optional[str]:
             continue
         level = len(m.group(1))
         text = m.group(2).strip()
-        if text.lower() == heading_query.strip().lower() or _sluggify_github(text) == target_slug:
+        if text.lower() == (heading_query.strip().lower() or
+                            _sluggify_github(text) == target_slug):
             start_idx = i
             start_level = level
             break
@@ -55,7 +61,12 @@ def extract_markdown_section(md_path: str, heading_query: str) -> Optional[str]:
 
     return "\n".join(body_lines).strip() or ('section is empty')
 
-def log_readme_section(md_path: str, heading_query: str, log: logging.Logger = logger, level: int = logging.INFO) -> bool:
+
+def log_readme_section(
+        md_path: str,
+        heading_query: str,
+        log: logging.Logger = logger,
+        level: int = logging.INFO) -> bool:
     """
     Extracts a section and writes it to the log line by line.
     Returns true if a section is found and logged, else false.

@@ -1,15 +1,20 @@
 """Script for attaching a namespace to new app logger."""
-import logging, weakref
+import logging
+import weakref
 from .tk_handler import TkTextHandler
+
 
 class NameSpaceFiler(logging.Filter):
     def __init__(self, prefix: str):
         super().__init__()
         self.prefix = prefix
+
     def filter(self, record: logging.LogRecord) -> bool:
         return record.name.startswith(self.prefix)
 
+
 _handlers_by_panel = weakref.WeakKeyDictionary()
+
 
 def attach_panel(panel_widget, logger_name: str | None = None):
     """
@@ -17,7 +22,9 @@ def attach_panel(panel_widget, logger_name: str | None = None):
     If logger_name is given, only logs from that namespace are shown.
     """
 
-    logger = logging.getLogger() if logger_name is None else logging.getLogger(logger_name)
+    logger = (logging.getLogger() if logger_name is None
+              else logging.getLogger(logger_name)
+              )
     handler = TkTextHandler(panel_widget)
     handler.setFormatter(logging.Formatter(
         '%(asctime)s %(levelname)-8s %(message)s',
@@ -31,6 +38,7 @@ def attach_panel(panel_widget, logger_name: str | None = None):
 
     # Detach when the panel is destroyed
     panel_widget.bind("<Destroy>", lambda e: detach_panel(panel_widget))
+
 
 def detach_panel(panel_widget):
     pair = _handlers_by_panel.pop(panel_widget, None)

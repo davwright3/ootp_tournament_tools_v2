@@ -1,6 +1,7 @@
 """Class for a custom dialog accepting user input."""
 import tkinter as tk
 
+
 class CustomInputDialog(tk.Toplevel):
     """
     CustomInputDialog to get string input information

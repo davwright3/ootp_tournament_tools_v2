@@ -1,6 +1,7 @@
 import logging
 import queue
 
+
 class TkTextHandler(logging.Handler):
     """
     Thread safe handler: queue records and let the UI drain the via .after()
@@ -34,7 +35,8 @@ class TkTextHandler(logging.Handler):
                     msg = self.format(record)
                 except Exception:
                     msg = f"Logging error: {record}"
-                tag = record.levelname if record.levelname in ("INFO", "WARNING", "ERROR") else None
+                tag = record.levelname if record.levelname in (
+                    "INFO", "WARNING", "ERROR") else None
                 self.sink.append(msg, tag)
         except queue.Empty:
             self._polling = False
