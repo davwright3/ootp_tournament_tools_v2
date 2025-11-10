@@ -1,8 +1,8 @@
 """Script for selecting and returning the raw data directory."""
-import os
 from tkinter import filedialog
 import logging
 from utils.config_utils.load_save_settings import settings as loaded_settings
+
 
 def select_return_data_dir(parent, dir_path=None):
     """

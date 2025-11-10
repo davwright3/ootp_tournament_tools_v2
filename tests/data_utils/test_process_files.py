@@ -4,7 +4,7 @@ import pandas as pd
 import pytest
 
 # ⬇️ CHANGE THIS to the actual path of the module you pasted
-import utils.data_utils.process_fiies as mod   # e.g., utils.fileproc.data_utils
+import utils.data_utils.process_files as mod   # e.g., utils.fileproc.data_utils
 
 
 # ---------- add_file ----------

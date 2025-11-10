@@ -2,10 +2,10 @@
 Singleton for storing the card list from the user's
 target_card_list path.
 """
-from utils.data_utils.select_return_target_file import select_return_target_file
 from utils.config_utils.load_save_settings import settings
 import pandas as pd
 import os
+
 
 class CardListStore:
     """
@@ -30,7 +30,11 @@ class CardListStore:
         :param filepath: The path of the csv file, str.
         """
         if filepath is None:
-            filepath = settings.get('TargetFiles', 'target_card_list', fallback=None)
+            filepath = settings.get(
+                'TargetFiles',
+                'target_card_list',
+                fallback=None
+            )
         filepath = os.path.normpath(filepath)
 
         if not filepath or not os.path.isfile(filepath):
@@ -58,9 +62,5 @@ class CardListStore:
         """
         self._card_list_dataframe = None
 
+
 card_list_store = CardListStore()
-
-
-
-
-

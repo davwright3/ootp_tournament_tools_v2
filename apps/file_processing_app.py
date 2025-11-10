@@ -16,7 +16,7 @@ from utils.log_utils.attach import attach_panel
 from utils.view_utils.header_frame import Header
 from utils.view_utils.footer_frame import Footer
 from utils.view_utils.message_panel import MessagePanel
-from utils.data_utils.process_fiies import process_files
+from utils.data_utils.process_files import process_files
 
 class FileProcessingApp(tk.Toplevel):
     """File Processing App for csv concatenation via Tkinter GUI."""

@@ -1,5 +1,6 @@
 from utils.stats_utils.calc_league_stats import calc_league_stats
 
+
 class LeagueStatsStore:
     _singleton = None
 
@@ -19,5 +20,6 @@ class LeagueStatsStore:
         if self._stats is None:
             self.load_stats()
         return self._stats
+
 
 league_stats_store = LeagueStatsStore()

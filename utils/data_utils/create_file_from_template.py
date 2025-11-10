@@ -1,10 +1,13 @@
 """Script for creating new ready file from template."""
 import logging
-import os, shutil, re
+import os
+import shutil
+import re
 from pathlib import Path
 from utils.config_utils.load_save_settings import settings as loaded_settings
 from utils.config_utils.get_resource_path import get_resource_path
 from utils.dialog_utils.custom_input_dialog import CustomInputDialog
+
 
 def sanitize_filename(filename):
     """
@@ -14,6 +17,7 @@ def sanitize_filename(filename):
      allowed in filename.
     """
     return re.sub(r'[^\w\s-]', '', filename.strip())
+
 
 def create_file_from_template(parent):
     """
@@ -25,8 +29,14 @@ def create_file_from_template(parent):
     """
     logger = logging.getLogger("apps.fileproc.data_utils")
 
-    target_folder = loaded_settings['InitialTargetDirs']['starting_target_folder']
-    template_path = get_resource_path(os.path.join('au_ootp_tournament_utilities_v2/image_assets', 'data_template.csv'))
+    target_folder = (
+        loaded_settings['InitialTargetDirs']['starting_target_folder']
+    )
+    template_path = get_resource_path(
+        os.path.join('au_ootp_tournament_utilities_v2/image_assets',
+                     'data_template.csv'
+                     )
+    )
 
     root_window = parent.winfo_toplevel()
     dialog = CustomInputDialog(
@@ -56,12 +66,3 @@ def create_file_from_template(parent):
             logger.error('Template is not valid')
     else:
         logger.error(f"Template file not found: {template_path}")
-
-
-
-
-
-
-
-
-

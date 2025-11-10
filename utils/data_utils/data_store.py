@@ -1,6 +1,6 @@
 """Singleton pattern data frame for basic stats app use."""
 import pandas as pd
-import numpy as np
+
 
 class DataStore:
     """

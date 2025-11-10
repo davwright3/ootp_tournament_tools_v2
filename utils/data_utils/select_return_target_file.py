@@ -17,7 +17,11 @@ def select_return_target_file(parent, file_path=None):
 
     path = filedialog.askopenfilename(
         parent=parent,
-        initialdir=settings_module.settings.get('InitialTargetDirs', 'starting_target_folder', fallback=os.getcwd()),
+        initialdir=settings_module.settings.get(
+            'InitialTargetDirs',
+            'starting_target_folder',
+            fallback=os.getcwd()
+        ),
         title="Choose target card list",
         filetypes=(("CSV Files", "*.csv"), ("All Files", "*.*")),
     )

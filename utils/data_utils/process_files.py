@@ -4,8 +4,10 @@ import os
 import glob
 import pandas as pd
 
+
 logger = logging.getLogger("apps.fileproc.data_utils")
 logger.info('Beginning file processing')
+
 
 def add_file(target_df, file_to_add):
     """
@@ -53,7 +55,9 @@ def process_files(target_file_path: str, raw_dir: str):
 
     # Check if the raw_dir is a valid directory.
     if not os.path.isdir(raw_dir):
-        logger.error('Raw directory does not exist, please choose valid directory.')
+        logger.error(
+            'Raw directory does not exist, please choose valid directory.'
+        )
         return
     else:
         raw_data_dir = raw_dir
@@ -72,10 +76,7 @@ def process_files(target_file_path: str, raw_dir: str):
             logger.info(f'Skipping {file_name}, already in dataset')
 
     total_len = len(target_dataframe)
-    logger.info(f'Processed {num_files_added} files.  Total entries in dataset: {total_len}')
+    logger.info(
+        f'Processed {num_files_added} files.  Total'
+        f' entries in dataset: {total_len}')
     target_dataframe.to_csv(target_file_path, index=False)
-
-
-
-
-
