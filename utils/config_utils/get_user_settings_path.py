@@ -4,13 +4,16 @@ and adjust user settings path as necessary."""
 import os
 import sys
 
+
 def get_user_settings_path(app_name):
     """
     Check OS and route program to user settings path.
-    If program is installed on Windows, will use APPDATA as the root settings path.
-    If program is installed on Linux, will use config as the root settings path.
-    If program is installed on macOS, will use /Library/Application Suppoer as the
-    root settings path.
+    If program is installed on Windows, will use APPDATA as the root settings
+    path.
+    If program is installed on Linux, will use config as the root settings
+    path.
+    If program is installed on macOS, will use /Library/Application Suppoer
+    as the root settings path.
     :param app_name: the name of the application for settings.ini location, str
     :return: the OS dependent path to the user's settings file, str
     """

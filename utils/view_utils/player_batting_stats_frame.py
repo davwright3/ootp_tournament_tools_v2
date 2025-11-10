@@ -16,9 +16,9 @@ class PlayerStatsFrameBatter(tk.Frame):
             ('OPS: ', stats['ply_ops']),
             ('wOBA: ', stats['ply_woba']),
             ('HR: ', stats['ply_hr_rate']),
-            ('K%: ', stats['ply_k']),
-            ('BB%: ', stats['ply_bb']),
-            ('SB: ', stats['ply_sb']),
+            ('K/600: ', stats['ply_k']),
+            ('BB/600: ', stats['ply_bb']),
+            ('SB/600: ', stats['ply_sb']),
             ('SB%: ', stats['ply_sb_pct']),
             ('WAR: ', stats['ply_war']),
         ]

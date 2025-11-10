@@ -1,7 +1,6 @@
 """Script for comparing current user settings with
 defaults to determine if required settings have been updated."""
 import os
-import shutil
 import logging
 from configparser import ConfigParser
 
@@ -11,6 +10,7 @@ def new_cfg():
     cfg = ConfigParser(interpolation=None)
     cfg.optionxform = str
     return cfg
+
 
 def verify_settings_up_to_date(default_path, user_settings_path):
     """
@@ -22,7 +22,8 @@ def verify_settings_up_to_date(default_path, user_settings_path):
         filename: name of the settings file
 
     Returns:
-        Message letting the user know whether the settings were up to date or needed to be updated.
+        Message letting the user know whether the settings were up to date
+        or needed to be updated.
     """
     logger = logging.getLogger(__name__)
     # Normalize the string
@@ -44,7 +45,9 @@ def verify_settings_up_to_date(default_path, user_settings_path):
     for section in default_cfg.sections():
         if not user_cfg.has_section(section):
             user_cfg.add_section(section)
-            logger.info(f'User settings file {user_file} was successfully updated.')
+            logger.info(
+                f'User settings file {user_file} was successfully updated.'
+            )
             updated = True
 
         for key, value in default_cfg.items(section):
@@ -56,7 +59,9 @@ def verify_settings_up_to_date(default_path, user_settings_path):
     if updated:
         with open(user_file, 'w', encoding='utf-8') as f:
             user_cfg.write(f)
-        logger.info(f'User settings file {user_file} was successfully updated.')
+        logger.info(
+            f'User settings file {user_file} was successfully updated.'
+        )
         return True
 
     logger.info(f'User settings file {user_file} up to date.')

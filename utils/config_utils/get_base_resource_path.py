@@ -2,6 +2,7 @@ import os
 import sys
 import logging
 
+
 def get_base_resource_path(relative_path: str) -> str:
     """
     Examines program path to determine if it is running in a development

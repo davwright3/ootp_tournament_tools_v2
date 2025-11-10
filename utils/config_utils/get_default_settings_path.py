@@ -2,6 +2,7 @@
 import os
 import sys
 
+
 def get_default_settings_path():
     """
     Find the path to the default settings.ini file.

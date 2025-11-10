@@ -23,13 +23,21 @@ def select_initial_target_folder(parent, target_var):
 
     old_cwd = os.getcwd()
     try:
-        path = filedialog.askdirectory(parent=parent, initialdir=initial_directory)
+        path = filedialog.askdirectory(
+            parent=parent,
+            initialdir=initial_directory
+        )
     finally:
         os.chdir(old_cwd)
 
     if path:
-        settings_module.update_setting('InitialTargetDirs', 'starting_target_folder', path)
+        settings_module.update_setting(
+            'InitialTargetDirs',
+            'starting_target_folder',
+            path
+        )
         target_var.set(path)
+
 
 def select_initial_raw_data_folder(parent, target_var):
     """
@@ -50,10 +58,17 @@ def select_initial_raw_data_folder(parent, target_var):
 
     old_cwd = os.getcwd()
     try:
-        path = filedialog.askdirectory(parent=parent, initialdir=initial_directory)
+        path = filedialog.askdirectory(
+            parent=parent,
+            initialdir=initial_directory
+        )
     finally:
         os.chdir(old_cwd)
 
     if path:
-        settings_module.update_setting('InitialTargetDirs', 'starting_data_folder', path)
+        settings_module.update_setting(
+            'InitialTargetDirs',
+            'starting_data_folder',
+            path
+        )
         target_var.set(path)
