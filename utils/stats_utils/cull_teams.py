@@ -1,8 +1,8 @@
 """Util for cutting teams that faced empty teams (Joe Unknowns)."""
-import pandas as pd
 import logging
 
-def cull_teams(df, run_cutoff=12):
+
+def cull_teams(df, run_cutoff=8):
     """
     Cull teams based on runs scored per game.
     Base cut off point will be 8 runs per game.
@@ -32,4 +32,3 @@ def cull_teams(df, run_cutoff=12):
         This is a {round(removed_pct, 2) * 100}% removal rate..
         ''')
     return df_filtered
-

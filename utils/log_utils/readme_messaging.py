@@ -38,8 +38,8 @@ def extract_markdown_section(
             continue
         level = len(m.group(1))
         text = m.group(2).strip()
-        if text.lower() == (heading_query.strip().lower() or
-                            _sluggify_github(text) == target_slug):
+        if (text.lower() == heading_query.strip().lower() or
+                _sluggify_github(text) == target_slug):
             start_idx = i
             start_level = level
             break

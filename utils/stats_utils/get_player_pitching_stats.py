@@ -1,11 +1,13 @@
-from utils.stats_utils.generate_basic_pitching_stats_df import generate_basic_pitching_stats
+from utils.stats_utils.generate_basic_pitching_stats_df import (
+    generate_basic_pitching_stats)
+
 
 def get_player_pitching_stats(card_id, team_select=None):
     if team_select is None:
         df = generate_basic_pitching_stats(min_ip=1, card_id=card_id)
     else:
-        df = generate_basic_pitching_stats(min_ip=1, card_id=card_id, team_select=team_select)
-
+        df = generate_basic_pitching_stats(
+            min_ip=1, card_id=card_id, team_select=team_select)
 
     if df.empty:
         stats = {

@@ -1,4 +1,5 @@
-from utils.stats_utils.generate_basic_batting_stats_df import generate_basic_batting_stats_df
+from utils.stats_utils.generate_basic_batting_stats_df import (
+    generate_basic_batting_stats_df)
 
 
 def get_player_batting_stats(card_id, selected_team=None):

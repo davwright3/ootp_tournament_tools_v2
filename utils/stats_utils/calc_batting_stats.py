@@ -1,13 +1,14 @@
 """Script for returning calculated basic batting stats."""
-import pandas as pd
 import numpy as np
+
 
 def calc_batting_stats(df, min_pa=0):
     """
     Calculate and return the basic batting stats for the return data frame.
     :param df: The DataFrame to be processed, pd.DataFrame
     :param min_pa: Return players with at least the min_pa, int
-    :return player_stats: DataFrame containing calculated basic batting stats, pd.DataFrame
+    :return player_stats: DataFrame containing calculated basic
+    batting stats, pd.DataFrame
     """
     df1 = df.copy()
 
@@ -58,7 +59,7 @@ def calc_batting_stats(df, min_pa=0):
         ((df1['SB'] / df1['PA']) * 600).round(1)
     )
 
-    den = df1['SB'] + df1 ['CS']
+    den = df1['SB'] + df1['CS']
     rate = df1['SB'] / den
 
     df1['SBpct'] = np.where(
@@ -73,17 +74,22 @@ def calc_batting_stats(df, min_pa=0):
 
     df1['ZRrate'] = ((df1['ZR'] / df1['PA']) * 600).round(1)
 
-    df1['Fld%'] = ((df1['PO'] + df1['A']) / (df1['PO'] + df1['A'] + df1['E'])).round(3)
+    df1['Fld%'] = ((df1['PO'] + df1['A']) /
+                   (df1['PO'] + df1['A'] + df1['E'])).round(3)
 
     if 'CID' in df1.columns:
         if 'VLvl' in df1.columns:
-            df2 = df1[['CID', 'VLvl', 'PA', 'AVG', 'OBP', 'SLG', 'OPS', 'wOBA', 'RCrate', 'HRrate', 'Krate', 'BBrate', 'SBrate', 'SBpct',
-                       'WARrate', 'ZRrate', 'Fld%']]
+            df2 = df1[['CID', 'VLvl', 'PA', 'AVG', 'OBP', 'SLG', 'OPS',
+                       'wOBA', 'RCrate', 'HRrate', 'Krate', 'BBrate',
+                       'SBrate', 'SBpct', 'WARrate', 'ZRrate', 'Fld%']]
         else:
-            df2 = df1[['CID', 'PA', 'AVG', 'OBP', 'SLG', 'OPS', 'wOBA', 'RCrate', 'HRrate', 'Krate', 'BBrate', 'SBrate', 'SBpct', 'WARrate', 'ZRrate', 'Fld%']]
+            df2 = df1[['CID', 'PA', 'AVG', 'OBP', 'SLG', 'OPS', 'wOBA',
+                       'RCrate', 'HRrate', 'Krate', 'BBrate', 'SBrate',
+                       'SBpct', 'WARrate', 'ZRrate', 'Fld%']]
         df2 = df2[df2['PA'] >= min_pa]
     else:
-        df2 = df1[['ORG', 'PA', 'AVG', 'OBP', 'SLG', 'OPS', 'wOBA', 'RCrate', 'HRrate', 'Krate', 'BBrate', 'SBrate', 'SBpct',
+        df2 = df1[['ORG', 'PA', 'AVG', 'OBP', 'SLG', 'OPS', 'wOBA',
+                   'RCrate', 'HRrate', 'Krate', 'BBrate', 'SBrate', 'SBpct',
                    'WARrate', 'ZRrate', 'Fld%']]
 
     del df1
