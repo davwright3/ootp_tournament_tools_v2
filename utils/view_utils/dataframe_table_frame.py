@@ -1,8 +1,8 @@
-import tkinter as tk
 from tkinter import ttk
 from typing import Dict, Callable, List, Optional
 import pandas as pd
 import logging
+
 
 class DataFrameTableFrame(ttk.Frame):
     def __init__(
@@ -11,7 +11,9 @@ class DataFrameTableFrame(ttk.Frame):
             df: Optional[pd.DataFrame] = None,
             columns: Optional[List[str]] = None,
             formatters: Optional[Dict[str, Callable]] = None,
-            sort_keys: Optional[Dict[str, Callable[[pd.Series], pd.Series]]] = None,
+            sort_keys: Optional[
+                Dict[str, Callable[[pd.Series], pd.Series]]
+            ] = None,
             height: int = 18,
             show_index: bool = False,
             on_row_double_click: Optional[Callable[[pd.Series], None]] = None,
@@ -29,8 +31,6 @@ class DataFrameTableFrame(ttk.Frame):
 
         self.selected_team = selected_team
 
-        logger = logging.getLogger('apps.basic_stats_app.data_utils')
-
         # Decide columns
         if columns is None:
             columns = self._df.columns.tolist()
@@ -39,7 +39,7 @@ class DataFrameTableFrame(ttk.Frame):
         # Create the tree and scroll bars
         self.tree = ttk.Treeview(
             self,
-            columns= self._tree_columns(),
+            columns=self._tree_columns(),
             show='headings',
             height=height
         )
@@ -53,7 +53,8 @@ class DataFrameTableFrame(ttk.Frame):
             orient='horizontal',
             command=self.tree.xview
         )
-        self.tree.configure(yscrollcommand=self.vsb.set, xscrollcommand=self.hsb.set)
+        self.tree.configure(
+            yscrollcommand=self.vsb.set, xscrollcommand=self.hsb.set)
 
         # Setting up the grids, main panel (tree) should expand fully)
         self.tree.grid(row=0, column=0, sticky='nsew')
@@ -74,13 +75,17 @@ class DataFrameTableFrame(ttk.Frame):
 
         # Set headings and widths
         for col in self._tree_columns():
-            self.tree.heading(col, text=col, command=lambda c=col: self._on_heading_click(c))
+            self.tree.heading(
+                col, text=col, command=lambda c=col: self._on_heading_click(c))
             self.tree.column(col, width=120, anchor='w')
 
         self._refresh_all()
 
     # Public API for apps to use
-    def set_dataframe(self, df: pd.DataFrame, columns: Optional[List[str]] = None):
+    def set_dataframe(
+            self,
+            df: pd.DataFrame,
+            columns: Optional[List[str]] = None):
         """Replace the current dataframe and redraw the tree."""
         self._df = df.copy()
         if columns is None:
@@ -88,17 +93,18 @@ class DataFrameTableFrame(ttk.Frame):
         else:
             self._columns = [c for c in self._df.columns if c in columns]
         self._formatters = {
-            k: v for k, v in (self._formatters or {}).items() if k in self._columns
+            k: v for k, v in (self._formatters or {}).items()
+            if k in self._columns
         }
         if hasattr(self, '_sort_keys'):
-            self._sort_keys = {k: v for k, v in self._sort_keys.items() if k in self._columns}
+            self._sort_keys = {k: v for k, v in self._sort_keys.items()
+                               if k in self._columns}
 
         self._refresh_all()
 
     def clear(self):
         """Clear the tree."""
         self.tree.delete(*self.tree.get_children())
-
 
     # Internal methods
     def _tree_columns(self) -> List[str]:
@@ -112,7 +118,7 @@ class DataFrameTableFrame(ttk.Frame):
         if col in self._formatters:
             try:
                 return self._formatters[col](val)
-            except Exception as e:
+            except Exception:
                 return str(val)
         return str(val)
 
@@ -121,7 +127,10 @@ class DataFrameTableFrame(ttk.Frame):
         current_cols = self._tree_columns()
         self.tree.configure(columns=current_cols)
         for col in current_cols:
-            self.tree.heading(col, text=col, command= lambda c=col: self._on_heading_click(c))
+            self.tree.heading(
+                col,
+                text=col,
+                command=lambda c=col: self._on_heading_click(c))
             # Numeric hueristic for alignment and width
             anchor = 'e' if self._is_numeric_column(col) else 'w'
             self.tree.column(col, anchor=anchor)
@@ -131,7 +140,8 @@ class DataFrameTableFrame(ttk.Frame):
     def _is_numeric_column(self, col: str) -> bool:
         if self._show_index and col == '#':
             return False
-        series = self._df.index if (self._show_index and col == '#') else self._df[col]
+        series = self._df.index if\
+            (self._show_index and col == '#') else self._df[col]
         return pd.api.types.is_numeric_dtype(series)
 
     def _load_rows(self):
@@ -140,7 +150,8 @@ class DataFrameTableFrame(ttk.Frame):
             return
         use_cols = self._columns
         for i, (idx, row) in enumerate(self._df.iterrows()):
-            if 'ORG' in list(self._columns) and row['ORG'] == self.selected_team:
+            if ('ORG' in list(self._columns)
+                    and row['ORG'] == self.selected_team):
                 tags = ('selected_team',)
             elif i % 2:
                 tags = ('odd',)
@@ -151,7 +162,11 @@ class DataFrameTableFrame(ttk.Frame):
                 values.append(idx)
             for col in use_cols:
                 values.append(self._format_value(col, row.get(col)))
-            iid = self.tree.insert('', 'end', values=values, tags=tags)
+            iid = self.tree.insert(
+                '',
+                'end',
+                values=values,
+                tags=tags)
             self._iid_to_row[iid] = row
 
             # Add right align tag for numeric
@@ -161,7 +176,10 @@ class DataFrameTableFrame(ttk.Frame):
                 start = 0
             for j, col in enumerate(use_cols, start=start):
                 if self._is_numeric_column(col):
-                    self.tree.set(iid, self._tree_columns()[j], self.tree.set(iid, self._tree_columns()[j]))
+                    self.tree.set(
+                        iid,
+                        self._tree_columns()[j],
+                        self.tree.set(iid, self._tree_columns()[j]))
 
     def _on_heading_click(self, col: str):
         """Sort by a column.  Toggles asc/desc."""
@@ -181,13 +199,17 @@ class DataFrameTableFrame(ttk.Frame):
         if by is None:
             sorted_df = self._df.sort_index(ascending=not reverse)
         else:
-            sorted_df = self._df.sort_values(by=by, ascending=not reverse, kind='mergesort', na_position='last')
+            sorted_df = self._df.sort_values(
+                by=by,
+                ascending=not reverse,
+                kind='mergesort',
+                na_position='last'
+            )
 
         self._sort_state = {'col': col, 'reverse': reverse}
         self.set_dataframe(sorted_df)
 
-
-    def _autosize_columns(self, sample_rows: int=200):
+    def _autosize_columns(self, sample_rows: int = 200):
         """Rough autosize based on header and sample rows."""
         cols = self._tree_columns()
         # Minimums
@@ -237,6 +259,5 @@ class DataFrameTableFrame(ttk.Frame):
             try:
                 self._on_row_double_click_cb(row)
             except Exception as e:
-                logging.getLogger('apps.basic_stats_app.data_utils').exception("Double click callback failed", e)
-
-
+                (logging.getLogger('apps.basic_stats_app.data_utils').
+                 exception("Double click callback failed", e))

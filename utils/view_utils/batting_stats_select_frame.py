@@ -8,7 +8,7 @@ class BattingStatsSelectFrame(tk.Frame):
     def __init__(self, parent):
         tk.Frame.__init__(self, parent, relief='ridge', bd=3)
 
-        self.available_stats =[
+        self.available_stats = [
             'PA', 'AVG', 'OBP', 'SLG', 'OPS', 'wOBA', 'RCrate', 'HRrate',
             'Krate', 'BBrate', 'SBrate', 'SBpct', 'WARrate', 'ZRrate', 'Fld%'
         ]
@@ -22,12 +22,12 @@ class BattingStatsSelectFrame(tk.Frame):
                     if child.get() != 'off':
                         self.selected_stats.append(child.get())
 
-
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=1)
         self.columnconfigure(2, weight=1)
 
-        self.label = tk.Label(self, text="Select Batting Stats", justify='center')
+        self.label = tk.Label(
+            self, text="Select Batting Stats", justify='center')
         self.label.grid(column=0, row=0, columnspan=3, sticky='nsew')
 
         stat_num = 0
@@ -50,7 +50,3 @@ class BattingStatsSelectFrame(tk.Frame):
 
     def get_selected_stats(self):
         return self.selected_stats
-
-
-
-

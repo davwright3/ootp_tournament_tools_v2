@@ -1,6 +1,7 @@
 """Custom label that codes based off of rating."""
 import tkinter as tk
 
+
 class ColorRatingLabel(tk.Label):
     def __init__(self, parent, font=None, rating: int=0):
         super().__init__(parent)

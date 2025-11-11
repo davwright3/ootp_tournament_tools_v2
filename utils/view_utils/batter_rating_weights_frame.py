@@ -1,7 +1,7 @@
 """Modular frame for user to set weights for batting ratings."""
 import tkinter as tk
-import math
 from utils.stats_utils.coerce_float import coerce_float
+
 
 class BatterWeightsFrame(tk.Frame):
     def __init__(self, parent):
@@ -72,51 +72,71 @@ class BatterWeightsFrame(tk.Frame):
         self.eye_label.grid(row=6, column=0, sticky='nsew')
 
         # Entries
-        self.babip_oa_entry = tk.Entry(self, textvariable=self.babip_weight, width=2)
-        self.babip_oa_entry.grid(row=2, column=1, sticky='nsew', padx=2, pady=2)
+        self.babip_oa_entry = tk.Entry(
+            self, textvariable=self.babip_weight, width=2)
+        self.babip_oa_entry.grid(
+            row=2, column=1, sticky='nsew', padx=2, pady=2)
 
-        self.babip_vL_entry = tk.Entry(self, textvariable=self.babip_vL_weight, width=2)
-        self.babip_vL_entry.grid(row=2, column=2, sticky='nsew', padx=2, pady=2)
+        self.babip_vL_entry = tk.Entry(
+            self, textvariable=self.babip_vL_weight, width=2)
+        self.babip_vL_entry.grid(
+            row=2, column=2, sticky='nsew', padx=2, pady=2)
 
-        self.babip_vR_entry = tk.Entry(self, textvariable=self.babip_vR_weight, width=2)
-        self.babip_vR_entry.grid(row=2, column=3, sticky='nsew', padx=2, pady=2)
+        self.babip_vR_entry = tk.Entry(
+            self, textvariable=self.babip_vR_weight, width=2)
+        self.babip_vR_entry.grid(
+            row=2, column=3, sticky='nsew', padx=2, pady=2)
 
-        self.avoidk_oa_entry = tk.Entry(self, textvariable=self.avoidk_weight, width=2)
-        self.avoidk_oa_entry.grid(row=3, column=1, sticky='nsew', padx=2, pady=2)
+        self.avoidk_oa_entry = tk.Entry(
+            self, textvariable=self.avoidk_weight, width=2)
+        self.avoidk_oa_entry.grid(
+            row=3, column=1, sticky='nsew', padx=2, pady=2)
 
-        self.avoidk_vL_entry = tk.Entry(self, textvariable=self.avoidk_vL_weight, width=2)
-        self.avoidk_vL_entry.grid(row=3, column=2, sticky='nsew', padx=2, pady=2)
+        self.avoidk_vL_entry = tk.Entry(
+            self, textvariable=self.avoidk_vL_weight, width=2)
+        self.avoidk_vL_entry.grid(
+            row=3, column=2, sticky='nsew', padx=2, pady=2)
 
-        self.avoidk_vR_entry = tk.Entry(self, textvariable=self.avoidk_vR_weight, width=2)
-        self.avoidk_vR_entry.grid(row=3, column=3, sticky='nsew', padx=2, pady=2)
+        self.avoidk_vR_entry = tk.Entry(
+            self, textvariable=self.avoidk_vR_weight, width=2)
+        self.avoidk_vR_entry.grid(
+            row=3, column=3, sticky='nsew', padx=2, pady=2)
 
-        self.gap_oa_entry = tk.Entry(self, textvariable=self.gap_weight, width=2)
+        self.gap_oa_entry = tk.Entry(
+            self, textvariable=self.gap_weight, width=2)
         self.gap_oa_entry.grid(row=4, column=1, sticky='nsew')
 
-        self.gap_vL_entry = tk.Entry(self, textvariable=self.gap_vL_weight, width=2)
+        self.gap_vL_entry = tk.Entry(
+            self, textvariable=self.gap_vL_weight, width=2)
         self.gap_vL_entry.grid(row=4, column=2, sticky='nsew')
 
-        self.gap_vR_entry = tk.Entry(self, textvariable=self.gap_vR_weight, width=2)
+        self.gap_vR_entry = tk.Entry(
+            self, textvariable=self.gap_vR_weight, width=2)
         self.gap_vR_entry.grid(row=4, column=3, sticky='nsew')
 
-        self.power_oa_entry = tk.Entry(self, textvariable=self.power_weight, width=2)
+        self.power_oa_entry = tk.Entry(
+            self, textvariable=self.power_weight, width=2)
         self.power_oa_entry.grid(row=5, column=1, sticky='nsew')
 
-        self.power_vL_entry = tk.Entry(self, textvariable=self.power_vL_weight, width=2)
+        self.power_vL_entry = tk.Entry(
+            self, textvariable=self.power_vL_weight, width=2)
         self.power_vL_entry.grid(row=5, column=2, sticky='nsew')
 
-        self.power_vR_entry = tk.Entry(self, textvariable=self.power_vR_weight, width=2)
+        self.power_vR_entry = tk.Entry(
+            self, textvariable=self.power_vR_weight, width=2)
         self.power_vR_entry.grid(row=5, column=3, sticky='nsew')
 
-        self.eye_oa_entry = tk.Entry(self, textvariable=self.eye_weight, width=2)
+        self.eye_oa_entry = tk.Entry(
+            self, textvariable=self.eye_weight, width=2)
         self.eye_oa_entry.grid(row=6, column=1, sticky='nsew')
 
-        self.eye_vL_entry = tk.Entry(self, textvariable=self.eye_vL_weight, width=2)
+        self.eye_vL_entry = tk.Entry(
+            self, textvariable=self.eye_vL_weight, width=2)
         self.eye_vL_entry.grid(row=6, column=2, sticky='nsew')
 
-        self.eye_vR_entry = tk.Entry(self, textvariable=self.eye_vR_weight, width=2)
+        self.eye_vR_entry = tk.Entry(
+            self, textvariable=self.eye_vR_weight, width=2)
         self.eye_vR_entry.grid(row=6, column=3, sticky='nsew')
-
 
     def get_batter_rating_weights(self):
         weight_vars = {
@@ -142,5 +162,3 @@ class BatterWeightsFrame(tk.Frame):
             for name, var in weight_vars.items()
         }
         return weights
-
-

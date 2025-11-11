@@ -1,6 +1,7 @@
 """Frame for selecting which side of batter to display."""
 import tkinter as tk
 
+
 class BattingSideSelectFrame(tk.Frame):
     """Frame for selecting which side of batter to display."""
     def __init__(self, parent):

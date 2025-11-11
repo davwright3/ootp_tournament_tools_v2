@@ -2,6 +2,7 @@
 import tkinter as tk
 from utils.stats_utils.coerce_float import coerce_float
 
+
 class BaserunningWeightFrame(tk.Frame):
     def __init__(self, parent):
         super().__init__(parent, relief='groove', bd=3)
@@ -39,16 +40,20 @@ class BaserunningWeightFrame(tk.Frame):
         self.baserunning_label.grid(row=4, column=0, sticky='nsew')
 
         # Entries
-        self.speed_weight_entry = tk.Entry(self, textvariable=self.speed_weight)
+        self.speed_weight_entry = tk.Entry(self,
+                                           textvariable=self.speed_weight)
         self.speed_weight_entry.grid(row=1, column=1, sticky='nsew')
 
-        self.steal_agg_weight_entry = tk.Entry(self, textvariable=self.steal_agg_weight)
+        self.steal_agg_weight_entry = (
+            tk.Entry(self, textvariable=self.steal_agg_weight))
         self.steal_agg_weight_entry.grid(row=2, column=1, sticky='nsew')
 
-        self.steal_ability_weight_entry = tk.Entry(self, textvariable=self.steal_ability_weight)
+        self.steal_ability_weight_entry = (
+            tk.Entry(self, textvariable=self.steal_ability_weight))
         self.steal_ability_weight_entry.grid(row=3, column=1, sticky='nsew')
 
-        self.baserunning_weight_entry = tk.Entry(self, textvariable=self.baserunning_weight)
+        self.baserunning_weight_entry = (
+            tk.Entry(self, textvariable=self.baserunning_weight))
         self.baserunning_weight_entry.grid(row=4, column=1, sticky='nsew')
 
     def get_baserunning_weights(self):

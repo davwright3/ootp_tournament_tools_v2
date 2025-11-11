@@ -2,12 +2,12 @@
 import tkinter as tk
 import webbrowser
 
+
 class Footer(tk.Frame):
     """Custom footer class, insertable into all apps."""
     def __init__(self, parent):
         """Initialization of footer class."""
         super().__init__(parent, bd=3, relief='groove', bg='lightgray')
-
 
         def open_link(url):
             webbrowser.open_new(url)
@@ -32,7 +32,8 @@ class Footer(tk.Frame):
         )
         self.au_label.grid(row=0, column=0, sticky="e")
 
-        self.github_button_frame = tk.Frame(self, padx=5, pady=5, bg='lightgray')
+        self.github_button_frame = tk.Frame(
+            self, padx=5, pady=5, bg='lightgray')
         self.github_button_frame.grid(row=0, column=1, sticky="e")
 
         self.github_button = tk.Button(
@@ -44,7 +45,8 @@ class Footer(tk.Frame):
             padx=10,
             pady=10,
             background='lightgray',
-            command=lambda: webbrowser.open_new("https://github.com/davwright3")
+            command=lambda: webbrowser.open_new(
+                "https://github.com/davwright3")
         )
         self.github_button.grid(row=0, column=2, sticky='w')
         self.github_button.bind("<Enter>", on_enter)

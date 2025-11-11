@@ -8,10 +8,12 @@ class MessagePanel(ttk.Frame):
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
 
-        self.text = tk.Text(self, height=height, wrap=wrap, state='disabled')
+        self.text = tk.Text(
+            self, height=height, wrap=wrap, state='disabled')
         self.text.grid(row=0, column=0, sticky="nsew")
 
-        self.scrollbar = ttk.Scrollbar(self, orient='vertical', command=self.text.yview)
+        self.scrollbar = ttk.Scrollbar(
+            self, orient='vertical', command=self.text.yview)
         self.scrollbar.grid(row=0, column=1, sticky="ns")
         self.text.configure(yscrollcommand=self.scrollbar.set)
 

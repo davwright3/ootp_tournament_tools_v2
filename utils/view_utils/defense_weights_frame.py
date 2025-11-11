@@ -2,6 +2,7 @@
 import tkinter as tk
 from utils.stats_utils.coerce_float import coerce_float
 
+
 class DefenseWeightsFrame(tk.Frame):
     def __init__(self, parent):
         super().__init__(parent, relief='groove', bd=3)
@@ -71,34 +72,44 @@ class DefenseWeightsFrame(tk.Frame):
         self.outfield_label.grid(row=5, column=0, sticky='nsew')
 
         # Entries
-        self.catcher_abil_entry = tk.Entry(self, textvariable=self.catch_abil_weight, width=2)
+        self.catcher_abil_entry = tk.Entry(
+            self, textvariable=self.catch_abil_weight, width=2)
         self.catcher_abil_entry.grid(row=2, column=1, sticky='nsew')
 
-        self.catcher_frame_entry = tk.Entry(self, textvariable=self.catch_frame_weight, width=2)
+        self.catcher_frame_entry = tk.Entry(
+            self, textvariable=self.catch_frame_weight, width=2)
         self.catcher_frame_entry.grid(row=2, column=2, sticky='nsew')
 
-        self.catcher_arm_entry = tk.Entry(self, textvariable=self.catch_arm_weight, width=2)
+        self.catcher_arm_entry = tk.Entry(
+            self, textvariable=self.catch_arm_weight, width=2)
         self.catcher_arm_entry.grid(row=2, column=3, sticky='nsew')
 
-        self.infield_range_entry = tk.Entry(self, textvariable=self.infield_range_weight, width=2)
+        self.infield_range_entry = tk.Entry(
+            self, textvariable=self.infield_range_weight, width=2)
         self.infield_range_entry.grid(row=4, column=1, sticky='nsew')
 
-        self.infield_error_entry = tk.Entry(self, textvariable=self.infield_error_weight, width=2)
+        self.infield_error_entry = tk.Entry(
+            self, textvariable=self.infield_error_weight, width=2)
         self.infield_error_entry.grid(row=4, column=2, sticky='nsew')
 
-        self.infield_arm_entry = tk.Entry(self, textvariable=self.infield_arm_weight, width=2)
+        self.infield_arm_entry = tk.Entry(
+            self, textvariable=self.infield_arm_weight, width=2)
         self.infield_arm_entry.grid(row=4, column=3, sticky='nsew')
 
-        self.turn_dp_entry = tk.Entry(self, textvariable=self.turn_dp_weight, width=2)
+        self.turn_dp_entry = tk.Entry(
+            self, textvariable=self.turn_dp_weight, width=2)
         self.turn_dp_entry.grid(row=4, column=4, sticky='nsew')
 
-        self.outfield_range_entry = tk.Entry(self, textvariable=self.outfield_range_weight, width=2)
+        self.outfield_range_entry = tk.Entry(
+            self, textvariable=self.outfield_range_weight, width=2)
         self.outfield_range_entry.grid(row=5, column=1, sticky='nsew')
 
-        self.outfield_error_entry = tk.Entry(self, textvariable=self.outfield_error_weight, width=2)
+        self.outfield_error_entry = tk.Entry(
+            self, textvariable=self.outfield_error_weight, width=2)
         self.outfield_error_entry.grid(row=5, column=2, sticky='nsew')
 
-        self.outfield_arm_entry = tk.Entry(self, textvariable=self.outfield_arm_weight, width=2)
+        self.outfield_arm_entry = tk.Entry(
+            self, textvariable=self.outfield_arm_weight, width=2)
         self.outfield_arm_entry.grid(row=5, column=3, sticky='nsew')
 
     def get_defense_ratings_weights(self):

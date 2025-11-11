@@ -1,6 +1,10 @@
-"""Custom frame for selecting which card types to view in the ratings comparison app."""
+"""
+Custom frame for selecting which card types to view in the ratings
+ comparison app.
+ """
 import tkinter as tk
 import customtkinter as ctk
+
 
 class CardTypeSelectFrame(tk.Frame):
     def __init__(self, parent):
@@ -15,7 +19,8 @@ class CardTypeSelectFrame(tk.Frame):
         self.rowconfigure(1, weight=1)
         self.rowconfigure(2, weight=1)
 
-        card_types = ['Live', 'NEL', 'Rookie', 'Legend', 'AS', 'FL', 'Snapshot', 'Unsung', 'Hardware']
+        card_types = ['Live', 'NEL', 'Rookie', 'Legend', 'AS', 'FL',
+                      'Snapshot', 'Unsung', 'Hardware']
         self.selected_card_types = []
 
         def update_selected_card_types():
@@ -37,7 +42,8 @@ class CardTypeSelectFrame(tk.Frame):
                 onvalue=num,
                 offvalue='off',
             )
-            checkbox.grid(row=((num -1) // 3) + 1, column=(num - 1) % 3, sticky='nsew')
+            checkbox.grid(
+                row=((num - 1) // 3) + 1, column=(num - 1) % 3, sticky='nsew')
             num += 1
 
     def get_selected_card_types(self):

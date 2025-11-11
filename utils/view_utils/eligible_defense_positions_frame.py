@@ -26,14 +26,23 @@ class EligibleDefensePositionsFrame(tk.Frame):
                 self.columnconfigure(0, weight=1)
                 self.columnconfigure(1, weight=1)
 
-                self.pos_label = tk.Label(self, text=position, font=fonts.basic_font, width=3)
+                self.pos_label = tk.Label(
+                    self, text=position, font=fonts.basic_font, width=3)
                 self.pos_label.grid(row=0, column=0, sticky='ew')
 
                 if sel_eligibility:
-                    self.eligible_label = tk.Label(self, text='X', bg='green', font=fonts.basic_font, width=3)
+                    self.eligible_label = tk.Label(
+                        self,
+                        text='X',
+                        bg='green',
+                        font=fonts.basic_font, width=3)
                     self.eligible_label.grid(row=0, column=1, sticky='ew')
                 else:
-                    self.eligible_label = tk.Label(self, text='-', bg='white', font=fonts.basic_font, width=3)
+                    self.eligible_label = tk.Label(
+                        self,
+                        text='-',
+                        bg='white',
+                        font=fonts.basic_font, width=3)
                     self.eligible_label.grid(row=0, column=1, sticky='ew')
 
         item = 0
@@ -41,4 +50,3 @@ class EligibleDefensePositionsFrame(tk.Frame):
             label = EligibilityFrame(self, position, eligibility)
             label.grid(row=item % 4, column=item // 4, sticky='nsew')
             item += 1
-

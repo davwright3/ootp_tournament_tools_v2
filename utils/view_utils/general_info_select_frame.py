@@ -34,9 +34,9 @@ class GeneralInfoFrame(tk.Frame):
                 offvalue='off',
                 command=set_active_items,
             )
-            checkbox.grid(column=item_num % 3, row=item_num // 3 +1, sticky='nsew')
+            checkbox.grid(
+                column=item_num % 3, row=item_num // 3 + 1, sticky='nsew')
             item_num += 1
 
     def get_selected_items(self):
         return self.selected_items
-

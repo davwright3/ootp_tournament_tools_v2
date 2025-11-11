@@ -9,7 +9,8 @@ class LeaguePitchingStatsFrame(tk.Frame):
 
         self.columnconfigure(0, weight=1)
 
-        self.label = tk.Label(self, text="Pitching", font=fonts.frame_title_font)
+        self.label = tk.Label(
+            self, text="Pitching", font=fonts.frame_title_font)
         self.label.grid(row=0, column=0)
 
         pitching_stats = [

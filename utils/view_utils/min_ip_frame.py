@@ -1,6 +1,7 @@
 """Custom frame for setting min innings to display."""
 import tkinter as tk
 
+
 class MinIPFrame(tk.Frame):
     def __init__(self, parent):
         super().__init__(parent, relief='groove', bd=3)
