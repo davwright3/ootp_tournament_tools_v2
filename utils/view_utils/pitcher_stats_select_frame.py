@@ -21,7 +21,6 @@ class PitcherStatsSelectFrame(tk.Frame):
                     if widget.get() != 'off':
                         self.selected_stats.append(widget.get())
 
-
         self.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=1)
@@ -50,10 +49,3 @@ class PitcherStatsSelectFrame(tk.Frame):
 
     def get_active_stats(self):
         return self.selected_stats
-
-
-
-
-
-
-

@@ -1,6 +1,7 @@
 """Custom frame for selecting minimum team games."""
 import tkinter as tk
 
+
 class MinTeamGamesFrame(tk.Frame):
     def __init__(self, parent):
         super().__init__(parent, relief='groove', bd=3)
@@ -29,5 +30,3 @@ class MinTeamGamesFrame(tk.Frame):
             min_games = 20
 
         return min_games
-
-

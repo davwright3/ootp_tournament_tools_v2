@@ -25,7 +25,8 @@ class TeamSelectFrame(tk.Frame):
             button_color=('blue', 'darkblue'),
             text_color='black',
         )
-        self.team_select_dropdown.grid(row=0, column=2, pady=(5, 0), padx=(5, 0))
+        self.team_select_dropdown.grid(
+            row=0, column=2, pady=(5, 0), padx=(5, 0))
 
         def on_enter_pressed(event):
             self.update_list()
@@ -37,14 +38,14 @@ class TeamSelectFrame(tk.Frame):
             df = data_store.get_data().copy()
 
             if self.team_search_term.get() != '':
-                df = df[df['ORG'].str.lower().str.contains(self.team_search_term.get().lower())]
+                df = df[df['ORG'].str.lower().str.contains(
+                    self.team_search_term.get().lower())]
 
             self.team_list = df['ORG'].unique().tolist()
             self.team_select_dropdown.configure(values=self.team_list)
             del df
-        except Exception as e:
+        except Exception:
             return
-
 
     def get_selected_team(self):
         return self.selected_team.get()

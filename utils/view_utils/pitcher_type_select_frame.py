@@ -1,6 +1,7 @@
 """Custom frame for selecting the type of pitcher."""
 import tkinter as tk
 
+
 class PitcherTypeSelectFrame(tk.Frame):
     def __init__(self, parent):
         super().__init__(parent, relief='groove', bd=3)
@@ -62,8 +63,6 @@ class PitcherTypeSelectFrame(tk.Frame):
             textvariable=self.pitcher_type_cutoff
         )
         self.cutoff_select_entry.grid(row=2, column=1, sticky="w")
-
-
 
     def get_pitcher_type(self):
         return self.pitcher_type_var.get()

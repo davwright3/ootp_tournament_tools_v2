@@ -1,7 +1,7 @@
 """Batter card for displaying individual batter stats."""
 import tkinter as tk
 from utils.stats_utils.set_batter_card_data import set_batter_card_data
-from utils.view_utils.player_card_bat_rattings_frame import BatterRatingFrame
+from utils.view_utils.player_card_bat_ratings_frame import BatterRatingFrame
 from utils.view_utils.baserunning_profile_frame import BaserunningProfileFrame
 from utils.view_utils.player_card_batting_stats_frame import PlayerBattingStatsFrame
 from utils.view_utils.batter_profile_frame import BatterProfileFrame

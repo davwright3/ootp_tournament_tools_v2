@@ -1,7 +1,8 @@
 import tkinter as tk
 from utils.view_utils import program_fonts as fonts
 from utils.view_utils.league_batting_stats_frame import LeagueBattingStatsFrame
-from utils.view_utils.league_pitching_stats_frame import LeaguePitchingStatsFrame
+from utils.view_utils.league_pitching_stats_frame import (
+    LeaguePitchingStatsFrame)
 from utils.data_utils.league_stats_store import league_stats_store
 
 

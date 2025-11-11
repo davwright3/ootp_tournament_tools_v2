@@ -2,6 +2,7 @@
 import tkinter as tk
 import customtkinter as ctk
 
+
 class RatingsSelectFrame(tk.Frame):
     def __init__(self, parent):
         super().__init__(parent, relief='groove', bd=3)
@@ -22,7 +23,6 @@ class RatingsSelectFrame(tk.Frame):
                     if widget.get() != 'off':
                         self.selected_ratings_list.append(widget.get())
 
-
         self.label = tk.Label(self, text='Select ratings:')
         self.label.grid(column=0, row=0, sticky='nsew', columnspan=3)
 
@@ -35,10 +35,8 @@ class RatingsSelectFrame(tk.Frame):
                 offvalue='off',
                 command=set_active_ratings,
             )
-            checkbox.grid(row=item//3 + 1, column=item%3, sticky='nsew')
+            checkbox.grid(row=item//3 + 1, column=item % 3, sticky='nsew')
             item += 1
 
     def get_active_ratings(self):
         return self.selected_ratings_list
-
-

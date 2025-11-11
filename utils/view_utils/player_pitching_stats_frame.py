@@ -1,5 +1,6 @@
 import tkinter as tk
-from utils.stats_utils.get_player_pitching_stats import get_player_pitching_stats
+from utils.stats_utils.get_player_pitching_stats import (
+    get_player_pitching_stats)
 from utils.view_utils.stat_label import StatLabel
 
 
@@ -10,7 +11,8 @@ class PlayerPitchingStatsFrame(tk.Frame):
         if team_select is None:
             stats = get_player_pitching_stats(card_id)
         else:
-            stats = get_player_pitching_stats(card_id=card_id, team_select=team_select)
+            stats = get_player_pitching_stats(
+                card_id=card_id, team_select=team_select)
 
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=1)

@@ -1,14 +1,23 @@
 import tkinter as tk
 from tkinter import ttk
 
+
 class ScrollableFrame(ttk.Frame):
     """
     Contains canvas + inner frame with vertical scrollbars.
     """
-    def __init__(self, parent, *, yscroll=True, xscroll=False, auto_width=True, **kwargs):
+    def __init__(
+            self,
+            parent,
+            *,
+            yscroll=True,
+            xscroll=False,
+            auto_width=True,
+            **kwargs):
         super().__init__(parent, **kwargs)
 
-        self.canvas = tk.Canvas(self, highlightthickness=0, borderwidth=0, bg='white')
+        self.canvas = tk.Canvas(
+            self, highlightthickness=0, borderwidth=0, bg='white')
 
         self.vsb = ttk.Scrollbar(
             self,
@@ -39,7 +48,8 @@ class ScrollableFrame(ttk.Frame):
         self.inner = ttk.Frame(self.canvas)
 
         # Put inner frame in canvas
-        self._win_id = self.canvas.create_window((0, 0), window=self.inner, anchor='nw')
+        self._win_id = self.canvas.create_window(
+            (0, 0), window=self.inner, anchor='nw')
 
         # Keep scroll region in sync
         self.inner.bind("<Configure>", self._on_inner_configure)
@@ -53,7 +63,6 @@ class ScrollableFrame(ttk.Frame):
         if yscroll:
             self._bind_mousewheel(self.canvas)
 
-
     # Helpers
     def _bind_mousewheel(self, widget):
         # Windows and Mac
@@ -63,12 +72,13 @@ class ScrollableFrame(ttk.Frame):
         widget.bind_all("<Button-5>", self._on_mousewheel)
 
     def _on_mousewheel(self, event):
-        if event.num == 4: # Linux scroll up
+        if event.num == 4:  # Linux scroll up
             self.canvas.yview_scroll(-1, 'units')
         elif event.num == 5:
             self.canvas.yview_scroll(1, 'units')
         else:
-            self.canvas.yview_scroll(int(-1 * (event.delta /120)), 'units')
+            self.canvas.yview_scroll(
+                int(-1 * (event.delta / 120)), 'units')
 
     def _on_inner_configure(self, event):
         # Update the scrollable area to the bounding box
@@ -77,4 +87,3 @@ class ScrollableFrame(ttk.Frame):
     def _on_canvas_configure(self, event):
         # Make the inner frame match canvas width
         self.canvas.itemconfigure(self._win_id, width=event.width)
-

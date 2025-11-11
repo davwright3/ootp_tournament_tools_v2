@@ -1,6 +1,7 @@
 """Frame for selecting the pitcher's arm side."""
 import tkinter as tk
 
+
 class PitcherSideSelectFrame(tk.Frame):
     def __init__(self, parent):
         super().__init__(parent, relief='groove', bd=3)

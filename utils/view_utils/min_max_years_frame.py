@@ -52,5 +52,3 @@ class MinMaxYearsFrame(tk.Frame):
             max_year_num = 2025
 
         return min_year_num, max_year_num
-
-

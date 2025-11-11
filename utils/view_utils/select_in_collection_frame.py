@@ -1,6 +1,7 @@
 """Custom frame for users to select card in collection only."""
 import tkinter as tk
 
+
 class SelectInCollectionFrame(tk.Frame):
     def __init__(self, parent):
         super().__init__(parent, relief='groove', bd=3)
@@ -20,6 +21,3 @@ class SelectInCollectionFrame(tk.Frame):
 
     def get_collection_only_value(self):
         return self.only_in_collection_var.get()
-
-
-

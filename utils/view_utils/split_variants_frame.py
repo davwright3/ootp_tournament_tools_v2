@@ -1,6 +1,7 @@
 """Custom frame for user to select whether they want variants split or not."""
 import tkinter as tk
 
+
 class SplitVariantsFrame(tk.Frame):
     def __init__(self, parent):
         super().__init__(parent, relief='groove', bd=3)

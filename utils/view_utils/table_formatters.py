@@ -1,6 +1,7 @@
 """Format batting stats for display."""
 import pandas as pd
 
+
 def fmt_leading_dot(precision=3, zero_str='.000'):
     "Format floats to leave off leading zeros."
     def _fmt(x):

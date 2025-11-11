@@ -7,7 +7,6 @@ class PlayerStatsFrameBatter(tk.Frame):
     def __init__(self, parent, title, stats):
         super().__init__(parent)
 
-
         stats_list = [
             ('PA: ', stats['ply_pa']),
             ('AVG: ', stats['ply_avg']),

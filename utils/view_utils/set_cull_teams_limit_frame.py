@@ -1,6 +1,7 @@
 """Modular frame for setting the runs per game at which teams get removed."""
 import tkinter as tk
 
+
 class SetCullTeamsFrame(tk.Frame):
     def __init__(self, parent):
         super().__init__(parent, relief='groove', bd=3)

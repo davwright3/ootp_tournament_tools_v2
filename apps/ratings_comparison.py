@@ -7,7 +7,7 @@ from utils.view_utils.footer_frame import Footer
 from utils.view_utils.dataframe_table_frame import DataFrameTableFrame
 from utils.view_utils.scrollable_frame import ScrollableFrame
 from utils.view_utils.min_max_rating_frame import MinMaxFrame
-from utils.view_utils.min_max_years import MinMaxYearsFrame
+from utils.view_utils.min_max_years_frame import MinMaxYearsFrame
 from utils.view_utils.ratings_select_frame import RatingsSelectFrame
 from utils.stats_utils.generate_ratings_df import generate_ratings_df
 from utils.view_utils.batter_rating_weights_frame import BatterWeightsFrame

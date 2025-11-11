@@ -1,8 +1,8 @@
 """Frame for displaying batter ratings on player card."""
 import tkinter as tk
-import pandas as pd
 from utils.view_utils.color_rating_code_label import ColorRatingLabel
 from utils.view_utils import program_fonts as fonts
+
 
 class BatterRatingFrame(tk.Frame):
     def __init__(self, parent, df=None):
@@ -26,7 +26,8 @@ class BatterRatingFrame(tk.Frame):
         self.rowconfigure(8, weight=1)
 
         # Set outer labels
-        self.label = tk.Label(self, text='Batter Ratings', font=fonts.frame_title_font)
+        self.label = tk.Label(
+            self, text='Batter Ratings', font=fonts.frame_title_font)
         self.label.grid(column=0, row=1, columnspan=4)
 
         self.overall_label = tk.Label(self, text='OA', font=fonts.basic_font)
@@ -41,7 +42,8 @@ class BatterRatingFrame(tk.Frame):
         self.babip_label = tk.Label(self, text='BABIP', font=fonts.basic_font)
         self.babip_label.grid(column=0, row=3)
 
-        self.avoid_k_label = tk.Label(self, text='AvoidK', font=fonts.basic_font)
+        self.avoid_k_label = tk.Label(
+            self, text='AvoidK', font=fonts.basic_font)
         self.avoid_k_label.grid(column=0, row=4)
 
         self.gap_label = tk.Label(self, text='Gap', font=fonts.basic_font)
