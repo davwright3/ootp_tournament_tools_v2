@@ -7,26 +7,31 @@ which can be found here: [GithubLink](https://github.com/davwright3/au_ootp_tour
 
 Please visit this link if you have any feature requests: [Feature Requests](https://docs.google.com/forms/d/1I01oUCsnH41OVFDkNjZeQurVAMr5zBd8103BPOorBUw/edit)
 
-## Current Version 0.3.3
+## Current Version 0.4.0
 
 ### Updated: 
 
-22 Oct 2025
+14 Nov 2025
 
 New Features:
 
-- Team Statistics App 🔢
+- Player Cards are Live
 
-  - Display team wins, losses, winning percentages
-  - Select minimum number of games played (default: 20)
-  - All stats that are in the batter and pitcher stats are available to view
+  - Cards contain player ratings, player stats for all teams, player stats for selected team, and league stats
+  - In order to facilitate the player stats for the selected team, a team selection dropdown has been added to the basic stats app home page
 
-- Ratings Comparison Tool ➕➖
+- New Team Cards available
 
-  - View batting, pitching, defense, baserunning ratings and compare across players
-  - View overall ratings, by side, and splits
-  - Select year and value ranges, as well as card types
-  - Select weight for each rating (user determined, default: 1x)
+  - Double-clicking on a team in the team stats app will open a new card with the players who have appeared for that team
+  - Player cards are also clickable from this page and will open in a new window
+
+- A few new stats added to the player stats that are available
+
+- Updated resource path checking, which should fix pathing issue for the logos and new files on MACos.  (Please inform me if this is not the case, as I cannot test on Mac.)
+
+- For developers:
+
+  - Linting is complete for all base scripts using Flake8 and updated to PEP 8.  This should make it easier for developers to make their updates from the source code.
 
 
 
@@ -211,3 +216,20 @@ New Features:
   - New logs on various pages provide improved communication to the user
   - Provides instant feedback to the user, without having to override other data labels
   - Color coded by message tag
+
+22 Oct 2025
+
+New Features:
+
+- Team Statistics App 🔢
+
+  - Display team wins, losses, winning percentages
+  - Select minimum number of games played (default: 20)
+  - All stats that are in the batter and pitcher stats are available to view
+
+- Ratings Comparison Tool ➕➖
+
+  - View batting, pitching, defense, baserunning ratings and compare across players
+  - View overall ratings, by side, and splits
+  - Select year and value ranges, as well as card types
+  - Select weight for each rating (user determined, default: 1x)
