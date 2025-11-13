@@ -23,7 +23,11 @@ def get_resource_path(relative_path):
      """
     if getattr(sys, 'frozen', False):
         # Running in PyInstaller bundle
-        base_path = sys._MEIPASS
+        # On Mac the _MEIPASS may not appear as expected
+        try:
+            base_path = sys._MEIPASS
+        except AttributeError:
+            base_path = os.path.dirname(sys.executable)
     else:
         # Running in development mode.
         base_path = os.path.abspath(
