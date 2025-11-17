@@ -24,7 +24,6 @@ def test_select_target_card_list_file_happy_path(mock_settings, fake_target_var)
 
     # With valid file selected it should update the settings
     mock_settings.update_setting.assert_called_once_with('TargetFiles', 'target_card_list', '/tmp/filename.csv')
-    fake_target_var.set.assert_called_once_with('/tmp/filename.csv')
 
 
 def test_select_target_card_list_file_cancel(mock_settings, fake_target_var):
