@@ -14,6 +14,7 @@ from utils.log_utils.readme_messaging import log_readme_section
 from utils.config_utils.get_base_resource_path import (
     get_base_resource_path
 )
+from utils.config_utils.select_target_card_list_file import select_target_file
 from utils.view_utils.header_frame import Header
 from utils.view_utils.footer_frame import Footer
 from utils.view_utils.message_panel import MessagePanel
@@ -219,6 +220,7 @@ class MainApp(tk.Tk):
         self.message_panel.grid(row=0, column=0, sticky="nsew")
 
         def on_select_card_file():
+            select_target_file()
             self.card_list_target_path = (
                 self.settings.get(
                     'TargetFiles',

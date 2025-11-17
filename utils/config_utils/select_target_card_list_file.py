@@ -4,14 +4,14 @@ import os
 from utils.config_utils import load_save_settings as settings_module
 
 
-def select_target_file(target_var):
+def select_target_file():
     """
     Select the target card list file, and save it to the settings file.
     This module allows the user to set the target of
     their OOTP Baseball Perfect Team card list dump from the card shop in game.
     This is a requirement for the statistics portion of the program to
     function.
-    :param target_var: The target card list file name for display, tk.StringVar
+    # :param target_var: The target card list file name for display, tk.StringVar
     :return: none
     """
     path = filedialog.askopenfilename(
@@ -29,5 +29,5 @@ def select_target_file(target_var):
             'target_card_list',
             path
         )
-        target_var.set(path)
+        # target_var.set(path)
         return path
