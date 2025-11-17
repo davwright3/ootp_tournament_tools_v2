@@ -227,6 +227,7 @@ class MainApp(tk.Tk):
                     'target_card_list',
                     fallback='')
             )
+            self.target_card_list_var.set(self.card_list_target_path)
             check_card_list_valid()
 
         # Settings frame content
