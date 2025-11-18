@@ -16,6 +16,7 @@ from apps.batting_stats import BattingStatsApp
 from apps.pitching_stats import PitchStatsApp
 from apps.team_stats import TeamStatsApp
 from apps.ratings_comparison import RatingsComparisonApp
+from apps.data_visualization import DataVisualizationApp
 
 
 
@@ -154,6 +155,13 @@ class BasicStatsApp(tk.Toplevel):
         )
         self.ratings_comparison_app_select_button.grid(row=1, column=0, sticky="nsew")
 
+        self.data_visualization_app_select_button = tk.Button(
+            self.app_select_frame,
+            text="Data Visualization",
+            command=self.open_data_visualization
+        )
+        self.data_visualization_app_select_button.grid(row=1, column=1, sticky="nsew")
+
         self.message_panel = MessagePanel(self.main_frame, height=12)
         self.message_panel.grid(row=0, column=1, sticky="nsew")
         attach_panel(self.message_panel, 'apps.basic_stats_app')
@@ -175,6 +183,10 @@ class BasicStatsApp(tk.Toplevel):
     def open_team_stats(self):
         team_select = self.team_select_entry.get_selected_team()
         TeamStatsApp(team_select=team_select)
+
+    def open_data_visualization(self):
+        team_select = self.team_select_entry.get_selected_team()
+        DataVisualizationApp(selected_team=team_select)
 
 def open_ratings_comparison():
     RatingsComparisonApp()
