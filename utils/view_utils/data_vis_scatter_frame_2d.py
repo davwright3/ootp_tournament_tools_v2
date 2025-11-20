@@ -10,13 +10,15 @@ from tkinter import messagebox
 
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.colors as mcol
 from matplotlib.figure import Figure
+import matplotlib.patches as mpatches
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 import numpy as np
 
 
 
-class DataVisScatterFrame(tk.Frame):
+class DataVisScatterFrame2d(tk.Frame):
     def __init__(self, parent, df=None):
         super().__init__(parent)
 
@@ -28,11 +30,54 @@ class DataVisScatterFrame(tk.Frame):
             y = df.iloc[:, 1]
 
             ax = fig.add_subplot(111)
-            ax.set_title('BABIP')
-            ax.set_xlabel('BABIP')
-            ax.set_ylabel('BABIP_calc')
+            ax.set_title(df.columns[1])
+            ax.set_xlabel(df.columns[0])
+            ax.set_ylabel(df.columns[1])
 
-            scatter = ax.scatter(x, y, s=40, picker=True)
+            mask = ~np.isnan(x) & ~np.isnan(y)
+            x_all = x[mask]
+            y_all = y[mask]
+
+            degree = 3
+            if len(x_all) >= 2:
+                coeffs = np.polyfit(x_all, y_all, deg=degree)
+
+                poly_fn = np.poly1d(coeffs)
+
+                x_line = np.linspace(x_all.min(), x_all.max(), 300)
+                y_line = poly_fn(x_line)
+
+                ax.plot(
+                    x_line,
+                    y_line,
+                    linewidth=2,
+                    color='black',
+                    linestyle='--',
+                    label='Overall Trend'
+                )
+
+
+            if 'BattedBallType' in df.columns:
+                col_idx = df.columns.get_loc('BattedBallType')
+                categories = df.iloc[:, col_idx]
+                custom_cmap = mcol.ListedColormap(['blue', 'yellow', 'red', 'green'])
+                scatter = ax.scatter(x, y, s=40, c=categories, cmap=custom_cmap, picker=True)
+
+                label_map = {
+                    0: 'Normal',
+                    1: 'GB',
+                    2: ' FB',
+                    3: 'LD'
+                }
+
+                handles = [
+                    mpatches.Patch(color=custom_cmap(i), label=label_map.get(i, str(i)))
+                    for i in sorted(label_map.keys())
+                    if(categories -- i).any()
+                ]
+                ax.legend(handles=handles, title='BBT', loc='upper left')
+            else:
+                scatter = ax.scatter(x, y, s=40, picker=True)
 
             annot = ax.annotate(
                 "",
