@@ -2,6 +2,7 @@
 import tkinter as tk
 import os
 import logging
+import sys
 from logging.handlers import MemoryHandler
 from utils.config_utils.load_save_settings import (
     settings as loaded_settings
@@ -49,6 +50,13 @@ class MainApp(tk.Tk):
         self.geometry("1920x1080")
         self.minsize(400, 300)
         self.configure(bg="lightgray")
+
+        try:
+            import utils.data_utils.mlb_season_stats_store as mlb_mod
+            print("Imported mlb_season_stats_store")
+        except:
+            print("Failed to import mlb_season_stats_store")
+
 
         # Variables for page
         self.target_card_list_var = tk.StringVar(

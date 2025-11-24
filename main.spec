@@ -1,12 +1,16 @@
 # -*- mode: python ; coding: utf-8 -*-
-
+from PyInstaller.utils.hooks import collect_submodules
+hidden = collect_submodules('au_ootp_tournament_utilities_v2')
 
 a = Analysis(
     ['main.py'],
     pathex=['.'],
     binaries=[],
-    datas=[('image_assets', 'au_ootp_tournament_utilities_v2\\image_assets'), ('settings_default.ini', '.'), ('README.md', '.')],
-    hiddenimports=['apps.pitcher_card'],
+    datas=[
+       ('image_assets', 'au_ootp_tournament_utilities_v2\\image_assets'),
+       ('settings_default.ini', '.'),
+       ('README.md', '.')],
+    hiddenimports=hidden,
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],

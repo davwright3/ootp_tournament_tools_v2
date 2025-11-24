@@ -17,6 +17,7 @@ from utils.view_utils.baserunning_weights_frame import BaserunningWeightFrame
 from utils.view_utils.position_select_frame import PositionSelectFrame
 from utils.view_utils.general_info_select_frame import GeneralInfoFrame
 from utils.view_utils.select_in_collection_frame import SelectInCollectionFrame
+from utils.view_utils.run_env_frame import RunEnvironmentFrame
 
 class RatingsComparisonApp(tk.Toplevel):
     def __init__(self):
@@ -46,6 +47,9 @@ class RatingsComparisonApp(tk.Toplevel):
 
         self.dataview_frame = DataFrameTableFrame(self.main_frame)
         self.dataview_frame.grid(column=0, row=0, sticky='nsew')
+
+        self.run_env_frame = RunEnvironmentFrame(self.main_frame)
+        self.run_env_frame.grid(column=0, row=1, sticky='nsew')
 
         self.options_frame = tk.Frame(self.main_frame)
         self.options_frame.grid(column=1, row=0, sticky='nsew')
