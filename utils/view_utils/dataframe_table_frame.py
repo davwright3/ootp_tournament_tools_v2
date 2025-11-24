@@ -1,4 +1,5 @@
 from tkinter import ttk
+from tkinter import font as tkfont
 from typing import Dict, Callable, List, Optional
 import pandas as pd
 import logging
@@ -65,6 +66,13 @@ class DataFrameTableFrame(ttk.Frame):
 
         # Setting up styles
         style = ttk.Style(self)
+        # ---------- Set Treeview Font Size ----------
+        tree_font = tkfont.Font(family="Segoe UI",
+                                size=10)  # increase size here
+        header_font = tkfont.Font(family="Segoe UI", size=11, weight="bold")
+
+        style.configure('Treeview', font=tree_font, rowheight=20)
+        style.configure('Treeview.Heading', font=header_font)
 
         style.configure('Treeview', rowheight=22)
         self.tree.tag_configure('odd', background='#f7f7f7')
