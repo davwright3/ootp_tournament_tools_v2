@@ -66,7 +66,6 @@ def get_run_environment(selected_year=2010):
     if pd.notna(df_2010.iloc[0]['SBPct']) and df_2010.iloc[0]['SBPct'] != 0:
         sb_pct_ratio = (df_selected_year.iloc[0]['SBPct'] / df_2010.iloc[0]['SBPct']).round(3)
 
-
     return_df = pd.DataFrame([
         {'BABIP': babip_ratio,
          'HRrate': hr_ratio,
@@ -75,8 +74,5 @@ def get_run_environment(selected_year=2010):
          'BBrate': bb_ratio,
          'SBrate': sb_ratio,
          'SBPct': sb_pct_ratio,}])
-    print(return_df)
-
-
 
     return return_df

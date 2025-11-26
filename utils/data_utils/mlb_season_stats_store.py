@@ -15,7 +15,6 @@ class MLBSeasonStatsStore:
 
     def __new__(cls):
         if cls._instance is None:
-            print("Creating new mlb stats instance.")
             cls._instance = super(MLBSeasonStatsStore, cls).__new__(cls)
             cls._instance._load_stats_dataframe()
         return cls._instance
