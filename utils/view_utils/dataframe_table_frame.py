@@ -71,10 +71,10 @@ class DataFrameTableFrame(ttk.Frame):
                                 size=10)  # increase size here
         header_font = tkfont.Font(family="Segoe UI", size=11, weight="bold")
 
-        style.configure('Treeview', font=tree_font, rowheight=20)
+        style.configure('Treeview', font=tree_font, padding=(0, 4))
         style.configure('Treeview.Heading', font=header_font)
 
-        style.configure('Treeview', rowheight=22)
+        style.configure('Treeview', rowheight=28)
         self.tree.tag_configure('odd', background='#f7f7f7')
         self.tree.tag_configure('even', background='#ffffff')
         self.tree.tag_configure('selected_team', background='#AFE1AF')
@@ -85,7 +85,11 @@ class DataFrameTableFrame(ttk.Frame):
         for col in self._tree_columns():
             self.tree.heading(
                 col, text=col, command=lambda c=col: self._on_heading_click(c))
-            self.tree.column(col, width=120, anchor='w')
+            if col == 'Title':
+                self.tree.column(col, width=700, minwidth=200, stretch=True, anchor='w')
+            else:
+                self.tree.column(col, width=50, minwidth=30, stretch=False, anchor='w')
+
 
         self._refresh_all()
 
@@ -221,7 +225,8 @@ class DataFrameTableFrame(ttk.Frame):
         """Rough autosize based on header and sample rows."""
         cols = self._tree_columns()
         # Minimums
-        min_w = {c: 60 for c in cols}
+        min_w = {c: 50 for c in cols}
+        min_w['Title'] = 700
         for c in cols:
             # Header width hint
             min_w[c] = max(min_w[c], int(len(c) * 8.0) + 24)

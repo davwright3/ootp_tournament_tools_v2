@@ -6,6 +6,7 @@ from utils.view_utils.data_vis_scatter_frame_2d import DataVisScatterFrame2d
 from utils.view_utils.data_vis_scatter_frame_3d import DataVisualScatterFrame3D
 from utils.data_vis_utils.generate_babip_vis_df import generate_babip_vis_df
 from utils.data_vis_utils.generate_hr_fb_vis_df import generate_hr_fb_vis
+from utils.data_vis_utils.generate_bip_rate_df import generate_bip_rate_df
 
 
 class DataVisualizationApp(tk.Toplevel):
@@ -43,5 +44,6 @@ class DataVisualizationApp(tk.Toplevel):
         self.hr_scatter_frame = DataVisScatterFrame2d(self.main_frame, df=hr_df)
         self.hr_scatter_frame.grid(row=0, column=1, sticky='nsew')
 
-        self.bip_scatter_frame = DataVisualScatterFrame3D(self.main_frame, df=babip_df)
-        self.bip_scatter_frame.grid(row=0, column=2, sticky='nsew')
+        # bip_df = generate_bip_rate_df()
+        # self.bip_scatter_frame = DataVisualScatterFrame3D(self.main_frame, df=bip_df)
+        # self.bip_scatter_frame.grid(row=0, column=2, sticky='nsew')
