@@ -153,5 +153,3 @@ class DataVisScatterFrame2d(tk.Frame):
             canvas.mpl_connect('pick_event', on_pick)
 
         plot()
-
-

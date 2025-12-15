@@ -18,6 +18,7 @@ from utils.view_utils.position_select_frame import PositionSelectFrame
 from utils.view_utils.general_info_select_frame import GeneralInfoFrame
 from utils.view_utils.select_in_collection_frame import SelectInCollectionFrame
 from utils.view_utils.run_env_frame import RunEnvironmentFrame
+from utils.view_utils.search_frame import SearchFrame
 
 class RatingsComparisonApp(tk.Toplevel):
     def __init__(self):
@@ -79,6 +80,10 @@ class RatingsComparisonApp(tk.Toplevel):
         inner_frame = self.option_selections_frame.inner
 
         row = 0
+        self.search_frame = SearchFrame(inner_frame)
+        self.search_frame.grid(column=0, row=row, sticky='nsew')
+        row += 1
+
         self.min_max_select = MinMaxFrame(inner_frame)
         self.min_max_select.grid(column=0, row=row, sticky='nsew')
         row += 1
@@ -138,6 +143,10 @@ class RatingsComparisonApp(tk.Toplevel):
         selected_position = self.position_select_frame.get_position_select()
         selected_in_collection_only = self.in_collection_frame.get_collection_only_value()
         selected_card_types = self.card_type_select_frame.get_selected_card_types()
+        if self.search_frame.get_search_term() != '':
+            selected_search_term = self.search_frame.get_search_term()
+        else:
+            selected_search_term = None
         ratings_df = generate_ratings_df(
             min_year=selected_min_year,
             max_year=selected_max_year,
@@ -152,6 +161,7 @@ class RatingsComparisonApp(tk.Toplevel):
             selected_position=selected_position,
             collection_only=selected_in_collection_only,
             selected_card_types=selected_card_types,
+            search_term=selected_search_term
         )
         self.dataview_frame.set_dataframe(ratings_df)
         del ratings_df

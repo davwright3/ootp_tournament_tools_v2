@@ -9,7 +9,7 @@ def generate_babip_vis_df():
 
     data = data_store.get_data()[['CID', 'PA', 'AB', 'H', 'HR', 'SO', 'SF']].copy()
     data = data.groupby(['CID']).sum()
-    data = data[data['PA'] >= 500]
+    data = data[data['PA'] >= 1000]
     print(f'BABIP data length: {len(data)}')
 
     merge_df = pd.merge(cards, data, on='CID', how='right').reset_index(drop=True)

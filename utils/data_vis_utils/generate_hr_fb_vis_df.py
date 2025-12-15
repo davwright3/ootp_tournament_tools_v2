@@ -8,7 +8,7 @@ def generate_hr_fb_vis():
     cards = cards.rename(columns={'Card ID': 'CID', '//Card Title': 'Title', 'Power': 'POW', 'Power vL': 'vL', 'Power vR': 'vR'})
     data = data_store.get_data()[['CID', 'PA', 'HR', 'SO', 'BB', 'IBB', 'HP']].copy()
     data = data.groupby(['CID']).sum()
-    data = data[data['PA'] > 500]
+    data = data[data['PA'] > 1000]
     print(f'HR data length: {len(data)}')
 
     data['BIP'] = (data['PA'] - data['SO'] - data['BB'] - data['HR'] - data['HP'] - data['IBB'])

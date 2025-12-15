@@ -17,12 +17,14 @@ def generate_ratings_df(
         selected_position=None,
         collection_only=False,
         selected_card_types=None,
+        search_term = None
 ):
     return_columns = ['CID', 'Title', 'Val']
-    if selected_ratings_list:
-        return_columns.extend(selected_ratings_list)
     if selected_general_list:
         return_columns.extend(selected_general_list)
+    if selected_ratings_list:
+        return_columns.extend(selected_ratings_list)
+
 
     card_df = card_list_store.get_card_list().copy()
     card_df = card_df.rename(
@@ -46,6 +48,8 @@ def generate_ratings_df(
                        'tier', 'owned', 'L10', 'VL10', 'Pitcher Role', 'date']]
     if selected_card_types:
         card_df = card_df[card_df['Type'].isin(selected_card_types)]
+    if search_term:
+        card_df = card_df[card_df['Title'].str.contains(search_term, case=False, na=False)]
 
     card_df['B'] = card_df['Bats'].apply(
         lambda x: 'R' if x == 1 else 'L' if x == 2 else 'S')

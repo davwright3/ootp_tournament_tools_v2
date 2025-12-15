@@ -1,5 +1,6 @@
 import tkinter as tk
 from utils.stats_utils.get_run_environment import get_run_environment
+from utils.view_utils import program_fonts as fonts
 
 
 class RunEnvironmentFrame(tk.Frame):
@@ -49,59 +50,59 @@ class RunEnvironmentFrame(tk.Frame):
         self.label.grid(column=column, row=0, sticky='nsew')
         column += 1
 
-        self.babip_label = tk.Label(self, text='BABIP: ')
+        self.babip_label = tk.Label(self, text='BABIP: ', font=fonts.basic_font)
         self.babip_label.grid(column=column, row=0, sticky='nsew')
         column += 1
 
-        self.babip_stat_label = tk.Label(self, textvariable=self.babip_var)
+        self.babip_stat_label = tk.Label(self, textvariable=self.babip_var, font=fonts.basic_font)
         self.babip_stat_label.grid(column=column, row=0, sticky='nsew')
         column += 1
 
-        self.hrrate_label = tk.Label(self, text='HRrate: ')
+        self.hrrate_label = tk.Label(self, text='HRrate: ', font=fonts.basic_font)
         self.hrrate_label.grid(column=column, row=0, sticky='nsew')
         column += 1
 
-        self.hrrate_stat_label = tk.Label(self, textvariable=self.hrrate_var)
+        self.hrrate_stat_label = tk.Label(self, textvariable=self.hrrate_var, font=fonts.basic_font)
         self.hrrate_stat_label.grid(column=column, row=0, sticky='nsew')
         column += 1
 
-        self.xbhrate_label = tk.Label(self, text='XBHrate: ')
+        self.xbhrate_label = tk.Label(self, text='XBHrate: ', font=fonts.basic_font)
         self.xbhrate_label.grid(column=column, row=0, sticky='nsew')
         column += 1
 
-        self.xbhrate_stat_label = tk.Label(self, textvariable=self.xbhrate_var)
+        self.xbhrate_stat_label = tk.Label(self, textvariable=self.xbhrate_var, font=fonts.basic_font)
         self.xbhrate_stat_label.grid(column=column, row=0, sticky='nsew')
         column += 1
 
-        self.krate_label = tk.Label(self, text='Krate: ')
+        self.krate_label = tk.Label(self, text='Krate: ', font=fonts.basic_font)
         self.krate_label.grid(column=column, row=0, sticky='nsew')
         column += 1
 
-        self.krate_stat_label = tk.Label(self, textvariable=self.krate_var)
+        self.krate_stat_label = tk.Label(self, textvariable=self.krate_var, font=fonts.basic_font)
         self.krate_stat_label.grid(column=column, row=0, sticky='nsew')
         column += 1
 
-        self.bbrate_label = tk.Label(self, text='BBRate: ')
+        self.bbrate_label = tk.Label(self, text='BBRate: ', font=fonts.basic_font)
         self.bbrate_label.grid(column=column, row=0, sticky='nsew')
         column += 1
 
-        self.bbrate_stat_label = tk.Label(self, textvariable=self.bbrate_var)
+        self.bbrate_stat_label = tk.Label(self, textvariable=self.bbrate_var, font=fonts.basic_font)
         self.bbrate_stat_label.grid(column=column, row=0, sticky='nsew')
         column += 1
 
-        self.sbrate_label = tk.Label(self, text='SBRate: ')
+        self.sbrate_label = tk.Label(self, text='SBRate: ', font=fonts.basic_font)
         self.sbrate_label.grid(column=column, row=0, sticky='nsew')
         column += 1
 
-        self.sbrate_stat_label = tk.Label(self, textvariable=self.sbrate_var)
+        self.sbrate_stat_label = tk.Label(self, textvariable=self.sbrate_var, font=fonts.basic_font)
         self.sbrate_stat_label.grid(column=column, row=0, sticky='nsew')
         column += 1
 
-        self.sbpctrate_label = tk.Label(self, text='SBPct: ')
+        self.sbpctrate_label = tk.Label(self, text='SBPct: ', font=fonts.basic_font)
         self.sbpctrate_label.grid(column=column, row=0, sticky='nsew')
         column += 1
 
-        self.sbpctrate_stat_label = tk.Label(self, textvariable=self.sbpctrate_var)
+        self.sbpctrate_stat_label = tk.Label(self, textvariable=self.sbpctrate_var, font=fonts.basic_font)
         self.sbpctrate_stat_label.grid(column=column, row=0, sticky='nsew')
         column += 1
 

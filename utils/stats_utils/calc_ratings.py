@@ -22,22 +22,22 @@ def calc_ratings(
                        (df['Eye'] * batter_weights['weight_eye']) +
                        (df['Avoid Ks'] * batter_weights['weight_avoidk']) +
                        (df['BABIP'] * batter_weights['weight_babip'])
-                       )
+                       ).round(2)
         df['BatvL'] = ((df['Gap vL'] * batter_weights['weight_gap_vL']) +
                        (df['Power vL'] * batter_weights['weight_power_vL']) +
                        (df['Eye vL'] * batter_weights['weight_eye_vL']) +
                        (df['Avoid K vL'] *
                         batter_weights['weight_avoidk_vL']) +
                        (df['BABIP vL'] * batter_weights['weight_babip_vL'])
-                       )
+                       ).round(2)
         df['BatvR'] = ((df['Gap vR'] * batter_weights['weight_gap_vR']) +
                        (df['Power vR'] * batter_weights['weight_power_vR']) +
                        (df['Eye vR'] * batter_weights['weight_eye_vR']) +
                        (df['Avoid K vR'] *
                         batter_weights['weight_avoidk_vR']) +
                        (df['BABIP vR'] * batter_weights['weight_babip_vR'])
-                       )
-    df['BatSplit'] = df['BatvL'] - df['BatvR']
+                       ).round(2)
+    df['BatSplit'] = (df['BatvL'] - df['BatvR']).round(2)
 
     # Pitcher ratings
 
@@ -51,21 +51,22 @@ def calc_ratings(
         df['PitOA'] = ((df['Stuff'] * pitcher_weights['weight_stuff']) +
                        (df['pHR'] * pitcher_weights['weight_phr']) +
                        (df['pBABIP'] * pitcher_weights['weight_pbabip']) +
-                       (df['Control'] * pitcher_weights['weight_control']))
+                       (df['Control'] * pitcher_weights['weight_control'])
+                       ).round(2)
         df['PitvL'] = ((df['Stuff vL'] * pitcher_weights['weight_stuff_vL']) +
                        (df['pHR vL'] * pitcher_weights['weight_phr_vL']) +
                        (df['pBABIP vL'] *
                         pitcher_weights['weight_pbabip_vL']) +
                        (df['Control vL'] *
-                        pitcher_weights['weight_control_vL']))
+                        pitcher_weights['weight_control_vL'])).round(2)
         df['PitvR'] = ((df['Stuff vR'] * pitcher_weights['weight_stuff_vR']) +
                        (df['pHR vR'] * pitcher_weights['weight_phr_vR']) +
                        (df['pBABIP vR'] *
                         pitcher_weights['weight_pbabip_vR']) +
                        (df['Control vR'] *
-                        pitcher_weights['weight_control_vR']))
+                        pitcher_weights['weight_control_vR'])).round(2)
 
-    df['PitSplit'] = df['PitvL'] - df['PitvR']
+    df['PitSplit'] = (df['PitvL'] - df['PitvR']).round(2)
 
     # Fielder ratings
     if defense_weights is None:
@@ -81,7 +82,7 @@ def calc_ratings(
                             defense_weights['weight_catch_frame']) +
                            (df['Catcher Arm'] *
                             defense_weights['weight_catch_arm'])
-                           )
+                           ).round(2)
         df['IF Def'] = ((df['Infield Range'] *
                          defense_weights['weight_infield_range']) +
                         (df['Infield Error'] *
@@ -89,13 +90,13 @@ def calc_ratings(
                         (df['Infield Arm'] *
                          defense_weights['weight_infield_arm']) +
                         (df['DP'] * defense_weights['weight_turn_dp'])
-                        )
+                        ).round(2)
         df['OF Def'] = ((df['OF Range'] *
                          defense_weights['weight_outfield_range']) +
                         (df['OF Error'] *
                          defense_weights['weight_outfield_error']) +
                         (df['OF Arm'] * defense_weights['weight_outfield_arm'])
-                        )
+                        ).round(2)
 
     # Baserunning ratings
     if baserunning_weights is None:
@@ -109,6 +110,6 @@ def calc_ratings(
                       baserunning_weights['weight_steal_ability']) +
                      (df['Baserunning'] *
                       baserunning_weights['weight_baserunning'])
-                     )
+                     ).round(2)
 
     return df
