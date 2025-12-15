@@ -50,7 +50,7 @@ def process_files(target_file_path: str, raw_dir: str):
         logger.error('Target file must end with .csv.')
         return
     else:
-        target_dataframe = pd.read_csv(target_file_path)
+        target_dataframe = pd.read_csv(target_file_path, low_memory=False)
         logger.info('Target file read into Dataframe.')
 
     # Check if the raw_dir is a valid directory.
@@ -64,7 +64,7 @@ def process_files(target_file_path: str, raw_dir: str):
 
     # Create the list for tracking whether the file has already been added.
     existing_files = set(target_dataframe['Trny'].unique())
-
+    existing_files = set(str(x) for x in existing_files)
     num_files_added = 0
     for file_path in glob.glob(os.path.join(raw_data_dir, '*.csv')):
         file_name = os.path.splitext(os.path.basename(file_path))[0]

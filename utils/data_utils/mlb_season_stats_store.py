@@ -4,7 +4,6 @@ Singleton for storing MLB season stats for run environment settings.
 import pandas as pd
 import os
 from utils.config_utils.get_resource_path import get_resource_path
-print("IMPORT: mlb_stats_store module loaded")
 
 class MLBSeasonStatsStore:
     """

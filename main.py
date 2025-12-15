@@ -51,13 +51,6 @@ class MainApp(tk.Tk):
         self.minsize(400, 300)
         self.configure(bg="lightgray")
 
-        try:
-            import utils.data_utils.mlb_season_stats_store as mlb_mod
-            print("Imported mlb_season_stats_store")
-        except:
-            print("Failed to import mlb_season_stats_store")
-
-
         # Variables for page
         self.target_card_list_var = tk.StringVar(
             value=get_setting('TargetFiles', 'target_card_list')
@@ -403,6 +396,12 @@ class MainApp(tk.Tk):
 
         readme_file = get_base_resource_path("README.md")
         log_readme_section(readme_file, 'Updated:')
+
+        try:
+            import utils.data_utils.mlb_season_stats_store as mlb_mod
+            logging.info("Loaded MLB historical data as season stats.")
+        except:
+            logging.info("Failed to import mlb_season_stats_store")
 
 
 def open_file_processing_app():
