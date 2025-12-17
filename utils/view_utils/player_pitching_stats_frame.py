@@ -5,11 +5,13 @@ from utils.view_utils.stat_label import StatLabel
 
 
 class PlayerPitchingStatsFrame(tk.Frame):
-    def __init__(self, parent, label='', card_id=None, team_select=None):
+    def __init__(self, parent, label='', card_id=None, team_select=None, cutoff_days=None):
         super().__init__(parent)
 
-        if team_select is None:
+        if team_select is None and cutoff_days is None:
             stats = get_player_pitching_stats(card_id)
+        elif team_select is None:
+            stats = get_player_pitching_stats(card_id, cutoff_days=cutoff_days)
         else:
             stats = get_player_pitching_stats(
                 card_id=card_id, team_select=team_select)

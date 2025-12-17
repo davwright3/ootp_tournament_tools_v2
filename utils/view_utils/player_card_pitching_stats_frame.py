@@ -19,7 +19,12 @@ class PlayerCardPitchingStatsFrame(tk.Frame):
             PlayerPitchingStatsFrame(self, card_id=card_id))
         self.player_pitching_stats_all_frame.grid(row=1, column=0)
 
+        self.player_pitching_stats_recent_frame = (
+            PlayerPitchingStatsFrame(self, card_id=card_id, cutoff_days=7)
+        )
+        self.player_pitching_stats_recent_frame.grid(row=1, column=1)
+
         self.player_pitching_stats_team_frame = (
             PlayerPitchingStatsFrame(
                 self, card_id=card_id, team_select=team_select))
-        self.player_pitching_stats_team_frame.grid(row=1, column=1)
+        self.player_pitching_stats_team_frame.grid(row=1, column=2)
