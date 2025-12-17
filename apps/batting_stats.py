@@ -12,6 +12,7 @@ from utils.view_utils.header_frame import Header
 from utils.view_utils.footer_frame import Footer
 from utils.stats_utils.generate_basic_batting_stats_df import generate_basic_batting_stats_df
 from utils.view_utils.dataframe_table_frame import DataFrameTableFrame
+from utils.data_utils.data_store import data_store
 from utils.view_utils.table_formatters import fmt_leading_dot
 from utils.view_utils.min_max_rating_frame import MinMaxFrame
 from utils.view_utils.scrollable_frame import ScrollableFrame
@@ -26,6 +27,7 @@ from utils.view_utils.team_only_checkbox_frame import TeamOnlyCheckboxFrame
 from utils.view_utils.search_frame import SearchFrame
 from utils.view_utils.split_variants_frame import SplitVariantsFrame
 from apps.batter_card import BatterCard
+from utils.view_utils.data_cutoff_by_days_frame import DataCutoffByDaysFrame
 from utils.view_utils.team_select_frame import TeamSelectFrame
 
 
@@ -97,6 +99,14 @@ class BattingStatsApp(tk.Toplevel):
         inner_frame.rowconfigure(3, weight=1)
 
         item = 0
+        print(data_store.get_tournament_type())
+        if data_store.get_tournament_type() == 'daily':
+            self.days_cutoff_frame = DataCutoffByDaysFrame(
+                inner_frame,
+            )
+            self.days_cutoff_frame.grid(row=item, column=0, sticky='nsew')
+            item += 1
+
         self.search_frame = SearchFrame(inner_frame)
         self.search_frame.grid(row=item, column=0, sticky='nsew')
         item += 1
@@ -178,6 +188,11 @@ class BattingStatsApp(tk.Toplevel):
         cull_teams_limit = self.cull_teams_limit_frame.get_cull_teams_limit()
         search_term = self.search_frame.get_search_term()
         split_variants_select = self.split_variants_frame.get_variant_split()
+        try:
+            num_cutoff_days = int(self.days_cutoff_frame.get_cutoff_days())
+        except ValueError:
+            num_cutoff_days = None
+
         if self.selected_team_only_frame.get_selected_team_bool():
             selected_team = self.selected_team
         else:
@@ -195,6 +210,7 @@ class BattingStatsApp(tk.Toplevel):
             selected_search_term=search_term,
             variant_split_select=split_variants_select,
             team_select=selected_team,
+            cutoff_days=num_cutoff_days
         )
         self.dataframe_frame.set_dataframe(stats_df)
 

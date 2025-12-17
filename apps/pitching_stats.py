@@ -20,6 +20,7 @@ from utils.view_utils.set_cull_teams_limit_frame import SetCullTeamsFrame
 from utils.view_utils.search_frame import SearchFrame
 from utils.view_utils.team_only_checkbox_frame import TeamOnlyCheckboxFrame
 from utils.view_utils.split_variants_frame import SplitVariantsFrame
+from utils.view_utils.data_cutoff_by_days_frame import DataCutoffByDaysFrame
 
 
 class PitchStatsApp(tk.Toplevel):
@@ -119,6 +120,13 @@ class PitchStatsApp(tk.Toplevel):
         inner_frame.rowconfigure(5, weight=0)
 
         row = 0
+        if data_store.get_tournament_type() == 'daily':
+            self.date_cutoff_frame = DataCutoffByDaysFrame(
+                inner_frame,
+            )
+            self.date_cutoff_frame.grid(row=row, column=0, sticky="nsew")
+            row += 1
+
         self.search_frame = SearchFrame(
             inner_frame,
         )
@@ -199,6 +207,7 @@ class PitchStatsApp(tk.Toplevel):
         cull_team_var_select = self.cull_teams_frame.get_cull_teams_limit()
         search_term = self.search_frame.get_search_term()
         variant_split_select = self.split_variants_frame.get_variant_split()
+        selected_cutoff_days = self.date_cutoff_frame.get_cutoff_days()
         if self.selected_team_only_checkbox_frame.get_selected_team_bool():
             selected_team = self.selected_team
         else:
@@ -217,7 +226,8 @@ class PitchStatsApp(tk.Toplevel):
             cull_team_limit_select=cull_team_var_select,
             selected_search_term=search_term,
             selected_variant_split=variant_split_select,
-            team_select=selected_team
+            team_select=selected_team,
+            cutoff_days=selected_cutoff_days,
         )
         self.stats_frame.set_dataframe(stats)
 

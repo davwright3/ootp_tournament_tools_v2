@@ -9,6 +9,7 @@ from utils.stats_utils.normalize_innings_pitched import (
 from utils.stats_utils.calc_pitching_stats import calculate_pitching_stats
 from utils.stats_utils.get_eligible_players import get_eligible_players
 import pandas as pd
+from datetime import datetime, timedelta, date
 
 
 def generate_basic_pitching_stats(
@@ -26,10 +27,16 @@ def generate_basic_pitching_stats(
         selected_variant_split=False,
         card_id=None,
         team_select=None,
+        cutoff_days=None,
 ):
     stats_df = cull_teams(
         data_store.get_data().copy(),
         run_cutoff=cull_team_limit_select)
+
+    if cutoff_days is not None:
+        cutoff = datetime.now() - timedelta(days=cutoff_days)
+        stats_df['Trny'] = pd.to_datetime(stats_df['Trny'] + ' 2025', format='%d %b %Y')
+        stats_df = stats_df[stats_df['Trny'] >= cutoff]
 
     if card_id is not None:
         stats_df = stats_df[stats_df['CID'] == card_id]
@@ -45,15 +52,14 @@ def generate_basic_pitching_stats(
                                'AB.1', 'ER', 'K', 'BB.1', 'IBB.1', 'HA',
                                '1B.1', '2B.1', '3B.1', 'HR.1', 'SV', 'SVO',
                                'SD', 'MD', 'HP.1', 'SH.1', 'SF.1', 'QS', 'IR',
-                               'IRS', 'GB', 'FB', 'WAR.1',
-                               'Trny']].groupby(['CID', 'VLvl'],
+                               'IRS', 'GB', 'FB', 'WAR.1']].groupby(['CID', 'VLvl'],
                                                 as_index=False).sum()
     else:
         stats_df1 = stats_df1[['CID', 'IPC', 'G.1', 'GS.1', 'BF', 'AB.1', 'ER',
                                'K', 'BB.1', 'IBB.1', 'HA', '1B.1', '2B.1',
                                '3B.1', 'HR.1', 'SV', 'SVO', 'SD', 'MD', 'HP.1',
                                'SH.1', 'SF.1', 'QS', 'IR', 'IRS', 'GB', 'FB',
-                               'WAR.1', 'Trny']].groupby(['CID'],
+                               'WAR.1']].groupby(['CID'],
                                                          as_index=False).sum()
 
     card_list = card_list_store.get_card_list().copy()

@@ -2,10 +2,16 @@ from utils.stats_utils.generate_basic_batting_stats_df import (
     generate_basic_batting_stats_df)
 
 
-def get_player_batting_stats(card_id, selected_team=None):
-    if selected_team is None:
+def get_player_batting_stats(card_id, selected_team=None, cutoff_days=None):
+    if selected_team is None and cutoff_days is None:
         df = generate_basic_batting_stats_df(
             min_pa=1,
+            card_id_select=card_id
+        )
+    elif selected_team is None:
+        df = generate_basic_batting_stats_df(
+            min_pa=1,
+            cutoff_days=cutoff_days,
             card_id_select=card_id
         )
     else:

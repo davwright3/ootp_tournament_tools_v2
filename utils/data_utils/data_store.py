@@ -70,8 +70,7 @@ class DataStore:
         :return: None
         """
         df = pd.read_csv(filepath)
-        _tournament_type = self.check_tourney_type(df)
-        print(_tournament_type)
+        self._tournament_type = self.check_tourney_type(df)
         self._main_dataframe = df
 
     def get_data(self):
@@ -80,6 +79,9 @@ class DataStore:
         :return: Dataframe
         """
         return self._main_dataframe
+
+    def get_tournament_type(self):
+        return self._tournament_type
 
     def set_data(self, df):
         """

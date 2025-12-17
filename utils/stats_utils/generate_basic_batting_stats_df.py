@@ -4,12 +4,15 @@ Will copy the dataframe from the datastore, and calculate
  stats based on user selections.
 The result will be sent back to the stats app for display in a custom frame.
 """
+from pycodestyle import continued_indentation
+
 from utils.data_utils.data_store import data_store
 from utils.data_utils.card_list_store import card_list_store
 from utils.stats_utils.calc_batting_stats import calc_batting_stats
 from utils.stats_utils.get_eligible_players import get_eligible_players
 from utils.stats_utils.cull_teams import cull_teams
 import pandas as pd
+from datetime import datetime, timedelta, date
 
 
 def generate_basic_batting_stats_df(
@@ -26,6 +29,7 @@ def generate_basic_batting_stats_df(
         variant_split_select: bool = False,
         card_id_select: int = None,
         team_select: str = None,
+        cutoff_days: int = None,
 ):
     """
     Calculates basic batting stats and returns a dataframe with the
@@ -45,6 +49,7 @@ def generate_basic_batting_stats_df(
     :param variant_split_select: whether to split variant selection, bool
     :param card_id_select: the id of the card, int
     :param team_select: the name of the team, str
+    :param cutoff_days: the number of days to cut off the batting stats, int
     :return: Dataframe
     """
     df = cull_teams(
@@ -52,6 +57,11 @@ def generate_basic_batting_stats_df(
         run_cutoff=cull_team_limit_select)
     df1 = df.copy()
     del df
+    if cutoff_days is not None:
+        cutoff = datetime.now() - timedelta(days=cutoff_days)
+        df1['Trny'] = pd.to_datetime(df1['Trny'] + ' 2025', format='%d %b %Y')
+        df1 = df1[df1['Trny'] >= cutoff]
+
     if team_select is not None:
         df1 = df1[df1['ORG'] == team_select]
 
