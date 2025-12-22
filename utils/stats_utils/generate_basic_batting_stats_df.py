@@ -4,8 +4,6 @@ Will copy the dataframe from the datastore, and calculate
  stats based on user selections.
 The result will be sent back to the stats app for display in a custom frame.
 """
-from pycodestyle import continued_indentation
-
 from utils.data_utils.data_store import data_store
 from utils.data_utils.card_list_store import card_list_store
 from utils.stats_utils.calc_batting_stats import calc_batting_stats
