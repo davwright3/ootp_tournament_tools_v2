@@ -53,9 +53,9 @@ card_df = {
 }
 
 bat_weights = {
-    'weight_babip': 2,
-    'weight_babip_vL': 2,
-    'weight_babip_vR': 2,
+    'weight_babip': 2.1,
+    'weight_babip_vL': 2.1,
+    'weight_babip_vR': 2.1,
     'weight_avoidk': 2,
     'weight_avoidk_vL': 2,
     'weight_avoidk_vR': 2,
@@ -71,9 +71,9 @@ bat_weights = {
 }
 
 pit_weights = {
-    'weight_stuff': 2,
-    'weight_phr': 2,
-    'weight_pbabip': 2,
+    'weight_stuff': 2.1,
+    'weight_phr': 2.1,
+    'weight_pbabip': 2.1,
     'weight_control': 2,
     'weight_stuff_vL': 2,
     'weight_stuff_vR': 2,
@@ -100,9 +100,9 @@ def test_ratings_weighted(
 ):
     df = mod.calc_ratings(card_df, batter_weights=bat_weights, pitcher_weights=pit_weights)
 
-    assert df['BatOA'] == 10
-    assert df['BatvL'] == 10
+    assert df['BatOA'] == 10.1
+    assert df['BatvL'] == 10.1
     assert df['Catch Def'] == 3
-    assert df['PitOA'] == 8
+    assert df['PitOA'] == 8.3
     assert df['PitvL'] == 8
 

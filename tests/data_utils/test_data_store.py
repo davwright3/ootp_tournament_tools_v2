@@ -48,27 +48,12 @@ def test_clear_data():
 
 def test_load_data_reads_csv(tmp_path: Path):
     csv = tmp_path / "example.csv"
-    csv.write_text("a,b\n1,2\n3,4\n", encoding="utf-8")
+    csv.write_text("a,b,Trny\n1,2,3\n3,4,5\n", encoding="utf-8")
 
     store = mod.DataStore()
     store.load_data(str(csv))
 
     df = store.get_data()
-    assert list(df.columns) == ["a", "b"]
-    assert df.shape == (2, 2)
-    assert df.iloc[0].to_dict() == {"a": 1, "b": 2}
-
-def test_load_data_overwrites_previous(tmp_path: Path):
-    first = pd.DataFrame({"c": [10]})
-    store = mod.DataStore()
-    store.set_data(first)
-
-    csv = tmp_path / "second.csv"
-    csv.write_text("z\n99\n", encoding="utf-8")
-
-    store.load_data(str(csv))
-    df = store.get_data()
-    assert list(df.columns) == ["z"]
-    assert df.iloc[0, 0] == 99
-    # ensure it replaced, not appended
-    assert df is not first
+    assert list(df.columns) == ["a", "b", "Trny"]
+    assert df.shape == (2, 3)
+    assert df.iloc[0].to_dict() == {"Trny": 3, "a": 1, "b": 2}

@@ -12,14 +12,14 @@ def test_team_stats_core_columns_and_filter(monkeypatch, patched_team_data_store
         return pd.DataFrame({
             'ORG': ['A', 'B'],
             'OPS': [0.800, 0.700],
-            'OBP': [0.350, 0.330]
+            'OBP': [0.350, 0.330],
         })
 
     def fake_calc_pitching_stats(df):
         return pd.DataFrame({
             'ORG': ['A', 'B'],
             'ERA': [3.50, 4.20],
-            'FIP': [3.80, 4.10]
+            'FIP': [3.80, 4.10],
         })
 
     # Patch the calc functions so they are small (these are tested in other modules)
