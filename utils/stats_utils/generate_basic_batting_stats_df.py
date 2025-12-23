@@ -54,11 +54,18 @@ def generate_basic_batting_stats_df(
         data_store.get_data().copy(),
         run_cutoff=cull_team_limit_select)
     df1 = df.copy()
-    del df
+
     if cutoff_days is not None:
-        cutoff = datetime.now() - timedelta(days=cutoff_days)
-        df1['Trny'] = pd.to_datetime(df1['Trny'] + ' 2025', format='%d %b %Y')
-        df1 = df1[df1['Trny'] >= cutoff]
+        try:
+            cutoff = datetime.now() - timedelta(days=cutoff_days)
+            df1['Trny'] = pd.to_datetime(df1['Trny'] + ' 2025', format='%d %b %Y')
+            df1 = df1[df1['Trny'] >= cutoff]
+
+            if df1.empty:
+                df1 = df
+        except TypeError:
+            return
+    del df
 
     if team_select is not None:
         df1 = df1[df1['ORG'] == team_select]

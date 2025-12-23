@@ -7,11 +7,6 @@ class BaserunningProfileFrame(tk.Frame):
     def __init__(self, parent, df):
         super().__init__(parent, relief='groove', bd=3)
 
-        self.speed = df.iloc[0]['Speed']
-        self.steal_agg = df.iloc[0]['Steal Rate']
-        self.stealing = df.iloc[0]['Stealing']
-        self.baserunning = df.iloc[0]['Baserunning']
-
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=1)
 
@@ -22,6 +17,14 @@ class BaserunningProfileFrame(tk.Frame):
         self.rowconfigure(4, weight=0)
         self.rowconfigure(5, weight=0)
         self.rowconfigure(6, weight=1)
+
+        self.update_frame(df)
+
+    def update_frame(self, df):
+        self.speed = df.iloc[0]['Speed']
+        self.steal_agg = df.iloc[0]['Steal Rate']
+        self.stealing = df.iloc[0]['Stealing']
+        self.baserunning = df.iloc[0]['Baserunning']
 
         row = 1
         self.label = tk.Label(

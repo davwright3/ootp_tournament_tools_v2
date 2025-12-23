@@ -5,9 +5,10 @@ from utils.data_utils.data_store import data_store
 from utils.data_utils.card_list_store import card_list_store
 
 
-def generate_batter_slide_df(position_select=None):
+def generate_batter_slide_df(position_select=None, selected_cutoff_days=7):
     stats_df = generate_basic_batting_stats_df(min_pa=600,
-                                               position_select='LearnC')
+                                               position_select=position_select,
+                                               cutoff_days=selected_cutoff_days)
     ratings_df = generate_batter_ratings_df(position_select=position_select)
     full_df = pd.merge(ratings_df, stats_df, how='inner', on=['CID', 'Title'])
 
@@ -42,8 +43,10 @@ def generate_batter_slide_df(position_select=None):
         full_df['total_score'] = round((full_df['woba_score'] * 7) + (full_df['baserunning_score'] * 1.5) + (full_df['infield_score'] * 1.5), 2)
     elif position_select == '2B' or position_select == 'SS':
         full_df['total_score'] = round((full_df['woba_score'] * 6) + (full_df['baserunning_score'] * 1.5) + (full_df['infield_score'] * 2.5), 2)
-    else:
+    elif position_select == 'LF' or position_select == 'CF' or position_select == 'RF':
         full_df['total_score'] = round((full_df['woba_score'] * 6) + (full_df['baserunning_score'] * 1.5) + (full_df['outfield_score'] * 2.5), 2)
+    else:
+        full_df['total_score'] = round((full_df['woba_score'] * 9) + (full_df['baserunning_score']), 2)
 
     full_df = full_df.sort_values(by=['total_score'], ascending=False)
 
