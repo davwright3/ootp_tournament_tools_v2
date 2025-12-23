@@ -6,6 +6,9 @@ class BatterProfileFrame(tk.Frame):
     def __init__(self, parent, df):
         super().__init__(parent, relief='groove', bd=3)
 
+        self.update_frame(df)
+
+    def update_frame(self, df):
         self.gb_profile = df.iloc[0]['GB Hitter Type']
         self.fb_profile = df.iloc[0]['FB Hitter Type']
         self.batted_ball_profile = df.iloc[0]['BattedBallType']

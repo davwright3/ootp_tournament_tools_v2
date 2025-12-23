@@ -96,6 +96,9 @@ class BatterSlideshowApp(tk.Toplevel):
         self.player_value_label.update_overall_rating_label(self.batter_df.iloc[0]['Val'])
         self.bat_side_label.update_rating('Bats', self.batter_df.iloc[0]['Bats'])
         self.throws_label.update_rating('Throws', self.batter_df.iloc[0]['Throws'])
+        self.batting_ratings_frame.update_frame(self.batter_df)
+        self.defense_positions_frame.update_frame(self.batter_df)
+        self.batter_profile_frame.update_frame(self.batter_df)
         self.batter_stats_frame.update_batter(self.batter_df)
 
     def next_batter(self):

@@ -35,15 +35,15 @@ def generate_batter_slide_df(position_select=None):
     full_df['baserunning_score'] = round((full_df['BaserunningVal'] ** 2) / (baserunning_max ** 2), 2)
 
     if position_select is None:
-        full_df['total_score'] = (full_df['woba_score'] * 8) + (full_df['baserunning_score'] * 2)
+        full_df['total_score'] = round((full_df['woba_score'] * 8) + (full_df['baserunning_score'] * 2), 2)
     elif position_select == 'LearnC':
-        full_df['total_score'] = (full_df['woba_score'] * 7) + (full_df['baserunning_score'] * 1.5) + (full_df['catch_score'] * 1.5)
+        full_df['total_score'] = round((full_df['woba_score'] * 7) + (full_df['baserunning_score'] * 1.5) + (full_df['catch_score'] * 1.5), 2)
     elif position_select == '1B' or position_select == '3B':
-        full_df['total_score'] = (full_df['woba_score'] * 7) + (full_df['baserunning_score'] * 1.5) + (full_df['infield_score'] * 1.5)
+        full_df['total_score'] = round((full_df['woba_score'] * 7) + (full_df['baserunning_score'] * 1.5) + (full_df['infield_score'] * 1.5), 2)
     elif position_select == '2B' or position_select == 'SS':
-        full_df['total_score'] = (full_df['woba_score'] * 6) + (full_df['baserunning_score'] * 1.5) + (full_df['infield_score'] * 2.5)
+        full_df['total_score'] = round((full_df['woba_score'] * 6) + (full_df['baserunning_score'] * 1.5) + (full_df['infield_score'] * 2.5), 2)
     else:
-        full_df['total_score'] = (full_df['woba_score'] * 6) + (full_df['baserunning_score'] * 1.5) + (full_df['outfield_score'] * 2.5)
+        full_df['total_score'] = round((full_df['woba_score'] * 6) + (full_df['baserunning_score'] * 1.5) + (full_df['outfield_score'] * 2.5), 2)
 
     full_df = full_df.sort_values(by=['total_score'], ascending=False)
 

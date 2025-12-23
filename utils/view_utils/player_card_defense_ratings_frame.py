@@ -26,3 +26,7 @@ class PlayerCardDefenseRatingsFrame(tk.Frame):
 
         self.eligibility_frame = EligibleDefensePositionsFrame(self, df)
         self.eligibility_frame.grid(row=1, column=2, sticky='nsew')
+
+    def update_frame(self, df):
+        self.ratings_frame.update_frame(df)
+        self.eligibility_frame.update_frame(df)

@@ -6,7 +6,13 @@ class ColorRatingLabel(tk.Label):
     def __init__(self, parent, font=None, rating: int = 0):
         super().__init__(parent)
 
+        self.font = font
         self.rating = rating
+
+        self.update_label(self.rating, self.font)
+
+
+    def update_label(self, rating, font):
         self.configure(text=rating)
         self.configure(font=font)
 
