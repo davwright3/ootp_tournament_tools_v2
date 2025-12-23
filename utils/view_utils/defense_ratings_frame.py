@@ -5,7 +5,7 @@ from utils.view_utils.color_rating_code_label import ColorRatingLabel
 
 class DefenseRatingsFrame(tk.Frame):
     def __init__(self, parent, df):
-        super().__init__(parent)
+        super().__init__(parent, relief='groove', bd=3)
 
         catch_abil = int(df.iloc[0, df.columns.get_loc('CatcherAbil')])
         catch_frame = int(df.iloc[0, df.columns.get_loc('CatcherFrame')])
