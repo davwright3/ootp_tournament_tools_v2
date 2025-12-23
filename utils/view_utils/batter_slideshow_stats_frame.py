@@ -1,66 +1,116 @@
 import tkinter as tk
+from tkinter import ttk
+from utils.view_utils import program_fonts as fonts
 
+LABEL_PADX = 5
+LABEL_PADY = 5
+SEP_PADX = 10
+LABEL_STICKY = 'e'
 
 class BatterSlideshowStatsFrame(tk.Frame):
     def __init__(self, parent, batter_df):
-        super().__init__(parent)
+        super().__init__(parent, relief='groove', bd=5)
 
-        self.average_label = tk.Label(self, text="AVG:")
-        self.average_label.grid(row=0, column=0, sticky="nsew")
+        self.columnconfigure(0, weight=1)
+        self.columnconfigure(8, weight=1)
 
-        self.obp_label = tk.Label(self, text="OBP:")
-        self.obp_label.grid(row=1, column=0, sticky="nsew")
+        self.rowconfigure(0, weight=0)
+        self.rowconfigure(1, weight=0)
+        self.rowconfigure(2, weight=0)
+        self.rowconfigure(3, weight=0)
+        self.rowconfigure(4, weight=0)
+        self.rowconfigure(5, weight=1)
 
-        self.slg_label = tk.Label(self, text="SLG:")
-        self.slg_label.grid(row=2, column=0, sticky="nsew")
 
-        self.ops_label = tk.Label(self, text="OPS:")
-        self.ops_label.grid(row=3, column=0, sticky="nsew")
+        self.average_label = tk.Label(self, text="AVG:", font=fonts.slideshow_label_font)
+        self.average_label.grid(row=0, column=1, sticky=LABEL_STICKY, pady=LABEL_PADY, padx=LABEL_PADX)
 
-        self.woba_label = tk.Label(self, text="wOBA:")
-        self.woba_label.grid(row=4, column=0, sticky="nsew")
+        self.obp_label = tk.Label(self, text="OBP:", font=fonts.slideshow_label_font)
+        self.obp_label.grid(row=1, column=1, sticky=LABEL_STICKY, pady=LABEL_PADY, padx=LABEL_PADX)
 
-        self.hr_label = tk.Label(self, text="HR:")
-        self.hr_label.grid(row=0, column=1, sticky="nsew")
+        self.slg_label = tk.Label(self, text="SLG:", font=fonts.slideshow_label_font)
+        self.slg_label.grid(row=2, column=1, sticky=LABEL_STICKY, pady=LABEL_PADY, padx=LABEL_PADX)
 
-        self.bb_label = tk.Label(self, text="BB:")
-        self.bb_label.grid(row=1, column=1, sticky="nsew")
+        self.ops_label = tk.Label(self, text="OPS:", font=fonts.slideshow_label_font)
+        self.ops_label.grid(row=3, column=1, sticky=LABEL_STICKY, pady=LABEL_PADY, padx=LABEL_PADX)
 
-        self.k_label = tk.Label(self, text="K:")
-        self.k_label.grid(row=2, column=1, sticky="nsew")
+        self.woba_label = tk.Label(self, text="wOBA:", font=fonts.slideshow_label_font)
+        self.woba_label.grid(row=4, column=1, sticky=LABEL_STICKY, pady=LABEL_PADY, padx=LABEL_PADX)
 
-        self.rc_label = tk.Label(self, text="RC:")
-        self.rc_label.grid(row=3, column=1, sticky="nsew")
+        ttk.Separator(
+            self,
+            orient='vertical').grid(
+            row=0,
+            column=2,
+            sticky="ns",
+            rowspan=5,
+            padx=SEP_PADX
+        )
 
-        self.war_label = tk.Label(self, text="WAR:")
-        self.war_label.grid(row=4, column=1, sticky="nsew")
+        self.hr_label = tk.Label(self, text="HR:", font=fonts.slideshow_label_font)
+        self.hr_label.grid(row=0, column=3, sticky=LABEL_STICKY, pady=LABEL_PADY, padx=LABEL_PADX)
 
-        self.sb_label = tk.Label(self, text="SB:")
-        self.sb_label.grid(row=0, column=2, sticky="nsew")
+        self.bb_label = tk.Label(self, text="BB:", font=fonts.slideshow_label_font)
+        self.bb_label.grid(row=1, column=3, sticky=LABEL_STICKY, pady=LABEL_PADY, padx=LABEL_PADX)
 
-        self.sb_pct_label = tk.Label(self, text="SB PCT:")
-        self.sb_pct_label.grid(row=1, column=2, sticky="nsew")
+        self.k_label = tk.Label(self, text="K:", font=fonts.slideshow_label_font)
+        self.k_label.grid(row=2, column=3, sticky=LABEL_STICKY, pady=LABEL_PADY, padx=LABEL_PADX)
 
-        self.zr_label = tk.Label(self, text="ZR:")
-        self.zr_label.grid(row=2, column=2, sticky="nsew")
+        self.rc_label = tk.Label(self, text="RC:", font=fonts.slideshow_label_font)
+        self.rc_label.grid(row=3, column=3, sticky=LABEL_STICKY, pady=LABEL_PADY, padx=LABEL_PADX)
 
-        self.fld_pct_label = tk.Label(self, text="FLD PCT:")
-        self.fld_pct_label.grid(row=3, column=2, sticky="nsew")
+        self.war_label = tk.Label(self, text="WAR:", font=fonts.slideshow_label_font)
+        self.war_label.grid(row=4, column=3, sticky=LABEL_STICKY, pady=LABEL_PADY, padx=LABEL_PADX)
 
-        self.pa_label = tk.Label(self, text="PA:")
-        self.pa_label.grid(row=4, column=2, sticky="nsew")
+        ttk.Separator(
+            self,
+            orient='vertical').grid(
+            row=0,
+            column=4,
+            sticky="ns",
+            rowspan=5,
+            padx=SEP_PADX
+        )
 
-        self.catch_label = tk.Label(self, text="Catch:")
-        self.catch_label.grid(row=0, column=3, sticky="nsew")
+        self.sb_label = tk.Label(self, text="SB:", font=fonts.slideshow_label_font)
+        self.sb_label.grid(row=0, column=5, sticky=LABEL_STICKY, pady=LABEL_PADY, padx=LABEL_PADX)
 
-        self.infield_label = tk.Label(self, text="INFIELD:")
-        self.infield_label.grid(row=1, column=3, sticky="nsew")
+        self.sb_pct_label = tk.Label(self, text="SB PCT:", font=fonts.slideshow_label_font)
+        self.sb_pct_label.grid(row=1, column=5, sticky=LABEL_STICKY, pady=LABEL_PADY, padx=LABEL_PADX)
 
-        self.outfield_label = tk.Label(self, text="OUTFIELD:")
-        self.outfield_label.grid(row=2, column=3, sticky="nsew")
+        self.zr_label = tk.Label(self, text="ZR:", font=fonts.slideshow_label_font)
+        self.zr_label.grid(row=2, column=5, sticky=LABEL_STICKY, pady=LABEL_PADY, padx=LABEL_PADX)
 
-        self.baserunning_label = tk.Label(self, text="Baserunning:")
-        self.baserunning_label.grid(row=3, column=3, sticky="nsew")
+        self.fld_pct_label = tk.Label(self, text="FLD PCT:", font=fonts.slideshow_label_font)
+        self.fld_pct_label.grid(row=3, column=5, sticky=LABEL_STICKY, pady=LABEL_PADY, padx=LABEL_PADX)
+
+        self.pa_label = tk.Label(self, text="PA:", font=fonts.slideshow_label_font)
+        self.pa_label.grid(row=4, column=5, sticky=LABEL_STICKY, pady=LABEL_PADY, padx=LABEL_PADX)
+
+        ttk.Separator(
+            self,
+            orient='vertical').grid(
+            row=0,
+            column=6,
+            sticky="ns",
+            rowspan=5,
+            padx=SEP_PADX
+        )
+
+        self.catch_label = tk.Label(self, text="Catch:", font=fonts.slideshow_label_font)
+        self.catch_label.grid(row=0, column=7, sticky=LABEL_STICKY, pady=LABEL_PADY, padx=LABEL_PADX)
+
+        self.infield_label = tk.Label(self, text="INFIELD:", font=fonts.slideshow_label_font)
+        self.infield_label.grid(row=1, column=7, sticky=LABEL_STICKY, pady=LABEL_PADY, padx=LABEL_PADX)
+
+        self.outfield_label = tk.Label(self, text="OUTFIELD:", font=fonts.slideshow_label_font)
+        self.outfield_label.grid(row=2, column=7, sticky=LABEL_STICKY, pady=LABEL_PADY, padx=LABEL_PADX)
+
+        self.baserunning_label = tk.Label(self, text="Baserunning:", font=fonts.slideshow_label_font)
+        self.baserunning_label.grid(row=3, column=7, sticky=LABEL_STICKY, pady=LABEL_PADY, padx=LABEL_PADX)
+
+        self.total_label = tk.Label(self, text="Total:", font=fonts.slideshow_label_font)
+        self.total_label.grid(row=4, column=7, sticky=LABEL_STICKY, pady=LABEL_PADY, padx=LABEL_PADX)
 
         self.update_batter(batter_df)
 
@@ -86,3 +136,4 @@ class BatterSlideshowStatsFrame(tk.Frame):
         self.infield_label.configure(text=f'Infield: {batter_df.iloc[0]['infield_score']} ( {batter_df.iloc[0]['infield_rank']} )')
         self.outfield_label.configure(text=f'Outfield: {batter_df.iloc[0]['outfield_score']} ( {batter_df.iloc[0]['outfield_rank']} )')
         self.baserunning_label.configure(text=f'Baserunning: {batter_df.iloc[0]['baserunning_score']} ( {batter_df.iloc[0]['baserunning_rank']} )')
+        self.total_label.configure(text=f'Total: {batter_df.iloc[0]["total_score"]} ( {batter_df.iloc[0]['total_rank']} )')

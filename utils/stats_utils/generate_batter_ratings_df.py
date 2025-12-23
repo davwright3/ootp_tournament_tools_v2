@@ -16,7 +16,7 @@ def generate_batter_ratings_df(position_select=None):
             'Bunt for hit', 'Infield Range', 'Infield Error', 'Infield Arm',
             'DP', 'CatcherAbil', 'CatcherFrame', 'Catcher Arm', 'OF Range',
             'OF Error', 'OF Arm', 'LearnC', 'Learn1B', 'Learn2B', 'Learn3B',
-            'LearnSS', 'LearnLF', 'LearnCF', 'LearnRF']]
+            'LearnSS', 'LearnLF', 'LearnCF', 'LearnRF', 'Bats', 'Throws']]
     )
     ratings_df = ratings_df.rename(columns={'//Card Title': 'Title', 'Card ID': 'CID',})
 
