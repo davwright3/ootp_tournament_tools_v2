@@ -24,6 +24,9 @@ class DataCutoffByDaysFrame(tk.Frame):
         self.days_entry.grid(row=0, column=1, sticky='w')
 
     def get_cutoff_days(self):
+        if self.days_var.get() == '':
+            return None
+
         try:
             return int(self.days_entry.get())
         except ValueError:

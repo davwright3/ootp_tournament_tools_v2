@@ -52,6 +52,7 @@ class BatterSlideshowApp(tk.Toplevel):
         self.footer_frame.grid(row=2, column=0, sticky="nsew")
 
         self.rank_var = tk.IntVar(value=5)
+        self.updating = False
 
         row = 0
         self.player_title = tk.Label(self.main_frame, text=f'{self.rank_var.get()}:', font=fonts.slideshow_header_font)
@@ -86,8 +87,6 @@ class BatterSlideshowApp(tk.Toplevel):
         self.baserunning_profile_frame = BaserunningProfileFrame(self.main_frame, self.batter_df)
         self.baserunning_profile_frame.grid(row=row, column=3, sticky="nsew")
         row += 1
-
-
 
         self.batter_stats_frame = BatterSlideshowStatsFrame(self.main_frame, self.batter_df)
         self.batter_stats_frame.grid(row=row, column=0, sticky="nsew", columnspan=4)
@@ -133,16 +132,20 @@ class BatterSlideshowApp(tk.Toplevel):
         self.update_batter(self.rank_var.get())
 
     def update_batter(self, rank):
-        self.batter_df = self.slide_df.iloc[[rank - 1]]
-        self.player_title.configure(text=f'{self.rank_var.get()}: {self.batter_df.iloc[0]['Title']}')
-        self.player_value_label.update_overall_rating_label(self.batter_df.iloc[0]['Val'])
-        self.bat_side_label.update_rating('Bats', self.batter_df.iloc[0]['Bats'])
-        self.throws_label.update_rating('Throws', self.batter_df.iloc[0]['Throws'])
-        self.batting_ratings_frame.update_frame(self.batter_df)
-        self.defense_positions_frame.update_frame(self.batter_df)
-        self.batter_profile_frame.update_frame(self.batter_df)
-        self.batter_stats_frame.update_batter(self.batter_df)
-        self.baserunning_profile_frame.update_frame(self.batter_df)
+        if not self.updating:
+            self.updating = True
+            num_qualifiers = len(self.slide_df)
+            self.batter_df = self.slide_df.iloc[[rank - 1]]
+            self.player_title.configure(text=f'{self.rank_var.get()}: {self.batter_df.iloc[0]['Title']}')
+            self.player_value_label.update_overall_rating_label(self.batter_df.iloc[0]['Val'])
+            self.bat_side_label.update_rating('Bats', self.batter_df.iloc[0]['Bats'])
+            self.throws_label.update_rating('Throws', self.batter_df.iloc[0]['Throws'])
+            self.batting_ratings_frame.update_frame(self.batter_df)
+            self.baserunning_profile_frame.update_frame(self.batter_df)
+            self.defense_positions_frame.update_frame(self.batter_df)
+            self.batter_profile_frame.update_frame(self.batter_df)
+            self.batter_stats_frame.update_batter(self.batter_df, quals=num_qualifiers)
+            self.updating = False
 
     def next_batter(self):
         if self.rank_var.get() > 1:

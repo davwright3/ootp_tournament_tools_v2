@@ -38,12 +38,14 @@ def generate_batter_slide_df(position_select=None, selected_cutoff_days=7):
     if position_select is None:
         full_df['total_score'] = round((full_df['woba_score'] * 8) + (full_df['baserunning_score'] * 2), 2)
     elif position_select == 'LearnC':
-        full_df['total_score'] = round((full_df['woba_score'] * 7) + (full_df['baserunning_score'] * 1.5) + (full_df['catch_score'] * 1.5), 2)
-    elif position_select == '1B' or position_select == '3B':
+        full_df['total_score'] = round((full_df['woba_score'] * 6) + (full_df['baserunning_score'] * 1) + (full_df['catch_score'] * 3), 2)
+    elif position_select == 'Learn1B' or position_select == 'Learn3B':
         full_df['total_score'] = round((full_df['woba_score'] * 7) + (full_df['baserunning_score'] * 1.5) + (full_df['infield_score'] * 1.5), 2)
-    elif position_select == '2B' or position_select == 'SS':
-        full_df['total_score'] = round((full_df['woba_score'] * 6) + (full_df['baserunning_score'] * 1.5) + (full_df['infield_score'] * 2.5), 2)
-    elif position_select == 'LF' or position_select == 'CF' or position_select == 'RF':
+    elif position_select == 'Learn2B' or position_select == 'LearnSS':
+        full_df['total_score'] = round((full_df['woba_score'] * 6) + (full_df['baserunning_score'] * 1) + (full_df['infield_score'] * 3), 2)
+    elif position_select == 'LearnCF':
+        full_df['total_score'] = round((full_df['woba_score'] * 5.5) + (full_df['baserunning_score'] * 1.5) + (full_df['outfield_score'] * 3), 2)
+    elif position_select == 'LearnLF' or position_select == 'LearnRF':
         full_df['total_score'] = round((full_df['woba_score'] * 6) + (full_df['baserunning_score'] * 1.5) + (full_df['outfield_score'] * 2.5), 2)
     else:
         full_df['total_score'] = round((full_df['woba_score'] * 9) + (full_df['baserunning_score']), 2)

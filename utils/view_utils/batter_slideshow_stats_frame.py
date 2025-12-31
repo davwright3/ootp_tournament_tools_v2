@@ -8,7 +8,7 @@ SEP_PADX = 10
 LABEL_STICKY = 'e'
 
 class BatterSlideshowStatsFrame(tk.Frame):
-    def __init__(self, parent, batter_df):
+    def __init__(self, parent, batter_df, quals=0):
         super().__init__(parent, relief='groove', bd=5)
 
         self.columnconfigure(0, weight=1)
@@ -37,13 +37,16 @@ class BatterSlideshowStatsFrame(tk.Frame):
         self.woba_label = tk.Label(self, text="wOBA:", font=fonts.slideshow_label_font)
         self.woba_label.grid(row=4, column=1, sticky=LABEL_STICKY, pady=LABEL_PADY, padx=LABEL_PADX)
 
+        self.woba_score_label = tk.Label(self, text="wOBA:", font=fonts.slideshow_label_font)
+        self.woba_score_label.grid(row=5, column=1, sticky=LABEL_STICKY, pady=LABEL_PADY, padx=LABEL_PADX)
+
         ttk.Separator(
             self,
             orient='vertical').grid(
             row=0,
             column=2,
             sticky="ns",
-            rowspan=5,
+            rowspan=6,
             padx=SEP_PADX
         )
 
@@ -68,7 +71,7 @@ class BatterSlideshowStatsFrame(tk.Frame):
             row=0,
             column=4,
             sticky="ns",
-            rowspan=5,
+            rowspan=6,
             padx=SEP_PADX
         )
 
@@ -93,7 +96,7 @@ class BatterSlideshowStatsFrame(tk.Frame):
             row=0,
             column=6,
             sticky="ns",
-            rowspan=5,
+            rowspan=6,
             padx=SEP_PADX
         )
 
@@ -112,16 +115,20 @@ class BatterSlideshowStatsFrame(tk.Frame):
         self.total_label = tk.Label(self, text="Total:", font=fonts.slideshow_label_font)
         self.total_label.grid(row=4, column=7, sticky=LABEL_STICKY, pady=LABEL_PADY, padx=LABEL_PADX)
 
-        self.update_batter(batter_df)
+        self.quals_label = tk.Label(self, text="Quals:", font=fonts.slideshow_label_font)
+        self.quals_label.grid(row=5, column=7, sticky=LABEL_STICKY, pady=LABEL_PADY, padx=LABEL_PADX)
+
+        self.update_batter(batter_df, quals)
 
 
 
-    def update_batter(self, batter_df):
+    def update_batter(self, batter_df, quals):
         self.average_label.configure(text=f'AVG: {batter_df.iloc[0]['AVG']} ( {int(batter_df.iloc[0]['avg_rank'])} )')
         self.obp_label.configure(text=f'OBP: {batter_df.iloc[0]['OBP']} ( {batter_df.iloc[0]['obp_rank']} )')
         self.slg_label.configure(text=f'SLG: {batter_df.iloc[0]['SLG']} ( {batter_df.iloc[0]['slg_rank']} )')
         self.ops_label.configure(text=f'OPS: {batter_df.iloc[0]['OPS']} ( {batter_df.iloc[0]['ops_rank']} )')
         self.woba_label.configure(text=f'wOBA: {batter_df.iloc[0]['wOBA']} ( {batter_df.iloc[0]['woba_rank']} )')
+        self.woba_score_label.configure(text=f'wOBA Score: {batter_df.iloc[0]['woba_score']}')
         self.hr_label.configure(text=f'HR/600: {batter_df.iloc[0]['HRrate']} ( {batter_df.iloc[0]['hr_rate_rank']} )')
         self.bb_label.configure(text=f'BB/600: {batter_df.iloc[0]['BBrate']} ( {batter_df.iloc[0]['bb_rate_rank']} )')
         self.k_label.configure(text=f'K/600: {batter_df.iloc[0]['Krate']} ( {batter_df.iloc[0]['k_rate_rank']} )')
@@ -137,3 +144,4 @@ class BatterSlideshowStatsFrame(tk.Frame):
         self.outfield_label.configure(text=f'Outfield: {batter_df.iloc[0]['outfield_score']} ( {batter_df.iloc[0]['outfield_rank']} )')
         self.baserunning_label.configure(text=f'Baserunning: {batter_df.iloc[0]['baserunning_score']} ( {batter_df.iloc[0]['baserunning_rank']} )')
         self.total_label.configure(text=f'Total: {batter_df.iloc[0]["total_score"]} ( {batter_df.iloc[0]['total_rank']} )')
+        self.quals_label.configure(text=f'Qualifed: {quals}')

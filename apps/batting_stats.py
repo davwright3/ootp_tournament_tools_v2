@@ -188,11 +188,8 @@ class BattingStatsApp(tk.Toplevel):
         cull_teams_limit = self.cull_teams_limit_frame.get_cull_teams_limit()
         search_term = self.search_frame.get_search_term()
         split_variants_select = self.split_variants_frame.get_variant_split()
-        try:
-            num_cutoff_days = int(self.days_cutoff_frame.get_cutoff_days())
-        except ValueError:
-            num_cutoff_days = None
-
+        num_cutoff_days = self.days_cutoff_frame.get_cutoff_days()
+        
         if self.selected_team_only_frame.get_selected_team_bool():
             selected_team = self.selected_team
         else:
