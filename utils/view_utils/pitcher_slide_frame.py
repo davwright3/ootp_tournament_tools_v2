@@ -27,7 +27,6 @@ class PitcherSlideFrame(tk.Frame):
         self.selected_player_df = pd.DataFrame()
 
         self.slide_df = generate_pitcher_slide_df()
-        print(self.slide_df.columns)
         self.selected_player_df = self.slide_df.iloc[[9]]
 
         row = 0
