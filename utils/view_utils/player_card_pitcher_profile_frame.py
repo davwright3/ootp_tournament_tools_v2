@@ -11,34 +11,8 @@ class PlayerCardPitcherProfileFrame(tk.Frame):
         self.columnconfigure(0, weight=1)
         self.columnconfigure(1, weight=1)
 
-        def format_pitcher_type(gb_type):
-            match gb_type:
-                case 0:
-                    return 'XGB'
-                case 1:
-                    return 'GB'
-                case 2:
-                    return 'Neu'
-                case 3:
-                    return 'FB'
-                case 4:
-                    return 'XFB'
-                case _:
-                    return 'None'
-
-        def format_arm_slot(arm_slot_id):
-            match arm_slot_id:
-                case 1:
-                    return 'Submarine'
-                case 2:
-                    return 'Sidearm'
-                case 3:
-                    return 'Normal (3/4)'
-                case 4:
-                    return 'Over the Top'
-
-        pitcher_type = format_pitcher_type(df.iloc[0]['GB'])
-        arm_slot = format_arm_slot(df.iloc[0]['Arm Slot'])
+        pitcher_type = self.format_pitcher_type(df.iloc[0]['GB'])
+        arm_slot = self.format_arm_slot(df.iloc[0]['Arm Slot'])
 
         self.pitcher_profile_label = tk.Label(
             self, text='Profile', font=fonts.frame_title_font)
@@ -87,3 +61,39 @@ class PlayerCardPitcherProfileFrame(tk.Frame):
         self.hold_runners_frame = ColorRatingLabel(
             self, font=fonts.basic_font, rating=df.iloc[0]['Hold'])
         self.hold_runners_frame.grid(row=6, column=1, sticky='nsew')
+
+    def format_pitcher_type(self, gb_type):
+        match gb_type:
+            case 0:
+                return 'XGB'
+            case 1:
+                return 'GB'
+            case 2:
+                return 'Neu'
+            case 3:
+                return 'FB'
+            case 4:
+                return 'XFB'
+            case _:
+                return 'None'
+
+    def format_arm_slot(self, arm_slot_id):
+        match arm_slot_id:
+            case 1:
+                return 'Submarine'
+            case 2:
+                return 'Sidearm'
+            case 3:
+                return 'Normal (3/4)'
+            case 4:
+                return 'Over the Top'
+
+    def update_frame(self, player_df):
+        pitcher_type = self.format_pitcher_type(player_df.iloc[0]['GB'])
+        arm_slot = self.format_arm_slot(player_df.iloc[0]['Arm Slot'])
+
+        self.gb_type_rating_label.configure(text=pitcher_type)
+        self.arm_slot_label.configure(text=arm_slot)
+        self.velocity_label.configure(text=player_df.iloc[0]['Velocity'])
+        self.stamina_frame.update_label(player_df.iloc[0]['Stamina'], font=fonts.basic_font)
+        self.hold_runners_frame.update_label(player_df.iloc[0]['Hold'], font=fonts.basic_font)

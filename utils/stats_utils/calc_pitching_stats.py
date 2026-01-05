@@ -31,6 +31,10 @@ def calculate_pitching_stats(df1, min_ip_sel=200):
 
     df1['K-BB'] = (df1['K%'] - df1['BB%']).round(3)
 
+    df1['HR%'] = np.where(df1['BF'] != 0,
+                          (df1['HR.1'] / df1['BF']).round(3),
+                          .000)
+
     df1['HR/9'] = np.where(df1['IPC'] != 0,
                            ((df1['HR.1'] / df1['IPC']) * 9).round(3), 0.0)
 
@@ -68,16 +72,16 @@ def calculate_pitching_stats(df1, min_ip_sel=200):
     if 'CID' in df1.columns:
         if 'VLvl' in df1.columns:
             df2 = df2[['CID', 'VLvl', 'IPC', 'ERA', 'FIP', 'WHIP', 'K%', 'BB%',
-                       'K-BB', 'HR/9', 'SV%', 'SD/MD', 'IRS%', 'GB%',
+                       'K-BB', 'HR/9', 'HR%', 'SV%', 'SD/MD', 'IRS%', 'GB%',
                        'WAR/200', 'IP/G', 'QS%', 'oBABIP']]
         else:
             df2 = df2[['CID', 'IPC', 'ERA', 'FIP', 'WHIP', 'K%', 'BB%', 'K-BB',
-                       'HR/9', 'SV%', 'SD/MD', 'IRS%', 'GB%', 'WAR/200',
+                       'HR/9', 'HR%', 'SV%', 'SD/MD', 'IRS%', 'GB%', 'WAR/200',
                        'IP/G', 'QS%', 'oBABIP']]
         df2 = df2[df2['IPC'] >= min_ip_sel]
     else:
         df2 = df2[['ORG', 'IPC', 'ERA', 'FIP', 'WHIP', 'K%', 'BB%', 'K-BB',
-                   'HR/9', 'SV%', 'SD/MD', 'IRS%', 'GB%', 'WAR/200', 'IP/G',
+                   'HR/9', 'HR%', 'SV%', 'SD/MD', 'IRS%', 'GB%', 'WAR/200', 'IP/G',
                    'QS%', 'oBABIP']]
 
     del df1

@@ -120,3 +120,17 @@ class PlayerCardIndividualPitchRatingsFrame(tk.Frame):
             font=fonts.basic_font,
             rating=player_df.iloc[0]['Knuckleball'])
         self.knuckleball_rating_label.grid(row=5, column=5, sticky='nsew')
+
+    def update_frame(self, player_df):
+        self.fastball_rating_label.update_label(player_df.iloc[0]['Fastball'], font=fonts.basic_font)
+        self.slider_rating_label.update_label(player_df.iloc[0]['Slider'], font=fonts.basic_font)
+        self.curveball_rating_label.update_label(player_df.iloc[0]['Curveball'], font=fonts.basic_font)
+        self.changeup_rating_label.update_label(player_df.iloc[0]['Changeup'], font=fonts.basic_font)
+        self.cutter_rating_label.update_label(player_df.iloc[0]['Cutter'], font=fonts.basic_font)
+        self.sinker_rating_label.update_label(player_df.iloc[0]['Sinker'], font=fonts.basic_font)
+        self.splitter_rating_label.update_label(player_df.iloc[0]['Splitter'], font=fonts.basic_font)
+        self.forkball_rating_label.update_label(player_df.iloc[0]['Forkball'], font=fonts.basic_font)
+        self.screwball_rating_label.update_label(player_df.iloc[0]['Screwball'], font=fonts.basic_font)
+        self.circlechange_rating_label.update_label(player_df.iloc[0]['Circlechange'], font=fonts.basic_font)
+        self.knucklecurve_rating_label.update_label(player_df.iloc[0]['Knucklecurve'], font=fonts.basic_font)
+        self.knuckleball_rating_label.update_label(player_df.iloc[0]['Knuckleball'], font=fonts.basic_font)

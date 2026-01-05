@@ -67,9 +67,8 @@ class DataFrameTableFrame(ttk.Frame):
         # Setting up styles
         style = ttk.Style(self)
         # ---------- Set Treeview Font Size ----------
-        tree_font = tkfont.Font(family="Segoe UI",
-                                size=10)  # increase size here
-        header_font = tkfont.Font(family="Segoe UI", size=11, weight="bold")
+        tree_font = ("Segoe UI", 16)  # increase size here
+        header_font = ("Segoe UI", 18, "bold")
 
         style.configure('Treeview', font=tree_font, padding=(0, 4))
         style.configure('Treeview.Heading', font=header_font)

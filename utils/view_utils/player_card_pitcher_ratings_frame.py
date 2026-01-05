@@ -1,6 +1,7 @@
 import tkinter as tk
 from utils.view_utils import program_fonts as fonts
 from utils.view_utils.color_rating_code_label import ColorRatingLabel
+from utils.view_utils import program_fonts as fonts
 
 
 class PlayerCardPitcherRatingsFrame(tk.Frame):
@@ -100,3 +101,55 @@ class PlayerCardPitcherRatingsFrame(tk.Frame):
             ColorRatingLabel(
                 self, font=fonts.basic_font, rating=df.iloc[0]['Control vR']))
         self.control_vr_rating_label.grid(row=5, column=3, sticky='nsew')
+
+
+    def update_frame(self, player_df):
+        self.stuff_overall_rating_label.update_label(
+            player_df.iloc[0]['Stuff'],
+            font=fonts.basic_font
+        )
+        self.stuff_vl_rating_label.update_label(
+            player_df.iloc[0]['Stuff vL'],
+            font=fonts.basic_font
+        )
+        self.stuff_vr_rating_label.update_label(
+            player_df.iloc[0]['Stuff vR'],
+            font=fonts.basic_font
+        )
+        self.phr_overall_rating_label.update_label(
+            player_df.iloc[0]['pHR'],
+            font=fonts.basic_font
+        )
+        self.phr_vl_rating_label.update_label(
+            player_df.iloc[0]['pHR vL'],
+            font=fonts.basic_font
+        )
+        self.phr_vr_rating_label.update_label(
+            player_df.iloc[0]['pHR vR'],
+            font=fonts.basic_font
+        )
+        self.pbabip_overall_rating_label.update_label(
+            player_df.iloc[0]['pBABIP'],
+            font=fonts.basic_font
+        )
+        self.pbabib_vl_rating_label.update_label(
+            player_df.iloc[0]['pBABIP vL'],
+            font=fonts.basic_font
+        )
+        self.pbabip_vr_rating_label.update_label(
+            player_df.iloc[0]['pBABIP vR'],
+            font=fonts.basic_font
+        )
+        self.control_overall_rating_label.update_label(
+            player_df.iloc[0]['Control'],
+            font=fonts.basic_font
+        )
+        self.control_vl_rating_label.update_label(
+            player_df.iloc[0]['Control vL'],
+            font=fonts.basic_font
+        )
+        self.control_vr_rating_label.update_label(
+            player_df.iloc[0]['Control vR'],
+            font=fonts.basic_font
+        )
+
