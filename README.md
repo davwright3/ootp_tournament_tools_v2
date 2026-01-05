@@ -7,32 +7,23 @@ which can be found here: [GithubLink](https://github.com/davwright3/au_ootp_tour
 
 Please visit this link if you have any feature requests: [Feature Requests](https://docs.google.com/forms/d/1I01oUCsnH41OVFDkNjZeQurVAMr5zBd8103BPOorBUw/edit)
 
-## Current Version 0.5.0
+## Current Version 0.6.0
 
-### Updated: 
+### Updated: 6 Jan 2026
 
-14 Nov 2025
+Final release for OOTP Perfect Team 26 Edition
 
-New Features:
+- Adds batting and pitching ranking slideshows
 
-- Player Cards are Live
+  - Batters currently ranked on a custom formula using wOBA and baserunning/fielding ratings
+  - Pitchers ranked on strikeout percentage minus walk and home run percentage formula
 
-  - Cards contain player ratings, player stats for all teams, player stats for selected team, and league stats
-  - In order to facilitate the player stats for the selected team, a team selection dropdown has been added to the basic stats app home page
+- Adds ability to customize basic views going back for a set number of days
 
-- New Team Cards available
+- Added framework for data visualization
 
-  - Double-clicking on a team in the team stats app will open a new card with the players who have appeared for that team
-  - Player cards are also clickable from this page and will open in a new window
-
-- A few new stats added to the player stats that are available
-
-- Updated resource path checking, which should fix pathing issue for the logos and new files on MACos.  (Please inform me if this is not the case, as I cannot test on Mac.)
-
-- For developers:
-
-  - Linting is complete for all base scripts using Flake8 and updated to PEP 8.  This should make it easier for developers to make their updates from the source code.
-
+  - Includes custom frames and matplotlib methods for plotting using single and double inputs
+  - Data visualization is planned to be added with first update to OOTP Perfect Team 27 in late March/early April
 
 
 ## Installation
@@ -233,3 +224,25 @@ New Features:
   - View overall ratings, by side, and splits
   - Select year and value ranges, as well as card types
   - Select weight for each rating (user determined, default: 1x)
+
+14 Nov 2025
+
+New Features:
+
+- Player Cards are Live
+
+  - Cards contain player ratings, player stats for all teams, player stats for selected team, and league stats
+  - In order to facilitate the player stats for the selected team, a team selection dropdown has been added to the basic stats app home page
+
+- New Team Cards available
+
+  - Double-clicking on a team in the team stats app will open a new card with the players who have appeared for that team
+  - Player cards are also clickable from this page and will open in a new window
+
+- A few new stats added to the player stats that are available
+
+- Updated resource path checking, which should fix pathing issue for the logos and new files on MACos.  (Please inform me if this is not the case, as I cannot test on Mac.)
+
+- For developers:
+
+  - Linting is complete for all base scripts using Flake8 and updated to PEP 8.  This should make it easier for developers to make their updates from the source code.
