@@ -34,6 +34,12 @@ jobs:
         run: |
           git ls-files apps | Sort-Object | Select-String 'pitcher_card.py'
           python -c "import sys, importlib.util; sys.path.insert(0,'.'); assert importlib.util.find_spec('apps.pitcher_card') is not None, 'Spec not found'; import apps.pitcher_card; print('OK: apps.pitcher_card import')"
+
+      - name: "Preflight: verify apps/batter_slideshow.py is present and importable"
+        shell: pwsh
+        run: |
+          git ls-files apps | Sort-Object | Select-String 'batter_slideshow.py'
+          python -c "import sys, importlib.util; sys.path.insert(0,'.'); assert importlib.util.find_spec('apps.batter_slideshow') is not None, 'Spec not found'; import apps.batter_slideshow; print('OK: apps.batter_slideshow import')"
       
 
       - name: Build executable with PyInstaller
