@@ -143,5 +143,5 @@ class BatterSlideshowStatsFrame(tk.Frame):
         self.infield_label.configure(text=f"Infield: {batter_df.iloc[0]['infield_score']} ( {batter_df.iloc[0]['infield_rank']} )")
         self.outfield_label.configure(text=f"Outfield: {batter_df.iloc[0]['outfield_score']} ( {batter_df.iloc[0]['outfield_rank']} )")
         self.baserunning_label.configure(text=f"Baserunning: {batter_df.iloc[0]['baserunning_score']} ( {batter_df.iloc[0]['baserunning_rank']} )")
-        self.total_label.configure(text=f"Total: {batter_df.iloc[0]["total_score"]} ( {batter_df.iloc[0]['total_rank']} )")
+        self.total_label.configure(text=f"Total: {batter_df.iloc[0]['total_score']} ( {batter_df.iloc[0]['total_rank']} )")
         self.quals_label.configure(text=f"Qualifed: {quals}")
