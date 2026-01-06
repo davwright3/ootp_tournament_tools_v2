@@ -1,6 +1,7 @@
 # -*- mode: python ; coding: utf-8 -*-
 from PyInstaller.utils.hooks import collect_submodules
 hidden = collect_submodules('au_ootp_tournament_utilities_v2')
+hidden += collect_submodules('apps')
 
 a = Analysis(
     ['main.py'],
