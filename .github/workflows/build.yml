@@ -38,7 +38,7 @@ jobs:
 
       - name: Build executable with PyInstaller
         run: |
-          pyinstaller --clean --log-level=DEBUG main.spec
+          pyinstaller --clean --log-level=DEBUG main.spec --clean
 
       - name: "Inspect PyInstaller Analysis TOC for apps.pitcher_card"
         shell: pwsh
@@ -104,7 +104,7 @@ jobs:
 
       - name: Build Executable With PyInstaller
         run: |
-          pyinstaller --clean main.spec
+          pyinstaller main.spec --clean
 
       - name: Create ZIP of Built App
         run: |

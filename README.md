@@ -9,7 +9,9 @@ Please visit this link if you have any feature requests: [Feature Requests](http
 
 ## Current Version 0.6.0
 
-### Updated: 6 Jan 2026
+### Updated: 
+
+6 Jan 2026
 
 Final release for OOTP Perfect Team 26 Edition
 
