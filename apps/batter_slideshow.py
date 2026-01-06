@@ -136,7 +136,7 @@ class BatterSlideshowApp(tk.Toplevel):
             self.updating = True
             num_qualifiers = len(self.slide_df)
             self.batter_df = self.slide_df.iloc[[rank - 1]]
-            self.player_title.configure(text=f'{self.rank_var.get()}: {self.batter_df.iloc[0]['Title']}')
+            self.player_title.configure(text=f"{self.rank_var.get()}: {self.batter_df.iloc[0]['Title']}")
             self.player_value_label.update_overall_rating_label(self.batter_df.iloc[0]['Val'])
             self.bat_side_label.update_rating('Bats', self.batter_df.iloc[0]['Bats'])
             self.throws_label.update_rating('Throws', self.batter_df.iloc[0]['Throws'])
