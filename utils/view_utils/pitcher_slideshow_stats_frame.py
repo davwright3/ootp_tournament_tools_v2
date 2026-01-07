@@ -50,6 +50,9 @@ class PitcherSlideshowStatsFrame(tk.Frame):
         self.hr_rate_label = tk.Label(self, text="HR/9", font=fonts.slideshow_label_font)
         self.hr_rate_label.grid(row=4, column=2, sticky='nsew')
 
+        self.obabip_label = tk.Label(self, text="OBABIP", font=fonts.slideshow_label_font)
+        self.obabip_label.grid(row=5, column=2, sticky='nsew')
+
         ttk.Separator(self, orient='vertical').grid(row=0, column=3, rowspan=6, sticky='ns')
 
         self.sd_md_label = tk.Label(self, text="SD/MD:", font=fonts.slideshow_label_font)
@@ -86,6 +89,7 @@ class PitcherSlideshowStatsFrame(tk.Frame):
         self.bb_pct_label.configure(text=f"BB%: {player_df.iloc[0]['BB%']} ( {player_df.iloc[0]['bb_pct_rank']} )")
         self.hr_pct_label.configure(text=f"HR%: {player_df.iloc[0]['HR%']} ( {player_df.iloc[0]['hr_pct_rank']} )")
         self.hr_rate_label.configure(text=f"HR/9: {player_df.iloc[0]['HR/9']} ( {player_df.iloc[0]['hr_per_9_rank']} )")
+        self.obabip_label.configure(text=f"OBABIP: {player_df.iloc[0]['oBABIP']} ( {player_df.iloc[0]['obabip_rank']} )")
         self.sd_md_label.configure(text=f"SD/MD: {player_df.iloc[0]['SD/MD']} ( {player_df.iloc[0]['sd_md_rank']} )")
         self.irs_pct_label.configure(text=f"IRS%: {player_df.iloc[0]['IRS%']} ( {player_df.iloc[0]['irs_pct_rank']} )")
         self.sv_pct_label.configure(text=f"SV%: {player_df.iloc[0]['SV%']} ( {player_df.iloc[0]['sv_pct_rank']} )")

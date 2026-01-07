@@ -3,14 +3,14 @@ from utils.stats_utils.generate_basic_pitching_stats_df import generate_basic_pi
 from utils.stats_utils.generate_pitcher_ratings_df import generate_pitcher_ratings_df
 
 
-def generate_pitcher_slide_df(pitcher_type=None):
+def generate_pitcher_slide_df(pitcher_type=None, selected_cutoff_days=7):
     ratings_df = generate_pitcher_ratings_df()
     if pitcher_type == 'SP':
-        stats_df = generate_basic_pitching_stats(min_ip=200, cutoff_days=7, pitcher_type_select='SP')
+        stats_df = generate_basic_pitching_stats(min_ip=100, cutoff_days=selected_cutoff_days, pitcher_type_select='SP')
     elif pitcher_type == 'RP':
-        stats_df = generate_basic_pitching_stats(min_ip=200, cutoff_days=7, pitcher_type_select='RP')
+        stats_df = generate_basic_pitching_stats(min_ip=100, cutoff_days=selected_cutoff_days, pitcher_type_select='RP')
     else:
-        stats_df = generate_basic_pitching_stats(min_ip=200, cutoff_days=7)
+        stats_df = generate_basic_pitching_stats(min_ip=100, cutoff_days=selected_cutoff_days)
 
     slide_df = pd.merge(ratings_df, stats_df, on=['CID', 'Title'], how='inner')
     slide_df['pit_val'] = (slide_df['K%'] - (slide_df['BB%'] + (slide_df['HR%'] * 3)))

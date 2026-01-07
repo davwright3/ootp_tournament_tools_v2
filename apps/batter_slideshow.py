@@ -60,10 +60,13 @@ class BatterSlideshowApp(tk.Toplevel):
         row += 1
 
         self.slide_df = generate_batter_slide_df(position_select='LearnC')
-        if len(self.slide_df) >= 5:
+        if len(self.slide_df) >= self.rank_var.get():
             self.batter_df = self.slide_df.iloc[[4]]
         else:
-            self.batter_df = self.slide_df.iloc[len(self.slide_df) - 1]
+            try:
+                self.batter_df = self.slide_df.iloc[len(self.slide_df) - 1]
+            except IndexError:
+                self.player_title.config(text='No batters available')
 
         self.bat_side_label = BatsThrowsLabel(self.main_frame, label_type='Bats', side_id=self.batter_df.iloc[0]['Bats'])
         self.bat_side_label.grid(row=row, column=0, sticky="nsew")
@@ -129,7 +132,8 @@ class BatterSlideshowApp(tk.Toplevel):
         self.all_batters_button = tk.Button(self.main_frame, text='ALL', command= lambda: self.change_position(position=None))
         self.all_batters_button.grid(row=row, column=2, sticky="nsew")
 
-        self.update_batter(self.rank_var.get())
+        if len(self.slide_df) >= self.rank_var.get():
+            self.update_batter(self.rank_var.get())
 
     def update_batter(self, rank):
         if not self.updating:

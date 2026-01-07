@@ -27,7 +27,17 @@ class PitcherSlideFrame(tk.Frame):
         self.selected_player_df = pd.DataFrame()
 
         self.slide_df = generate_pitcher_slide_df()
-        self.selected_player_df = self.slide_df.iloc[[9]]
+        if self.selected_rank < len(self.slide_df):
+            self.selected_player_df = self.slide_df.iloc[[self.selected_rank]]
+        else:
+            try:
+                self.selected_player_df = self.slide_df.iloc[[len(self.slide_df) - 1]]
+            except Exception as e:
+                self.title_label = tk.Label(self,
+                                            text='Not enough data to create slideshow',
+                                            font=fonts.slideshow_header_font)
+                self.title_label.grid(row=0, column=0, columnspan=3, sticky='nsew')
+                return
 
         row = 0
         self.title_label = tk.Label(self, text="Pitcher Slide", font=fonts.slideshow_header_font)

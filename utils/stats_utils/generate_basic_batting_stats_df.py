@@ -58,7 +58,7 @@ def generate_basic_batting_stats_df(
     if cutoff_days is not None:
         try:
             cutoff = datetime.now() - timedelta(days=cutoff_days)
-            df1['Trny'] = pd.to_datetime(df1['Trny'] + ' 2025', format='%d %b %Y')
+            df1['Trny'] = pd.to_datetime(df1['Trny'] + ' 2026', format='%d %b %Y')
             df1 = df1[df1['Trny'] >= cutoff]
 
             if df1.empty:

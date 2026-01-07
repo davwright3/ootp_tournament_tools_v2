@@ -29,14 +29,17 @@ def generate_basic_pitching_stats(
         team_select=None,
         cutoff_days=None,
 ):
-    stats_df = cull_teams(
+    df = cull_teams(
         data_store.get_data().copy(),
         run_cutoff=cull_team_limit_select)
+    stats_df = df.copy()
 
     if cutoff_days is not None:
         cutoff = datetime.now() - timedelta(days=cutoff_days)
-        stats_df['Trny'] = pd.to_datetime(stats_df['Trny'] + ' 2025', format='%d %b %Y')
+        stats_df['Trny'] = pd.to_datetime(stats_df['Trny'] + ' 2026', format='%d %b %Y')
         stats_df = stats_df[stats_df['Trny'] >= cutoff]
+        if stats_df.empty:
+            stats_df = df.copy()
 
     if card_id is not None:
         stats_df = stats_df[stats_df['CID'] == card_id]
