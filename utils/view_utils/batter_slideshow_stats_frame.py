@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from utils.view_utils import program_fonts as fonts
+from utils.view_utils.open_bref import open_bref
 
 LABEL_PADX = 5
 LABEL_PADY = 5
@@ -20,6 +21,8 @@ class BatterSlideshowStatsFrame(tk.Frame):
         self.rowconfigure(3, weight=0)
         self.rowconfigure(4, weight=0)
         self.rowconfigure(5, weight=1)
+
+        self.bref_id = tk.StringVar(value="")
 
 
         self.average_label = tk.Label(self, text="AVG:", font=fonts.slideshow_label_font)
@@ -118,6 +121,9 @@ class BatterSlideshowStatsFrame(tk.Frame):
         self.quals_label = tk.Label(self, text="Quals:", font=fonts.slideshow_label_font)
         self.quals_label.grid(row=5, column=7, sticky=LABEL_STICKY, pady=LABEL_PADY, padx=LABEL_PADX)
 
+        self.bref_button = tk.Button(self, text="B-Ref", command=lambda: open_bref(self.bref_id.get()))
+        self.bref_button.grid(row=0, column=8, sticky=LABEL_STICKY, pady=LABEL_PADY, padx=LABEL_PADX)
+
         self.update_batter(batter_df, quals)
 
 
@@ -145,3 +151,10 @@ class BatterSlideshowStatsFrame(tk.Frame):
         self.baserunning_label.configure(text=f"Baserunning: {batter_df.iloc[0]['baserunning_score']} ( {batter_df.iloc[0]['baserunning_rank']} )")
         self.total_label.configure(text=f"Total: {batter_df.iloc[0]['total_score']} ( {batter_df.iloc[0]['total_rank']} )")
         self.quals_label.configure(text=f"Qualifed: {quals}")
+        self.bref_id.set(batter_df.iloc[0]['brefid'])
+
+    def open_bref(self):
+        start_letter = self.bref_id.get()[0]
+        url = f'https://www.baseball-reference.com/players/{start_letter}/{self.bref_id.get()}.shtml'
+        webbrowser.open(url, new=0, autoraise=True)
+        return

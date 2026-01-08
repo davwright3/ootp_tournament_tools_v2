@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter.ttk import Separator
+from utils.view_utils.open_bref import open_bref
 
 from utils.view_utils import program_fonts as fonts
 
@@ -14,6 +15,8 @@ class PitcherSlideshowStatsFrame(tk.Frame):
         self.columnconfigure(2, weight=1)
         self.columnconfigure(3, weight=0)
         self.columnconfigure(4, weight=1)
+
+        self.bref_id = tk.StringVar(value='')
 
         self.innings_pitched_label = tk.Label(self, text="IP", font=fonts.slideshow_label_font)
         self.innings_pitched_label.grid(row=0, column=0, sticky='e')
@@ -73,6 +76,9 @@ class PitcherSlideshowStatsFrame(tk.Frame):
         self.qualifiers_label = tk.Label(self, text="Qual:", font=fonts.slideshow_label_font)
         self.qualifiers_label.grid(row=5, column=4, sticky='w')
 
+        self.bref_button = tk.Button(self, text="B-Ref", command=lambda: open_bref(self.bref_id.get()))
+        self.bref_button.grid(row=0, column=5, sticky='w')
+
         self.update_frame(player_df, num_quals=numquals)
 
 
@@ -96,4 +102,5 @@ class PitcherSlideshowStatsFrame(tk.Frame):
         self.ip_game_label.configure(text=f"IP/G: {player_df.iloc[0]['IP/G']} ( {player_df.iloc[0]['ip_game_rank']} )")
         self.score_label.configure(text=f"Score: {player_df.iloc[0]['pit_score']} ( {player_df.iloc[0]['score_rank']} )")
         self.qualifiers_label.configure(text=f'Qual: {num_quals}')
+        self.bref_id.set(player_df.iloc[0]['brefid'])
 

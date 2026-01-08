@@ -10,6 +10,6 @@ def generate_pitcher_ratings_df():
              'pBABIP vR', 'Fastball', 'Slider', 'Curveball', 'Changeup',
              'Cutter', 'Sinker', 'Splitter', 'Forkball', 'Screwball',
              'Circlechange', 'Knucklecurve', 'Knuckleball', 'Stamina', 'Hold',
-             'GB', 'Velocity', 'Arm Slot']]
+             'GB', 'Velocity', 'Arm Slot', 'brefid']]
     df = df.rename(columns={'Card ID': 'CID', '//Card Title': 'Title'})
     return df
