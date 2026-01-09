@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 from utils.data_utils.mlb_season_stats_store import mlb_stats_store
+from utils.data_utils.stadium_factors_store import stadium_factors_store
 
 def get_run_environment(selected_year=2010):
     seasons_df = mlb_stats_store.get_stats_dataframe().copy()
@@ -38,9 +39,6 @@ def get_run_environment(selected_year=2010):
                 df_selected_year['SB'] / (df_selected_year['SB'] + df_selected_year['CS'])).round(3),
                                 np.nan)
 
-
-
-
     if len(df_selected_year) == 0 or len(df_2010) == 0:
         raise ValueError('Missing rows from selected year')
 
@@ -76,3 +74,9 @@ def get_run_environment(selected_year=2010):
          'SBPct': sb_pct_ratio,}])
 
     return return_df
+
+
+def get_park_factors():
+    stadium_df = stadium_factors_store.get_park_factors()
+
+    return stadium_df
