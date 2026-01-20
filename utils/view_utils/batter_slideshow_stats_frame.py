@@ -93,6 +93,9 @@ class BatterSlideshowStatsFrame(tk.Frame):
         self.pa_label = tk.Label(self, text="PA:", font=fonts.slideshow_label_font)
         self.pa_label.grid(row=4, column=5, sticky=LABEL_STICKY, pady=LABEL_PADY, padx=LABEL_PADX)
 
+        self.variant_label = tk.Label(self, text="VARIANT:", font=fonts.slideshow_label_font)
+        self.variant_label.grid(row=5, column=5, sticky=LABEL_STICKY, pady=LABEL_PADY, padx=LABEL_PADX)
+
         ttk.Separator(
             self,
             orient='vertical').grid(
@@ -145,6 +148,7 @@ class BatterSlideshowStatsFrame(tk.Frame):
         self.zr_label.configure(text=f"ZR/600: {batter_df.iloc[0]['ZRrate']} ( {batter_df.iloc[0]['zr_rank']} )")
         self.fld_pct_label.configure(text=f"Fld%: {batter_df.iloc[0]['Fld%']} ( {batter_df.iloc[0]['fld_pct_rank']} )")
         self.pa_label.configure(text=f"PA: {batter_df.iloc[0]['PA']} ( {batter_df.iloc[0]['pa_rank']} )")
+        self.variant_label.configure(text=f"Var: {batter_df.iloc[0]['VLvl']}")
         self.catch_label.configure(text=f"Catch: {batter_df.iloc[0]['catch_score']} ( {batter_df.iloc[0]['catch_rank']} )")
         self.infield_label.configure(text=f"Infield: {batter_df.iloc[0]['infield_score']} ( {batter_df.iloc[0]['infield_rank']} )")
         self.outfield_label.configure(text=f"Outfield: {batter_df.iloc[0]['outfield_score']} ( {batter_df.iloc[0]['outfield_rank']} )")

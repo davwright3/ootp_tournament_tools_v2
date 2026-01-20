@@ -8,7 +8,7 @@ from utils.data_utils.card_list_store import card_list_store
 def generate_batter_slide_df(position_select=None, selected_cutoff_days=7):
     stats_df = generate_basic_batting_stats_df(min_pa=600,
                                                position_select=position_select,
-                                               cutoff_days=selected_cutoff_days)
+                                               cutoff_days=selected_cutoff_days, variant_split_select=True)
     ratings_df = generate_batter_ratings_df(position_select=position_select)
     full_df = pd.merge(ratings_df, stats_df, how='inner', on=['CID', 'Title'])
 
@@ -73,5 +73,7 @@ def generate_batter_slide_df(position_select=None, selected_cutoff_days=7):
     full_df['outfield_rank'] = full_df['outfield_score'].rank(ascending=False, method='first').astype(int)
     full_df['baserunning_rank'] = full_df['baserunning_score'].rank(ascending=False, method='first').astype(int)
     full_df['total_rank'] = full_df['total_score'].rank(ascending=False, method='first').astype(int)
+
+    print(full_df)
 
     return full_df

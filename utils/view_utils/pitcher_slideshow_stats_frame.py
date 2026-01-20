@@ -76,6 +76,9 @@ class PitcherSlideshowStatsFrame(tk.Frame):
         self.qualifiers_label = tk.Label(self, text="Qual:", font=fonts.slideshow_label_font)
         self.qualifiers_label.grid(row=5, column=4, sticky='w')
 
+        self.variant_label = tk.Label(self, text="Variant:", font=fonts.slideshow_label_font)
+        self.variant_label.grid(row=6, column=4, sticky='w')
+
         self.bref_button = tk.Button(self, text="B-Ref", command=lambda: open_bref(self.bref_id.get()))
         self.bref_button.grid(row=0, column=5, sticky='w')
 
@@ -102,5 +105,6 @@ class PitcherSlideshowStatsFrame(tk.Frame):
         self.ip_game_label.configure(text=f"IP/G: {player_df.iloc[0]['IP/G']} ( {player_df.iloc[0]['ip_game_rank']} )")
         self.score_label.configure(text=f"Score: {player_df.iloc[0]['pit_score']} ( {player_df.iloc[0]['score_rank']} )")
         self.qualifiers_label.configure(text=f'Qual: {num_quals}')
+        self.variant_label.configure(text=f"Variant: {player_df.iloc[0]['VLvl']}")
         self.bref_id.set(player_df.iloc[0]['brefid'])
 
