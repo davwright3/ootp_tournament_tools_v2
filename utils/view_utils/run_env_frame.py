@@ -9,7 +9,7 @@ class RunEnvironmentFrame(tk.Frame):
     def __init__(self, parent):
         super().__init__(parent)
 
-        self.selected_year = tk.StringVar(value='2000')
+        self.selected_year = tk.StringVar(value='2010')
         self.selected_stadium = tk.StringVar(value='Heinsohn Ballpark 2025')
 
         self.stadiums = get_park_factors()
@@ -201,44 +201,45 @@ class RunEnvironmentFrame(tk.Frame):
         self.triples_stat_label = tk.Label(self, textvariable=self.triples_var, font=fonts.basic_font)
         self.triples_stat_label.grid(column=column, row=1, sticky='nsew')
 
-def get_run_environment_factors(self):
-    try:
-        avg_lhb_calc = round(float(self.babip_var.get()) * float(self.avg_lhb_var.get()), 3)
-    except ValueError:
-        avg_lhb_calc = 1.0
+    def get_run_environment_factors(self):
+        try:
+            avg_lhb_calc = round(float(self.babip_var.get()) * float(self.avg_lhb_var.get()), 3)
+        except ValueError:
+            avg_lhb_calc = 1.0
 
-    try:
-        avg_rhb_calc = round(float(self.babip_var.get()) * float(self.avg_rhb_var.get()), 3)
-    except ValueError:
-        avg_rhb_calc = 1.0
+        try:
+            avg_rhb_calc = round(float(self.babip_var.get()) * float(self.avg_rhb_var.get()), 3)
+        except ValueError:
+            avg_rhb_calc = 1.0
 
-    try:
-        hr_lhb_calc = round(float(self.babip_var.get()) * float(self.hr_lhb_var.get()), 3)
-    except ValueError:
-        hr_lhb_calc = 1.0
+        try:
+            hr_lhb_calc = round(float(self.babip_var.get()) * float(self.hr_lhb_var.get()), 3)
+        except ValueError:
+            hr_lhb_calc = 1.0
 
-    try:
-        hr_rhb_calc = round(float(self.babip_var.get()) * float(self.hr_rhb_var.get()), 3)
-    except ValueError:
-        hr_rhb_calc = 1.0
+        try:
+            hr_rhb_calc = round(float(self.babip_var.get()) * float(self.hr_rhb_var.get()), 3)
+        except ValueError:
+            hr_rhb_calc = 1.0
 
-    try:
-        doubles_calc = round(float(self.babip_var.get()) * float(self.doubles_var.get()), 3)
-    except ValueError:
-        doubles_calc = 1.0
+        try:
+            doubles_calc = round(float(self.babip_var.get()) * float(self.doubles_var.get()), 3)
+        except ValueError:
+            doubles_calc = 1.0
 
-    try:
-        triples_calc = round(float(self.babip_var.get()) * float(self.triples_var.get()), 3)
-    except ValueError:
-        triples_calc = 1.0
+        try:
+            triples_calc = round(float(self.babip_var.get()) * float(self.triples_var.get()), 3)
+        except ValueError:
+            triples_calc = 1.0
 
-    run_env_factors = {
-        'avg_lhb': avg_lhb_calc,
-        'avg_rhb': avg_rhb_calc,
-        'hr_lhb': hr_lhb_calc,
-        'hr_rhb': hr_rhb_calc,
-        'doubles': doubles_calc,
-        'triples': triples_calc,
-    }
-    return run_env_factors
+        run_env_factors = {
+            'avg_lhb': avg_lhb_calc,
+            'avg_rhb': avg_rhb_calc,
+            'hr_lhb': hr_lhb_calc,
+            'hr_rhb': hr_rhb_calc,
+            'doubles': doubles_calc,
+            'triples': triples_calc,
+        }
+        print(run_env_factors)
+        return run_env_factors
 

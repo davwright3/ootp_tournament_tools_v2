@@ -6,7 +6,7 @@ from utils.data_utils.card_list_store import card_list_store
 
 
 def generate_batter_slide_df(position_select=None, selected_cutoff_days=7):
-    stats_df = generate_basic_batting_stats_df(min_pa=600,
+    stats_df = generate_basic_batting_stats_df(min_pa=300,
                                                position_select=position_select,
                                                cutoff_days=selected_cutoff_days, variant_split_select=True)
     ratings_df = generate_batter_ratings_df(position_select=position_select)
@@ -24,12 +24,12 @@ def generate_batter_slide_df(position_select=None, selected_cutoff_days=7):
 
     # Get max values for player values
     woba_max = full_df['wOBA'].max()
-    catch_max = full_df['CatchValue'].max()
-    infield_max = full_df['InfValue'].max()
-    of_max = full_df['OFValue'].max()
+    catch_max = max(full_df['CatchValue'].max(), 1)
+    infield_max = max(full_df['InfValue'].max(), 1)
+    of_max = max(full_df['OFValue'].max(), 1)
     baserunning_max = full_df['BaserunningVal'].max()
 
-    full_df['woba_score'] = round(((full_df['wOBA'] * 10) ** 2) / ((woba_max * 10) ** 2), 2)
+    full_df['woba_score'] = round(((full_df['wOBA'] * 10) ** 3) / ((woba_max * 10) ** 2), 2)
     full_df['catch_score'] = round((full_df['CatchValue'] ** 2) / (catch_max ** 2), 2)
     full_df['infield_score'] = round((full_df['InfValue'] ** 2) / (infield_max ** 2), 2)
     full_df['outfield_score'] = round((full_df['OFValue'] ** 2) / (of_max ** 2), 2)
@@ -52,6 +52,7 @@ def generate_batter_slide_df(position_select=None, selected_cutoff_days=7):
 
     full_df = full_df.sort_values(by=['total_score'], ascending=False)
 
+
     # Set rankings
     full_df['pa_rank'] = full_df['PA'].rank(ascending=False, method='first').astype(int)
     full_df['avg_rank'] = full_df['AVG'].rank(ascending=False, method='first').astype(int)
@@ -73,7 +74,5 @@ def generate_batter_slide_df(position_select=None, selected_cutoff_days=7):
     full_df['outfield_rank'] = full_df['outfield_score'].rank(ascending=False, method='first').astype(int)
     full_df['baserunning_rank'] = full_df['baserunning_score'].rank(ascending=False, method='first').astype(int)
     full_df['total_rank'] = full_df['total_score'].rank(ascending=False, method='first').astype(int)
-
-    print(full_df)
 
     return full_df

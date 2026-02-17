@@ -39,6 +39,7 @@ def generate_basic_pitching_stats(
         stats_df['Trny'] = pd.to_datetime(stats_df['Trny'] + ' 2026', format='%d %b %Y')
         stats_df = stats_df[stats_df['Trny'] >= cutoff]
         if stats_df.empty:
+            print("Not enough seven day data, using full dataset")
             stats_df = df.copy()
 
     if card_id is not None:

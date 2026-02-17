@@ -1,4 +1,5 @@
 """Calculate a return a dataframe with the ratings calculated."""
+import numpy as np
 
 
 def calc_ratings(
@@ -6,8 +7,48 @@ def calc_ratings(
         batter_weights=None,
         pitcher_weights=None,
         defense_weights=None,
-        baserunning_weights=None
+        baserunning_weights=None,
+        run_env_weights=None,
 ):
+
+    #Set weights from run environment
+    if run_env_weights:
+        print('Using run env weights')
+        bat_vl_mask = df['B'].isin(['R', 'S'])
+        df['BABIP vL'] = np.where(
+            bat_vl_mask,
+            round(df['BABIP vL'] * run_env_weights['avg_rhb'], 1),
+            round(df['BABIP vL'] * run_env_weights['avg_lhb'], 1)
+        )
+        df['Power vL'] = np.where(
+            bat_vl_mask,
+            round(df['Power vL'] * run_env_weights['hr_rhb'], 1),
+            round(df['Power vL'] * run_env_weights['hr_lhb'], 1)
+        )
+        df['Gap vL'] = np.where(
+            bat_vl_mask,
+            round(df['Gap vL'] * run_env_weights['avg_rhb'] * run_env_weights[
+                'doubles'], 1),
+            round(df['Gap vL'] * run_env_weights['avg_lhb'] * run_env_weights[
+                'doubles'], 1),
+        )
+        bat_vr_mask = df['B'].isin(['L', 'S'])
+        df['BABIP vR'] = np.where(
+            bat_vr_mask,
+            round(df['BABIP vR'] * run_env_weights['avg_lhb'],1),
+            round(df['BABIP vR'] * run_env_weights['avg_rhb'], 1)
+        )
+        df['Power vR'] = np.where(
+            bat_vr_mask,
+            round(df['Power vR'] * run_env_weights['hr_lhb'], 1),
+            round(df['Power vR'] * run_env_weights['hr_rhb'], 1)
+        )
+        df['Gap vR'] = np.where(
+            bat_vr_mask,
+            round(df['Gap vR'] * run_env_weights['avg_lhb'] * run_env_weights['doubles'], 1),
+            round(df['Gap vR'] * run_env_weights['avg_rhb'] * run_env_weights['doubles'], 1)
+        )
+
     # Batter ratings
     if batter_weights is None:
         df['BatOA'] = (df['Gap'] + df['Power'] + df['Eye'] +

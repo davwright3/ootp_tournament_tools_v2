@@ -13,7 +13,10 @@ class RatingsSelectFrame(tk.Frame):
 
         ratings_list = ['BatOA', 'BatvL', 'BatvR', 'BatSplit', 'Catch Def',
                         'IF Def', 'OF Def', 'Bsr', 'PitOA', 'PitvL', 'PitvR',
-                        'PitSplit', 'Stamina', 'GB']
+                        'PitSplit', 'Stamina', 'GB', 'BABIP', 'BABIP vL',
+                        'BABIP vR', 'Gap', 'Gap vL', 'Gap vR', 'Power',
+                        'Power vL', 'Power vR', 'Eye', 'Eye vL', 'Eye vR',
+                        'Avoid Ks', 'Avoid K vL', 'Avoid K vR',]
         self.selected_ratings_list = []
 
         def set_active_ratings():

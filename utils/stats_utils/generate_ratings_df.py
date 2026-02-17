@@ -1,6 +1,7 @@
 """Return dataframe with selected calculated ratings to be viewed."""
 from utils.data_utils.card_list_store import card_list_store
 from utils.stats_utils.calc_ratings import calc_ratings
+import numpy as np
 
 
 def generate_ratings_df(
@@ -10,6 +11,8 @@ def generate_ratings_df(
         max_year=2025,
         selected_ratings_list=None,
         selected_general_list=None,
+        batter_side_select=None,
+        pitcher_side_select=None,
         batter_weights=None,
         pitcher_weights=None,
         defense_weights=None,
@@ -17,7 +20,8 @@ def generate_ratings_df(
         selected_position=None,
         collection_only=False,
         selected_card_types=None,
-        search_term = None
+        search_term=None,
+        run_env_weights=None
 ):
     return_columns = ['CID', 'Title', 'Val']
     if selected_general_list:
@@ -55,6 +59,12 @@ def generate_ratings_df(
         lambda x: 'R' if x == 1 else 'L' if x == 2 else 'S')
     card_df['T'] = card_df['Throws'].apply(lambda x: 'R' if x == 1 else 'L')
 
+    if batter_side_select and batter_side_select != 'All':
+        card_df = card_df[card_df['B'] == batter_side_select]
+
+    if pitcher_side_select and pitcher_side_select != 'All':
+        card_df = card_df[card_df['T'] == pitcher_side_select]
+
     if collection_only:
         card_df = card_df[card_df['owned'] != 0]
     card_df = card_df[(card_df['Val'] >= min_rating) &
@@ -70,8 +80,10 @@ def generate_ratings_df(
         batter_weights=batter_weights,
         pitcher_weights=pitcher_weights,
         defense_weights=defense_weights,
-        baserunning_weights=baserunning_weights
+        baserunning_weights=baserunning_weights,
+        run_env_weights=run_env_weights,
     )
+
     ratings_df = ratings_df[return_columns]
     del card_df
 

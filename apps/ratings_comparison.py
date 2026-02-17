@@ -15,8 +15,10 @@ from utils.view_utils.pitcher_rating_weights_frame import PitcherWeightsFrame
 from utils.view_utils.defense_weights_frame import DefenseWeightsFrame
 from utils.view_utils.baserunning_weights_frame import BaserunningWeightFrame
 from utils.view_utils.position_select_frame import PositionSelectFrame
-from utils.view_utils.general_info_select_frame import GeneralInfoFrame
+from utils.view_utils.batting_side_select_frame import BattingSideSelectFrame
+from utils.view_utils.pitcher_side_select_frame import PitcherSideSelectFrame
 from utils.view_utils.select_in_collection_frame import SelectInCollectionFrame
+from utils.view_utils.general_info_select_frame import GeneralInfoFrame
 from utils.view_utils.run_env_frame import RunEnvironmentFrame
 from utils.view_utils.search_frame import SearchFrame
 
@@ -96,6 +98,14 @@ class RatingsComparisonApp(tk.Toplevel):
         self.rating_select_frame.grid(column=0, row=row, sticky='nsew')
         row += 1
 
+        self.batting_side_select_frame = BattingSideSelectFrame(inner_frame)
+        self.batting_side_select_frame.grid(column=0, row=row, sticky='nsew')
+        row += 1
+
+        self.pitcher_side_select_frame = PitcherSideSelectFrame(inner_frame)
+        self.pitcher_side_select_frame.grid(column=0, row=row, sticky='nsew')
+        row += 1
+
         self.bat_ratings_weight_frame = BatterWeightsFrame(inner_frame)
         self.bat_ratings_weight_frame.grid(column=0, row=row, sticky='nsew')
         row += 1
@@ -135,6 +145,8 @@ class RatingsComparisonApp(tk.Toplevel):
         selected_min_year, selected_max_year = self.year_range_select.get_min_max_years()
         selected_min_rating, selected_max_rating = self.min_max_select.get_min_max_rating()
         selected_ratings = self.rating_select_frame.get_active_ratings()
+        selected_batter_side = self.batting_side_select_frame.get_selected_side()
+        selected_pitcher_side = self.pitcher_side_select_frame.get_pitcher_side_select()
         selected_general_items=self.general_info_select_frame.get_selected_items()
         selected_batter_weights = self.bat_ratings_weight_frame.get_batter_rating_weights()
         selected_pitcher_weights = self.pitch_ratings_weight_frame.get_pitcher_rating_weights()
@@ -143,6 +155,7 @@ class RatingsComparisonApp(tk.Toplevel):
         selected_position = self.position_select_frame.get_position_select()
         selected_in_collection_only = self.in_collection_frame.get_collection_only_value()
         selected_card_types = self.card_type_select_frame.get_selected_card_types()
+        selected_run_factors = self.run_env_frame.get_run_environment_factors()
         if self.search_frame.get_search_term() != '':
             selected_search_term = self.search_frame.get_search_term()
         else:
@@ -152,6 +165,8 @@ class RatingsComparisonApp(tk.Toplevel):
             max_year=selected_max_year,
             min_rating=selected_min_rating,
             max_rating=selected_max_rating,
+            batter_side_select=selected_batter_side,
+            pitcher_side_select=selected_pitcher_side,
             selected_ratings_list=selected_ratings,
             selected_general_list=selected_general_items,
             batter_weights=selected_batter_weights,
@@ -161,7 +176,8 @@ class RatingsComparisonApp(tk.Toplevel):
             selected_position=selected_position,
             collection_only=selected_in_collection_only,
             selected_card_types=selected_card_types,
-            search_term=selected_search_term
+            search_term=selected_search_term,
+            run_env_weights=selected_run_factors
         )
         self.dataview_frame.set_dataframe(ratings_df)
         del ratings_df

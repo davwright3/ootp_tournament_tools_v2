@@ -62,6 +62,7 @@ def generate_basic_batting_stats_df(
             df1 = df1[df1['Trny'] >= cutoff]
 
             if df1.empty:
+                print("Not enough data, using full dataset")
                 df1 = df
         except TypeError:
             return
