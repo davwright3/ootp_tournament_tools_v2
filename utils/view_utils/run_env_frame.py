@@ -240,6 +240,5 @@ class RunEnvironmentFrame(tk.Frame):
             'doubles': doubles_calc,
             'triples': triples_calc,
         }
-        print(run_env_factors)
         return run_env_factors
 

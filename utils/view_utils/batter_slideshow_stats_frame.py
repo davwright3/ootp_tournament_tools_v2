@@ -12,8 +12,10 @@ class BatterSlideshowStatsFrame(tk.Frame):
     def __init__(self, parent, batter_df, quals=0):
         super().__init__(parent, relief='groove', bd=5)
 
-        self.columnconfigure(0, weight=1)
-        self.columnconfigure(8, weight=1)
+        self.columnconfigure(1, minsize=400)
+        self.columnconfigure(3, minsize=400)
+        self.columnconfigure(5, minsize=400)
+        self.columnconfigure(7, minsize=400)
 
         self.rowconfigure(0, weight=0)
         self.rowconfigure(1, weight=0)
@@ -156,9 +158,3 @@ class BatterSlideshowStatsFrame(tk.Frame):
         self.total_label.configure(text=f"Total: {batter_df.iloc[0]['total_score']} ( {batter_df.iloc[0]['total_rank']} )")
         self.quals_label.configure(text=f"Qualifed: {quals}")
         self.bref_id.set(batter_df.iloc[0]['brefid'])
-
-    def open_bref(self):
-        start_letter = self.bref_id.get()[0]
-        url = f'https://www.baseball-reference.com/players/{start_letter}/{self.bref_id.get()}.shtml'
-        webbrowser.open(url, new=0, autoraise=True)
-        return

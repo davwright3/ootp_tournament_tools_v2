@@ -13,7 +13,6 @@ def calc_ratings(
 
     #Set weights from run environment
     if run_env_weights:
-        print('Using run env weights')
         bat_vl_mask = df['B'].isin(['R', 'S'])
         df['BABIP vL'] = np.where(
             bat_vl_mask,
